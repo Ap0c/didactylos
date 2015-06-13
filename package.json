@@ -1,5 +1,5 @@
 {
 	"name": "didactylos",
 	"version": "0.0.1",
-	"main": "./html/index.html"
+	"main": "./html/editor.html"
 }
