@@ -26,13 +26,17 @@ body {
 	border: none;
 	height: 100%;
 	width: 100%;
-	padding: 2%;
+	padding: 3%;
 	display: block;
 	box-sizing: border-box;
-	background-color: #aaaaff;
+	background-color: #005c8a;
 	outline: none;
+	font-size: medium;
+	font-family: Menlo, Consolas, monospace;
+	color: #ffffff;
 }
 
 #preview {
 	padding: 2% 4%;
+	color: #222222;
 }
