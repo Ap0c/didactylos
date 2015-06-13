@@ -1,5 +1,9 @@
 {
 	"name": "didactylos",
 	"version": "0.0.1",
-	"main": "./html/editor.html"
+	"main": "./html/editor.html",
+	"window": {
+		"width": 1200,
+		"height": 640
+	}
 }
