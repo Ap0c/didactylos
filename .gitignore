@@ -2,3 +2,4 @@
 nwjs.app
 nwjc
 *.sublime*
+node_modules
