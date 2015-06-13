@@ -1,6 +1,7 @@
 // ----- Requires ----- //
 
 var marked = require('marked');
+var fs = require('fs');
 
 
 // ----- Setup ----- //
@@ -27,19 +28,34 @@ var updatePreview = function (input) {
 
 };
 
+var openFile = function (fileInput, editorContent) {
 
-var addListeners = function () {
+	var filepath = fileInput.value;
+	fileInput.value = '';
+
+	fs.readFile(filepath, function (err, data) {
+		editorContent.value = data;
+		updatePreview(editorContent);
+	});
+
+};
+
+var editorSetup = function () {
 
 	var editorInput = document.getElementById('editor_input');
+	var fileInput = document.getElementById('file_open');
 
 	editorInput.addEventListener('input', function () {
 		updatePreview(editorInput);
 	});
 
+	fileInput.addEventListener('change', function () {
+		openFile(fileInput, editorInput);
+	});
 
 };
 
 
 // ----- Page Load ----- //
 
-document.addEventListener('DOMContentLoaded', addListeners);
+document.addEventListener('DOMContentLoaded', editorSetup);

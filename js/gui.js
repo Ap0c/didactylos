@@ -39,7 +39,8 @@ function buildFileOpen (fileMenu) {
 		key: 'o',
 		modifiers: 'cmd',
 		click: function () {
-			
+			var fileInput = document.getElementById('file_open');
+			fileInput.click();
 		}
 
 	});
