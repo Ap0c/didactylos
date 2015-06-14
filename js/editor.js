@@ -28,10 +28,10 @@ var updatePreview = function (input) {
 
 };
 
-var openFile = function (fileInput, editorContent) {
+var openFile = function (fileOpen, editorContent) {
 
-	var filepath = fileInput.value;
-	fileInput.value = '';
+	var filepath = fileOpen.value;
+	fileOpen.files.clear();
 
 	fs.readFile(filepath, function (err, data) {
 		editorContent.value = data;
@@ -40,17 +40,32 @@ var openFile = function (fileInput, editorContent) {
 
 };
 
+var saveFile = function (fileSave, editorContent) {
+
+	var filepath = fileSave.value;
+	var data = editorContent.value;
+	fileSave.files.clear();
+
+	fs.writeFile(filepath, data);
+
+};
+
 var editorSetup = function () {
 
 	var editorInput = document.getElementById('editor_input');
-	var fileInput = document.getElementById('file_open');
+	var fileOpen = document.getElementById('file_open');
+	var fileSave = document.getElementById('file_save');
 
 	editorInput.addEventListener('input', function () {
 		updatePreview(editorInput);
 	});
 
-	fileInput.addEventListener('change', function () {
-		openFile(fileInput, editorInput);
+	fileOpen.addEventListener('change', function () {
+		openFile(fileOpen, editorInput);
+	});
+
+	fileSave.addEventListener('change', function () {
+		saveFile(fileSave, editorInput);
 	});
 
 };

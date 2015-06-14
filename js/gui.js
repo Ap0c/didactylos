@@ -39,8 +39,8 @@ function buildFileOpen (fileMenu) {
 		key: 'o',
 		modifiers: 'cmd',
 		click: function () {
-			var fileInput = document.getElementById('file_open');
-			fileInput.click();
+			var fileOpen = document.getElementById('file_open');
+			fileOpen.click();
 		}
 
 	});
@@ -57,7 +57,8 @@ function buildFileSave (fileMenu) {
 		key: 's',
 		modifiers: 'cmd',
 		click: function () {
-			
+			var fileSave = document.getElementById('file_save');
+			fileSave.click();
 		}
 
 	});
