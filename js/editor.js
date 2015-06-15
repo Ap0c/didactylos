@@ -4,7 +4,6 @@ var marked = require('marked');
 var fs = require('fs');
 var tools = require('../js/editing-tools');
 
-
 // ----- Setup ----- //
 
 // Sets up the Marked markdown renderer.
@@ -22,11 +21,9 @@ marked.setOptions({
 // ----- Functions ----- //
 
 // Updates the preview area with rendered HTML.
-var updatePreview = function (input) {
+var updatePreview = function (editor, preview) {
 
-	var content = input.value;
-	var preview = document.getElementById('preview');
-
+	var content = editor.value;
 	preview.innerHTML = marked(content);
 
 };
@@ -58,20 +55,23 @@ var saveFile = function (fileSave, editorContent) {
 // Sets up various components of the editor (e.g. file handling).
 var editorSetup = function () {
 
-	var editorInput = document.getElementById('editor_input');
-	var fileOpen = document.getElementById('file_open');
-	var fileSave = document.getElementById('file_save');
+	var ELEMENTS = {
+		editor: document.getElementById('editor_input'),
+		preview: document.getElementById('preview'),
+		fileOpen: document.getElementById('file_open'),
+		fileSave: document.getElementById('file_save')
+	};
 
-	editorInput.addEventListener('input', function () {
-		updatePreview(editorInput);
+	ELEMENTS.editor.addEventListener('input', function () {
+		updatePreview(ELEMENTS.editor, ELEMENTS.preview);
 	});
 
-	fileOpen.addEventListener('change', function () {
-		openFile(fileOpen, editorInput);
+	ELEMENTS.fileOpen.addEventListener('change', function () {
+		openFile(ELEMENTS.fileOpen, ELEMENTS.editor);
 	});
 
-	fileSave.addEventListener('change', function () {
-		saveFile(fileSave, editorInput);
+	ELEMENTS.fileSave.addEventListener('change', function () {
+		saveFile(ELEMENTS.fileSave, ELEMENTS.editor);
 	});
 
 };
