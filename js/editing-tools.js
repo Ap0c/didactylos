@@ -1,3 +1,15 @@
+// ----- Setup ----- //
+
+var HEADINGS = {
+	h1: '# ',
+	h2: '## ',
+	h3: '### ',
+	h4: '#### ',
+	h5: '##### ',
+	h6: '###### '
+};
+
+
 // ----- Functions ----- //
 
 // Inserts a snippet into the editor.
@@ -16,29 +28,9 @@ function insert (elements, snippet) {
 
 
 // Inserts a heading of a given (number) size into the editor.
-function insertHeading (elements, size) {
+function insertHeading (elements, heading) {
 
-	var snippet = '';
-
-	switch (size) {
-		case 1:
-			snippet = '# ';
-			break;
-		case 2:
-			snippet = '## ';
-			break;
-		case 3:
-			snippet = '### ';
-			break;
-		case 4:
-			snippet = '#### ';
-			break;
-		case 5:
-			snippet = '##### ';
-			break;
-		case 6:
-			snippet = '###### ';
-	}
+	var snippet = HEADINGS[heading.name];
 
 	insert(elements, snippet);
 

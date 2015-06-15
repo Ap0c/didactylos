@@ -29,23 +29,23 @@ var updatePreview = function (editor, preview) {
 };
 
 // Reads a file and puts its content into the editor area.
-var openFile = function (fileOpen, editorContent) {
+var openFile = function (fileOpen, editor, preview) {
 
 	var filepath = fileOpen.value;
 	fileOpen.files.clear();
 
 	fs.readFile(filepath, function (err, data) {
-		editorContent.value = data;
-		updatePreview(editorContent);
+		editor.value = data;
+		updatePreview(editor, preview);
 	});
 
 };
 
 // Saves the contents of the editor area to disk.
-var saveFile = function (fileSave, editorContent) {
+var saveFile = function (fileSave, editor) {
 
 	var filepath = fileSave.value;
-	var data = editorContent.value;
+	var data = editor.value;
 	fileSave.files.clear();
 
 	fs.writeFile(filepath, data);
@@ -67,17 +67,22 @@ var editorSetup = function () {
 	});
 
 	ELEMENTS.fileOpen.addEventListener('change', function () {
-		openFile(ELEMENTS.fileOpen, ELEMENTS.editor);
+		openFile(ELEMENTS.fileOpen, ELEMENTS.editor, ELEMENTS.preview);
 	});
 
 	ELEMENTS.fileSave.addEventListener('change', function () {
 		saveFile(ELEMENTS.fileSave, ELEMENTS.editor);
 	});
 
-	var h1 = document.getElementById('h1_insert');
-	h1.addEventListener('click', function () {
-		tools.insertHeading(ELEMENTS, 1);
-	});
+	var headings = document.getElementsByClassName('heading_button');
+
+	function insertHeading () {
+		tools.insertHeading(ELEMENTS, this);
+	}
+
+	for (var i = headings.length - 1; i >= 0; i--) {
+		headings[i].addEventListener('click',insertHeading);
+	}
 
 };
 

@@ -15,19 +15,21 @@ body {
 #toolbar {
 	width: 100%;
 	height: 5%;
-	background-color: #4499dd;
-	position: relative;
+	background-color: #ffffff;
+	padding: 0 0 0 0.2%;
+	box-sizing: border-box;
+	border-bottom: 0.1em solid #005c8a;
 }
 
 .tool_button {
 	border: none;
-	background-color: #ffffff;
-	height: 60%;
-	width: 2%;
-	margin: 0 1%;
+	background-color: #005c8a;
+	color: #ffffff;
+	height: 80%;
+	width: 3em;
+	margin: 0.3em 0.1% 0;
 	padding: 0;
-	position: absolute;
-	top: 20%;
+	/*position: absolute;*/
 }
 
 .tool_button:active {
@@ -62,6 +64,7 @@ body {
 }
 
 #preview {
+	overflow-y: auto;
 	padding: 2% 4%;
 	color: #222222;
 }
