@@ -8,11 +8,19 @@
 <script type="text/javascript" src="../js/editor.js"></script>
 </head>
 <body>
+
 	<input type="file" id="file_open" accept="text/*, .md" />
 	<input type="file" id="file_save" nwsaveas="myFile.md" accept="text/*, .md" />
+
+	<section id="toolbar">
+		<button id="h1_insert" class="tool_button" type="button">H1</button>
+	</section>
+
 	<section id="editor" class="editor_window">
 		<textarea name="editor" id="editor_input">Markdown goes here...</textarea>
 	</section>
+
 	<section id="preview" class="editor_window"></section>
+
 </body>
 </html>

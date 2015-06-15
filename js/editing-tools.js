@@ -10,6 +10,8 @@ function insert (elements, snippet) {
 	editor.value = editor.value.substring(0, selectStart) + snippet +
 		editor.value.substring(selectEnd);
 
+	editor.focus();
+
 }
 
 
@@ -45,7 +47,7 @@ function insertHeading (elements, size) {
 
 // ----- Module Exports ----- //
 
-module.exports = function (elements) {
+module.exports = function () {
 	return {
 		insertHeading: insertHeading
 	};

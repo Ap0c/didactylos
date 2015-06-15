@@ -2,7 +2,7 @@
 
 var marked = require('marked');
 var fs = require('fs');
-var tools = require('../js/editing-tools');
+var tools = require('../js/editing-tools.js')();
 
 // ----- Setup ----- //
 
@@ -72,6 +72,11 @@ var editorSetup = function () {
 
 	ELEMENTS.fileSave.addEventListener('change', function () {
 		saveFile(ELEMENTS.fileSave, ELEMENTS.editor);
+	});
+
+	var h1 = document.getElementById('h1_insert');
+	h1.addEventListener('click', function () {
+		tools.insertHeading(ELEMENTS, 1);
 	});
 
 };

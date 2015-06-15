@@ -10,11 +10,36 @@ body {
 }
 
 
+/* ----- Toolbar ----- */
+
+#toolbar {
+	width: 100%;
+	height: 5%;
+	background-color: #4499dd;
+	position: relative;
+}
+
+.tool_button {
+	border: none;
+	background-color: #ffffff;
+	height: 60%;
+	width: 2%;
+	margin: 0 1%;
+	padding: 0;
+	position: absolute;
+	top: 20%;
+}
+
+.tool_button:active {
+	background-color: #bbbbbb;
+}
+
+
 /* ----- Editor Windows ----- */
 
 .editor_window {
 	width: 50%;
-	height: 100%;
+	height: 95%;
 	float: left;
 	margin: 0;
 	padding: 0;
