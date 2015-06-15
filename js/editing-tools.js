@@ -13,35 +13,35 @@ var HEADINGS = {
 // ----- Functions ----- //
 
 // Inserts a snippet into the editor.
-function insert (elements, snippet, updatePreview) {
+function insert (snippet, editor) {
 
-	var editor = elements.editor;
-	var selectStart = editor.selectionStart;
-	var selectEnd = editor.selectionEnd;
+	var editArea = editor.editArea;
+	var selectStart = editArea.selectionStart;
+	var selectEnd = editArea.selectionEnd;
 
-	editor.value = editor.value.substring(0, selectStart) + snippet +
-		editor.value.substring(selectEnd);
+	editArea.value = editArea.value.substring(0, selectStart) + snippet +
+		editArea.value.substring(selectEnd);
 
-	editor.focus();
-	updatePreview(elements.editor, elements.preview);
+	editArea.focus();
+	editor.updatePreview();
 
 }
 
 // Inserts a heading of a given (number) size into the editor.
-function insertHeading (elements, heading, updatePreview) {
+function insertHeading (heading, editor) {
 
 	var snippet = HEADINGS[heading.name];
 
-	insert(elements, snippet, updatePreview);
+	insert(snippet, editor);
 
 }
 
-function setupToolbar (document, elements, updatePreview) {
+function setupToolbar (document, editor) {
 
 	var headings = document.getElementsByClassName('heading_button');
 
 	function addHeading () {
-		insertHeading(elements, this, updatePreview);
+		insertHeading(this, editor);
 	}
 
 	for (var i = headings.length - 1; i >= 0; i--) {

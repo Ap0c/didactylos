@@ -18,25 +18,37 @@ marked.setOptions({
 });
 
 
+// ----- The Editor ----- //
+
+// Editor object to hold commonly needed methods and properties.
+function Editor () {
+
+	return {
+		editArea: document.getElementById('editor_input'),
+		preview: document.getElementById('preview'),
+		updatePreview: updatePreview
+	};
+
+	// Updates the preview area with rendered HTML.
+	function updatePreview () {
+		var content = this.editArea.value;
+		this.preview.innerHTML = marked(content);
+	}
+
+}
+
+
 // ----- Functions ----- //
 
-// Updates the preview area with rendered HTML.
-var updatePreview = function (editor, preview) {
-
-	var content = editor.value;
-	preview.innerHTML = marked(content);
-
-};
-
 // Reads a file and puts its content into the editor area.
-var openFile = function (fileOpen, editor, preview) {
+var openFile = function (fileOpen, editor) {
 
 	var filepath = fileOpen.value;
 	fileOpen.files.clear();
 
 	fs.readFile(filepath, function (err, data) {
-		editor.value = data;
-		updatePreview(editor, preview);
+		editor.editArea.value = data;
+		editor.updatePreview();
 	});
 
 };
@@ -45,40 +57,38 @@ var openFile = function (fileOpen, editor, preview) {
 var saveFile = function (fileSave, editor) {
 
 	var filepath = fileSave.value;
-	var data = editor.value;
+	var data = editor.editArea.value;
 	fileSave.files.clear();
 
 	fs.writeFile(filepath, data);
 
 };
 
+
 // Sets up various components of the editor (e.g. file handling).
-var editorSetup = function () {
+var setup = function () {
 
-	var ELEMENTS = {
-		editor: document.getElementById('editor_input'),
-		preview: document.getElementById('preview'),
-		fileOpen: document.getElementById('file_open'),
-		fileSave: document.getElementById('file_save')
-	};
+	var editor = Editor();
+	var fileOpen = document.getElementById('file_open');
+	var fileSave = document.getElementById('file_save');
 
-	ELEMENTS.editor.addEventListener('input', function () {
-		updatePreview(ELEMENTS.editor, ELEMENTS.preview);
+	editor.editArea.addEventListener('input', function () {
+		editor.updatePreview();
 	});
 
-	ELEMENTS.fileOpen.addEventListener('change', function () {
-		openFile(ELEMENTS.fileOpen, ELEMENTS.editor, ELEMENTS.preview);
+	fileOpen.addEventListener('change', function () {
+		openFile(fileOpen, editor);
 	});
 
-	ELEMENTS.fileSave.addEventListener('change', function () {
-		saveFile(ELEMENTS.fileSave, ELEMENTS.editor);
+	fileSave.addEventListener('change', function () {
+		saveFile(fileSave, editor);
 	});
 
-	tools.setupToolbar(document, ELEMENTS, updatePreview);
+	tools.setupToolbar(document, editor);
 
 };
 
 
 // ----- Page Load ----- //
 
-document.addEventListener('DOMContentLoaded', editorSetup);
+document.addEventListener('DOMContentLoaded', setup);
