@@ -2,7 +2,7 @@
 
 var marked = require('marked');
 var fs = require('fs');
-var tools = require('../js/editing-tools.js')();
+var tools = require('../js/editing-tools.js');
 
 // ----- Setup ----- //
 

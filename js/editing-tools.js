@@ -53,11 +53,9 @@ function setupToolbar (document, editor) {
 
 // ----- Module Exports ----- //
 
-module.exports = function () {
+module.exports = {
 
-	return {
-		insertHeading: insertHeading,
-		setupToolbar: setupToolbar
-	};
+	insertHeading: insertHeading,
+	setupToolbar: setupToolbar
 
 };
