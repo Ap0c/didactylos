@@ -74,15 +74,7 @@ var editorSetup = function () {
 		saveFile(ELEMENTS.fileSave, ELEMENTS.editor);
 	});
 
-	var headings = document.getElementsByClassName('heading_button');
-
-	function insertHeading () {
-		tools.insertHeading(ELEMENTS, this);
-	}
-
-	for (var i = headings.length - 1; i >= 0; i--) {
-		headings[i].addEventListener('click',insertHeading);
-	}
+	tools.setupToolbar(document, ELEMENTS, updatePreview);
 
 };
 
