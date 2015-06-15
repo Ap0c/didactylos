@@ -6,6 +6,7 @@ var fs = require('fs');
 
 // ----- Setup ----- //
 
+// Sets up the Marked markdown renderer.
 marked.setOptions({
 	gfm: true,
 	tables: true,
@@ -19,6 +20,7 @@ marked.setOptions({
 
 // ----- Functions ----- //
 
+// Updates the preview area with rendered HTML.
 var updatePreview = function (input) {
 
 	var content = input.value;
@@ -28,6 +30,7 @@ var updatePreview = function (input) {
 
 };
 
+// Reads a file and puts its content into the editor area.
 var openFile = function (fileOpen, editorContent) {
 
 	var filepath = fileOpen.value;
@@ -40,6 +43,7 @@ var openFile = function (fileOpen, editorContent) {
 
 };
 
+// Saves the contents of the editor area to disk.
 var saveFile = function (fileSave, editorContent) {
 
 	var filepath = fileSave.value;
@@ -50,6 +54,7 @@ var saveFile = function (fileSave, editorContent) {
 
 };
 
+// Sets up various components of the editor (e.g. file handling).
 var editorSetup = function () {
 
 	var editorInput = document.getElementById('editor_input');

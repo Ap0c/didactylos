@@ -5,15 +5,18 @@ var gui = require('nw.gui');
 
 // ----- Setup ----- //
 
+// Creates the menu bar.
 var menu = new gui.Menu({ type: 'menubar' });
 
 
 // ----- Functions ----- //
 
+// Creates the default OS X menu controls.
 function buildMacMenu () {
 	menu.createMacBuiltin('Didactylos');
 }
 
+// Adds the File > New menu item.
 function buildFileNew (fileMenu) {
 
 	var fileNew = new gui.MenuItem({
@@ -31,6 +34,7 @@ function buildFileNew (fileMenu) {
 
 }
 
+// Adds the File > Open menu item.
 function buildFileOpen (fileMenu) {
 
 	var fileOpen = new gui.MenuItem({
@@ -49,6 +53,7 @@ function buildFileOpen (fileMenu) {
 
 }
 
+// Adds the File > Save menu item.
 function buildFileSave (fileMenu) {
 
 	var fileSave = new gui.MenuItem({
@@ -67,18 +72,20 @@ function buildFileSave (fileMenu) {
 
 }
 
-function buildFileMenu () {
+// Creates the File submenu (to hold Open, Save, etc.).
+function buildFileSubmenu () {
 
-	var fileMenu = new gui.Menu();
+	var fileSubmenu = new gui.Menu();
 
-	buildFileNew(fileMenu);
-	buildFileOpen(fileMenu);
-	buildFileSave(fileMenu);
+	buildFileNew(fileSubmenu);
+	buildFileOpen(fileSubmenu);
+	buildFileSave(fileSubmenu);
 
-	return fileMenu;
+	return fileSubmenu;
 
 }
 
+// Creates the File option on the menu bar.
 function addFileMenu () {
 
 	var fileMenuContent = buildFileMenu();
@@ -93,8 +100,11 @@ function addFileMenu () {
 }
 
 
-// ----- Build ----- //
+// ----- Build GUI ----- //
 
+// Builds the menus.
 buildMacMenu();
 addFileMenu();
+
+// Adds the menu to the window.
 gui.Window.get().menu = menu;
