@@ -27,32 +27,38 @@ function insert (snippet, editor) {
 
 }
 
-// Inserts a heading of a given (number) size into the editor.
-function insertHeading (heading, editor) {
-
-	var snippet = HEADINGS[heading.name];
-
-	insert(snippet, editor);
-
-}
-
-// Builds the insert toolbar.
-function setupToolbar (document, editor) {
+// Adds heading buttons.
+function addHeadings (document, editor) {
 
 	var headingButtons = document.getElementsByClassName('heading_button');
 
 	function addHeading () {
-		insertHeading(this, editor);
+		var snippet = HEADINGS[this.name];
+		insert(snippet, editor);
 	}
 
 	for (var i = headingButtons.length - 1; i >= 0; i--) {
 		headingButtons[i].addEventListener('click', addHeading);
 	}
 
+}
+
+// Adds bullet point button.
+function addBullets (document, editor) {
+
 	var bulletButton = document.getElementById('bullet_insert');
+
 	bulletButton.addEventListener('click', function () {
 		insert('- ', editor);
 	});
+
+}
+
+// Builds the insert toolbar.
+function setupToolbar (document, editor) {
+
+	addHeadings(document, editor);
+	addBullets(document, editor);
 
 }
 
