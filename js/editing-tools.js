@@ -36,17 +36,23 @@ function insertHeading (heading, editor) {
 
 }
 
+// Builds the insert toolbar.
 function setupToolbar (document, editor) {
 
-	var headings = document.getElementsByClassName('heading_button');
+	var headingButtons = document.getElementsByClassName('heading_button');
 
 	function addHeading () {
 		insertHeading(this, editor);
 	}
 
-	for (var i = headings.length - 1; i >= 0; i--) {
-		headings[i].addEventListener('click', addHeading);
+	for (var i = headingButtons.length - 1; i >= 0; i--) {
+		headingButtons[i].addEventListener('click', addHeading);
 	}
+
+	var bulletButton = document.getElementById('bullet_insert');
+	bulletButton.addEventListener('click', function () {
+		insert('- ', editor);
+	});
 
 }
 
