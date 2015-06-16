@@ -54,11 +54,39 @@ function addBullets (document, editor) {
 
 }
 
+// Adds italics button.
+function addItalics (document, editor) {
+
+	var bulletButton = document.getElementById('italics_insert');
+
+	bulletButton.addEventListener('click', function () {
+		insert('**', editor);
+		editor.editArea.selectionStart--;
+		editor.editArea.selectionEnd--;
+	});
+
+}
+
+// Adds bold button.
+function addBold (document, editor) {
+
+	var bulletButton = document.getElementById('bold_insert');
+
+	bulletButton.addEventListener('click', function () {
+		insert('****', editor);
+		editor.editArea.selectionStart -= 2;
+		editor.editArea.selectionEnd -= 2;
+	});
+
+}
+
 // Builds the insert toolbar.
 function setupToolbar (document, editor) {
 
 	addHeadings(document, editor);
 	addBullets(document, editor);
+	addItalics(document, editor);
+	addBold(document, editor);
 
 }
 
@@ -67,7 +95,6 @@ function setupToolbar (document, editor) {
 
 module.exports = {
 
-	insertHeading: insertHeading,
 	setupToolbar: setupToolbar
 
 };
