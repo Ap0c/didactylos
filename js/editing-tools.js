@@ -27,7 +27,7 @@ function insert (snippet, editor) {
 
 }
 
-// Adds heading buttons.
+// Adds headings to content.
 function addHeadings (document, editor) {
 
 	var headingButtons = document.getElementsByClassName('heading_button');
@@ -43,7 +43,7 @@ function addHeadings (document, editor) {
 
 }
 
-// Adds bullet point button.
+// Adds bullet points to content.
 function addBullets (document, editor) {
 
 	var bulletButton = document.getElementById('bullet_insert');
@@ -54,7 +54,7 @@ function addBullets (document, editor) {
 
 }
 
-// Adds italics button.
+// Adds italics to content.
 function addItalics (document, editor) {
 
 	var bulletButton = document.getElementById('italics_insert');
@@ -67,7 +67,7 @@ function addItalics (document, editor) {
 
 }
 
-// Adds bold button.
+// Adds bold to content.
 function addBold (document, editor) {
 
 	var bulletButton = document.getElementById('bold_insert');
@@ -80,7 +80,7 @@ function addBold (document, editor) {
 
 }
 
-// Adds link button.
+// Adds link to content.
 function addLink (document, editor) {
 
 	var linkButton = document.getElementById('link_insert');
@@ -93,6 +93,19 @@ function addLink (document, editor) {
 
 }
 
+// Adds code block to content.
+function addCode (document, editor) {
+
+	var linkButton = document.getElementById('code_insert');
+
+	linkButton.addEventListener('click', function () {
+		insert('```\n\n```', editor);
+		editor.editArea.selectionStart -= 4;
+		editor.editArea.selectionEnd -= 4;
+	});
+
+}
+
 // Builds the insert toolbar.
 function setupToolbar (document, editor) {
 
@@ -101,6 +114,7 @@ function setupToolbar (document, editor) {
 	addItalics(document, editor);
 	addBold(document, editor);
 	addLink(document, editor);
+	addCode(document, editor);
 
 }
 
