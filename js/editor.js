@@ -1,48 +1,8 @@
 // ----- Requires ----- //
 
-var marked = require('marked');
 var fs = require('fs');
+var Editor = require('../js/editor-new.js');
 var tools = require('../js/editing-tools.js');
-
-// ----- Setup ----- //
-
-// Sets up the Marked markdown renderer.
-marked.setOptions({
-	gfm: true,
-	tables: true,
-	breaks: false,
-	pedantic: false,
-	sanitize: false,
-	smartLists: true,
-	smartypants: false
-});
-
-
-// ----- The Editor ----- //
-
-// Editor object to hold commonly needed methods and properties.
-function Editor () {
-
-	return {
-		editArea: document.getElementById('editor_input'),
-		preview: document.getElementById('preview'),
-		updatePreview: updatePreview
-	};
-
-	// Updates the preview area with rendered HTML.
-	function updatePreview () {
-
-		var content = this.editArea.value;
-		this.preview.innerHTML = marked(content);
-
-		var links = document.links;
-		for (var i = links.length - 1; i >= 0; i--) {
-			links[i].setAttribute('target', '_blank');
-		}
-
-	}
-
-}
 
 
 // ----- Functions ----- //
@@ -75,13 +35,9 @@ var saveFile = function (fileSave, editor) {
 // Sets up various components of the editor (e.g. file handling).
 var setup = function () {
 
-	var editor = Editor();
+	var editor = Editor(window);
 	var fileOpen = document.getElementById('file_open');
 	var fileSave = document.getElementById('file_save');
-
-	editor.editArea.addEventListener('input', function () {
-		editor.updatePreview();
-	});
 
 	fileOpen.addEventListener('change', function () {
 		openFile(fileOpen, editor);
