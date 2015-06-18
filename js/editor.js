@@ -35,7 +35,7 @@ function Editor () {
 		var content = this.editArea.value;
 		this.preview.innerHTML = marked(content);
 
-		var links = document.getElementsByTagName('a');
+		var links = document.links;
 		for (var i = links.length - 1; i >= 0; i--) {
 			links[i].setAttribute('target', '_blank');
 		}
