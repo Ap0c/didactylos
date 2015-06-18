@@ -31,8 +31,15 @@ function Editor () {
 
 	// Updates the preview area with rendered HTML.
 	function updatePreview () {
+
 		var content = this.editArea.value;
 		this.preview.innerHTML = marked(content);
+
+		var links = document.getElementsByTagName('a');
+		for (var i = links.length - 1; i >= 0; i--) {
+			links[i].setAttribute('target', '_blank');
+		}
+
 	}
 
 }

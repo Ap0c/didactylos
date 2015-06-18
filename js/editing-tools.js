@@ -80,6 +80,19 @@ function addBold (document, editor) {
 
 }
 
+// Adds link button.
+function addLink (document, editor) {
+
+	var linkButton = document.getElementById('link_insert');
+
+	linkButton.addEventListener('click', function () {
+		insert('[text](https://)', editor);
+		editor.editArea.selectionStart -= 1;
+		editor.editArea.selectionEnd -= 1;
+	});
+
+}
+
 // Builds the insert toolbar.
 function setupToolbar (document, editor) {
 
@@ -87,6 +100,7 @@ function setupToolbar (document, editor) {
 	addBullets(document, editor);
 	addItalics(document, editor);
 	addBold(document, editor);
+	addLink(document, editor);
 
 }
 
