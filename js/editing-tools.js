@@ -27,7 +27,7 @@ function insert (snippet, editor) {
 
 }
 
-// Adds headings to content.
+// Adds headings to content, H1 through H6.
 function addHeadings (document, editor) {
 
 	var headingButtons = document.getElementsByClassName('heading_button');
@@ -43,65 +43,21 @@ function addHeadings (document, editor) {
 
 }
 
-// Adds bullet points to content.
-function addBullets (document, editor) {
+// Sets up a toolbar button, inserts corresponding snippet into the content.
+// E.g. the bullet button will insert '- ', a bullet point.
+function setupButton (document, editor, buttonName, snippet, caretMove) {
 
-	var bulletButton = document.getElementById('bullet_insert');
+	var button = document.getElementById(buttonName + '_insert');
 
-	bulletButton.addEventListener('click', function () {
-		insert('- ', editor);
-	});
+	button.addEventListener('click', function () {
 
-}
+		insert(snippet, editor);
 
-// Adds italics to content.
-function addItalics (document, editor) {
+		if (caretMove) {
+			editor.editArea.selectionStart -= caretMove;
+			editor.editArea.selectionEnd -= caretMove;
+		}
 
-	var bulletButton = document.getElementById('italics_insert');
-
-	bulletButton.addEventListener('click', function () {
-		insert('**', editor);
-		editor.editArea.selectionStart--;
-		editor.editArea.selectionEnd--;
-	});
-
-}
-
-// Adds bold to content.
-function addBold (document, editor) {
-
-	var bulletButton = document.getElementById('bold_insert');
-
-	bulletButton.addEventListener('click', function () {
-		insert('****', editor);
-		editor.editArea.selectionStart -= 2;
-		editor.editArea.selectionEnd -= 2;
-	});
-
-}
-
-// Adds link to content.
-function addLink (document, editor) {
-
-	var linkButton = document.getElementById('link_insert');
-
-	linkButton.addEventListener('click', function () {
-		insert('[text](https://)', editor);
-		editor.editArea.selectionStart -= 1;
-		editor.editArea.selectionEnd -= 1;
-	});
-
-}
-
-// Adds code block to content.
-function addCode (document, editor) {
-
-	var linkButton = document.getElementById('code_insert');
-
-	linkButton.addEventListener('click', function () {
-		insert('```\n\n```', editor);
-		editor.editArea.selectionStart -= 4;
-		editor.editArea.selectionEnd -= 4;
 	});
 
 }
@@ -110,11 +66,12 @@ function addCode (document, editor) {
 function setupToolbar (document, editor) {
 
 	addHeadings(document, editor);
-	addBullets(document, editor);
-	addItalics(document, editor);
-	addBold(document, editor);
-	addLink(document, editor);
-	addCode(document, editor);
+
+	setupButton(document, editor, 'bullet', '- ');
+	setupButton(document, editor, 'italics', '**', 1);
+	setupButton(document, editor, 'bold', '****', 2);
+	setupButton(document, editor, 'link', '[text](https://)', 1);
+	setupButton(document, editor, 'code', '```\n\n```', 4);
 
 }
 
