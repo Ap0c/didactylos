@@ -85,6 +85,7 @@ var setup = function () {
 	});
 
 	tools.setupToolbar(document, editor);
+	editor.editArea.focus();
 
 };
 
