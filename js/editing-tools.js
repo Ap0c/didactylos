@@ -15,10 +15,6 @@ var HEADINGS = {
 // Inserts a snippet into the editor.
 function insert (snippet, editor) {
 
-	// var editArea = editor.editArea;
-	// var selectStart = editArea.selectionStart;
-	// var selectEnd = editArea.selectionEnd;
-
 	var currentContent = editor.getContent();
 	var selection = editor.getSelection();
 
@@ -26,9 +22,7 @@ function insert (snippet, editor) {
 		currentContent.substring(selection.end);
 
 	editor.setContent(newContent);
-
 	editor.focus();
-	editor.updatePreview();
 
 }
 

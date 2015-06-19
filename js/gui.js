@@ -88,11 +88,11 @@ function buildFileSubmenu () {
 // Creates the File option on the menu bar.
 function addFileMenu () {
 
-	var fileMenuContent = buildFileSubmenu();
+	var fileSubmenu = buildFileSubmenu();
 
 	var fileMenu = new gui.MenuItem({
 		label: 'File',
-		submenu: fileMenuContent
+		submenu: fileSubmenu
 	});
 
 	menu.insert(fileMenu, 1);

@@ -46,6 +46,7 @@ module.exports = function Editor (window) {
 	// Sets the contents of the editor pane.
 	function setContent (newContent) {
 		editArea.value = newContent;
+		updatePreview();
 	}
 
 	// Gets the contents of the editor pane.
