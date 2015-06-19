@@ -100,7 +100,6 @@ module.exports = function Editor (window) {
 	};
 
 	init();
-
 	return editor;
 
 };
