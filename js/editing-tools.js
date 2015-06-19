@@ -15,14 +15,19 @@ var HEADINGS = {
 // Inserts a snippet into the editor.
 function insert (snippet, editor) {
 
-	var editArea = editor.editArea;
-	var selectStart = editArea.selectionStart;
-	var selectEnd = editArea.selectionEnd;
+	// var editArea = editor.editArea;
+	// var selectStart = editArea.selectionStart;
+	// var selectEnd = editArea.selectionEnd;
 
-	editArea.value = editArea.value.substring(0, selectStart) + snippet +
-		editArea.value.substring(selectEnd);
+	var currentContent = editor.getContent();
+	var selection = editor.getSelection();
 
-	editArea.focus();
+	var newContent = currentContent.substring(0, selection.start) + snippet +
+		currentContent.substring(selection.end);
+
+	editor.setContent(newContent);
+
+	editor.focus();
 	editor.updatePreview();
 
 }
@@ -54,8 +59,10 @@ function setupButton (document, editor, buttonName, snippet, caretMove) {
 		insert(snippet, editor);
 
 		if (caretMove) {
-			editor.editArea.selectionStart -= caretMove;
-			editor.editArea.selectionEnd -= caretMove;
+			var selection = editor.getSelection();
+			selection.start -= caretMove;
+			selection.end -= caretMove;
+			editor.setSelection(selection);
 		}
 
 	});

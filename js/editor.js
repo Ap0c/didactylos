@@ -14,7 +14,7 @@ var openFile = function (fileOpen, editor) {
 	fileOpen.files.clear();
 
 	fs.readFile(filepath, function (err, data) {
-		editor.editArea.value = data;
+		editor.setContent(data);
 		editor.updatePreview();
 	});
 
@@ -24,7 +24,7 @@ var openFile = function (fileOpen, editor) {
 var saveFile = function (fileSave, editor) {
 
 	var filepath = fileSave.value;
-	var data = editor.editArea.value;
+	var data = editor.getContent();
 	fileSave.files.clear();
 
 	fs.writeFile(filepath, data);
@@ -48,7 +48,7 @@ var setup = function () {
 	});
 
 	tools.setupToolbar(document, editor);
-	editor.editArea.focus();
+	editor.focus();
 
 };
 

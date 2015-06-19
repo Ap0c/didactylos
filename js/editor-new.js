@@ -21,9 +21,11 @@ marked.setOptions({
 
 module.exports = function Editor (window) {
 
-	// ----- Setup ----- //
+	// ----- Internal Properties ----- //
 
 	var document = window.document;
+	var editArea = document.getElementById('editor_input');
+	var preview = document.getElementById('preview');
 
 
 	// ----- Functions ----- //
@@ -31,8 +33,8 @@ module.exports = function Editor (window) {
 	// Updates the preview area with rendered HTML.
 	function updatePreview () {
 
-		var content = this.editArea.value;
-		this.preview.innerHTML = marked(content);
+		var content = editArea.value;
+		preview.innerHTML = marked(content);
 
 		var links = document.links;
 		for (var i = links.length - 1; i >= 0; i--) {
@@ -41,11 +43,43 @@ module.exports = function Editor (window) {
 
 	}
 
+	// Sets the contents of the editor pane.
+	function setContent (newContent) {
+		editArea.value = newContent;
+	}
+
+	// Gets the contents of the editor pane.
+	function getContent () {
+		return editArea.value;
+	}
+
+	// Gets the currently selected content.
+	function getSelection () {
+
+		var selection = {
+			start: editArea.selectionStart,
+			end: editArea.selectionEnd
+		};
+
+		return selection;
+	}
+
+	// Sets the selection in the textarea.
+	function setSelection (selection) {
+		editArea.selectionStart = selection.start;
+		editArea.selectionEnd = selection.end;
+	}
+
+	// Sets the focus on the editing textarea.
+	function focus () {
+		editArea.focus();
+	}
+
 	// Sets up event listeners.
 	function init () {
 
-		editor.editArea.addEventListener('input', function () {
-			editor.updatePreview();
+		editArea.addEventListener('input', function () {
+			updatePreview();
 		});
 
 	}
@@ -55,18 +89,16 @@ module.exports = function Editor (window) {
 
 	var editor = {
 
-		doc: document,
-		win: window,
-		editArea: document.getElementById('editor_input'),
-		preview: document.getElementById('preview'),
+		setContent: setContent,
+		getContent: getContent,
+		getSelection: getSelection,
+		setSelection: setSelection,
+		focus: focus,
 		updatePreview: updatePreview
 
 	};
 
 	init();
-
-
-	// ----- Return ----- //
 
 	return editor;
 
