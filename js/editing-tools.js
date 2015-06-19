@@ -9,6 +9,16 @@ var HEADINGS = {
 	h6: '###### '
 };
 
+var SYNTAX = {
+
+	bullet: { symbol: '- ', caretMove: null },
+	italics: { symbol: '**', caretMove: 1 },
+	bold: { symbol: '****', caretMove: 2 },
+	link: { symbol: '[text](https://)', caretMove: 1 },
+	code: { symbol: '```\n\n```', caretMove: 4 }
+
+};
+
 
 // ----- Functions ----- //
 
@@ -27,52 +37,58 @@ function insert (snippet, editor) {
 }
 
 // Adds headings to content, H1 through H6.
-function addHeadings (document, editor) {
-
-	var headingButtons = document.getElementsByClassName('heading_button');
+function setupHeadings (toolbar, editor) {
 
 	function addHeading () {
 		var snippet = HEADINGS[this.name];
 		insert(snippet, editor);
 	}
 
-	for (var i = headingButtons.length - 1; i >= 0; i--) {
-		headingButtons[i].addEventListener('click', addHeading);
+	for (var heading in HEADINGS) {
+		toolbar.listen(heading, 'click', addHeading);
 	}
 
 }
 
-// Sets up a toolbar button, inserts corresponding snippet into the content.
-// E.g. the bullet button will insert '- ', a bullet point.
-function setupButton (document, editor, buttonName, snippet, caretMove) {
+// Moves the editor caret position.
+function moveCaret (caretMove, editor) {
 
-	var button = document.getElementById(buttonName + '_insert');
+	if (caretMove) {
 
-	button.addEventListener('click', function () {
+		var selection = editor.getSelection();
+		selection.start -= caretMove;
+		selection.end -= caretMove;
+		editor.setSelection(selection);
 
-		insert(snippet, editor);
+	}
 
-		if (caretMove) {
-			var selection = editor.getSelection();
-			selection.start -= caretMove;
-			selection.end -= caretMove;
-			editor.setSelection(selection);
-		}
+}
 
-	});
+// Inserts a piece of syntax and moves the caret.
+function insertSyntax (syntax, editor) {
+
+	return function () {
+		insert(syntax.symbol, editor);
+		moveCaret(syntax.caretMove, editor);
+	};
+
+}
+
+// Sets up markdown syntax insertion.
+function setupSyntax (toolbar, editor) {
+
+	for (var item in SYNTAX) {
+		var syntaxPiece = SYNTAX[item];
+		toolbar.listen(item, 'click', insertSyntax(syntaxPiece, editor));
+	}
 
 }
 
 // Builds the insert toolbar.
-function setupToolbar (document, editor) {
+function setup (toolbar, editor) {
 
-	addHeadings(document, editor);
-
-	setupButton(document, editor, 'bullet', '- ');
-	setupButton(document, editor, 'italics', '**', 1);
-	setupButton(document, editor, 'bold', '****', 2);
-	setupButton(document, editor, 'link', '[text](https://)', 1);
-	setupButton(document, editor, 'code', '```\n\n```', 4);
+	setupHeadings(toolbar, editor);
+	setupSyntax(toolbar, editor);
 
 }
 
@@ -80,7 +96,5 @@ function setupToolbar (document, editor) {
 // ----- Module Exports ----- //
 
 module.exports = {
-
-	setupToolbar: setupToolbar
-
+	setup: setup
 };

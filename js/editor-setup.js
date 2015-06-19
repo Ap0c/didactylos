@@ -1,10 +1,11 @@
 // ----- Requires ----- //
 
-// var fs = require('fs');
+var gui = require('nw.gui');
+
 var Editor = require('../js/editor.js');
 var File = require('../js/file.js');
-var gui = require('nw.gui');
-var menus = require('../js/gui.js');
+var Toolbar = require('../js/toolbar.js');
+var menus = require('../js/menus.js');
 var tools = require('../js/editing-tools.js');
 
 
@@ -15,9 +16,10 @@ var setup = function () {
 
 	var editor = Editor(window);
 	var file = File(window, editor);
-	menus.build(gui, file);
+	var toolbar = Toolbar(window);
 
-	tools.setupToolbar(document, editor);
+	menus.build(gui, file);
+	tools.setup(toolbar, editor);
 	editor.focus();
 
 };
