@@ -3,6 +3,8 @@
 // var fs = require('fs');
 var Editor = require('../js/editor-new.js');
 var File = require('../js/file.js');
+var gui = require('nw.gui');
+var menus = require('../js/gui.js');
 var tools = require('../js/editing-tools.js');
 
 
@@ -38,6 +40,7 @@ var setup = function () {
 
 	var editor = Editor(window);
 	var file = File(window, editor);
+	menus(gui, file);
 
 	tools.setupToolbar(document, editor);
 	editor.focus();

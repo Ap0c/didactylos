@@ -12,12 +12,13 @@ module.exports = function File (window, editor) {
 	var document = window.document;
 	var fileOpen = document.getElementById('file_open');
 	var fileSave = document.getElementById('file_save');
+	var filepath = null;
 
 
 	// ----- Functions ----- //
 
 	// Reads a file and puts its content into the editor area.
-	var openFile = function () {
+	function open () {
 
 		var filepath = fileOpen.value;
 		fileOpen.files.clear();
@@ -26,24 +27,45 @@ module.exports = function File (window, editor) {
 			editor.setContent(data);
 		});
 
-	};
+	}
 
-	// Saves the contents of the editor area to disk.
-	var saveFile = function () {
+	// Saves the contents of the editor area to user-specified location.
+	function saveAs () {
 
-		var filepath = fileSave.value;
-		var data = editor.getContent();
+		filepath = fileSave.value;
 		fileSave.files.clear();
 
-		fs.writeFile(filepath, data);
+		save();
 
-	};
+	}
+
+	// Saves editor contents to disk.
+	function save () {
+
+		if (filepath) {
+			var data = editor.getContent();
+			fs.writeFile(filepath, data);
+		} else {
+			fileSave.click();
+		}
+
+	}
+
+	// Displays the file open dialog.
+	function openDialog () {
+		fileOpen.click();
+	}
+
+	// Displays the file save dialog.
+	function saveDialog () {
+		fileSave.click();
+	}
 
 	// Sets up event listeners.
 	function init () {
 
-		fileOpen.addEventListener('change', openFile);
-		fileSave.addEventListener('change', saveFile);
+		fileOpen.addEventListener('change', open);
+		fileSave.addEventListener('change', saveAs);
 
 	}
 
@@ -51,8 +73,9 @@ module.exports = function File (window, editor) {
 
 	var file = {
 
-		openFile: openFile,
-		saveFile: saveFile
+		open: openDialog,
+		saveAs: saveDialog,
+		save: save
 
 	};
 
