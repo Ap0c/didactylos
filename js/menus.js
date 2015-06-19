@@ -1,4 +1,4 @@
-module.exports = function buildMenus (gui, file) {
+exports.build = function buildMenus (gui, file) {
 
 	// ----- Setup ----- //
 
