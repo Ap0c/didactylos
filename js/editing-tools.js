@@ -11,11 +11,11 @@ var HEADINGS = {
 
 var SYNTAX = {
 
-	bullet: { symbol: '- ', caretMove: null },
-	italics: { symbol: '**', caretMove: 1 },
-	bold: { symbol: '****', caretMove: 2 },
-	link: { symbol: '[text](https://)', caretMove: 1 },
-	code: { symbol: '```\n\n```', caretMove: 4 }
+	bullet: { before: '- ', after: '', caretMove: null },
+	italics: { before: '*', after: '*', caretMove: 1 },
+	bold: { before: '**', after: '**', caretMove: 2 },
+	link: { before: '[text](https://', after: ')', caretMove: 1 },
+	code: { before: '```\n', after: '\n```', caretMove: 4 }
 
 };
 
@@ -23,13 +23,18 @@ var SYNTAX = {
 // ----- Functions ----- //
 
 // Inserts a snippet into the editor.
-function insert (snippet, editor) {
+function insert (symbolBefore, symbolAfter, editor) {
 
 	var currentContent = editor.getContent();
 	var selection = editor.getSelection();
 
-	var newContent = currentContent.substring(0, selection.start) + snippet +
-		currentContent.substring(selection.end);
+	var contentBefore = currentContent.substring(0, selection.start);
+	var contentSelected = currentContent.substring(
+		selection.start, selection.end);
+	var contentAfter = currentContent.substring(selection.end);
+
+	var newContent = contentBefore + symbolBefore + contentSelected +
+		symbolAfter + contentAfter;
 
 	editor.setContent(newContent);
 	editor.focus();
@@ -41,7 +46,7 @@ function setupHeadings (toolbar, editor) {
 
 	function addHeading () {
 		var snippet = HEADINGS[this.name];
-		insert(snippet, editor);
+		insert(snippet, '', editor);
 	}
 
 	for (var heading in HEADINGS) {
@@ -68,7 +73,7 @@ function moveCaret (caretMove, editor) {
 function insertSyntax (syntax, editor) {
 
 	return function () {
-		insert(syntax.symbol, editor);
+		insert(syntax.before, syntax.after, editor);
 		moveCaret(syntax.caretMove, editor);
 	};
 
