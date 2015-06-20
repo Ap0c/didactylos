@@ -55,7 +55,7 @@ exports.build = function buildMenus (gui, file, toolbar) {
 		var fileMenuItems = fileMenu.items(gui, file);
 		addMenu('File', 1, fileMenuItems);
 
-		var insertMenuItems = insertMenu.items(gui, toolbar);
+		var insertMenuItems = insertMenu.items(toolbar);
 		addMenu('Insert', 3, insertMenuItems);
 
 	}

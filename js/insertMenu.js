@@ -1,4 +1,4 @@
-exports.items = function items (gui, toolbar) {
+exports.items = function items (toolbar) {
 
 	// ----- Setup ----- //
 
