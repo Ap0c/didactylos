@@ -20,10 +20,12 @@ module.exports = function File (window, editor) {
 	// Reads a file and puts its content into the editor area.
 	function open () {
 
-		var filepath = fileOpen.value;
+		var openPath = fileOpen.value;
+		filepath = openPath;
+
 		fileOpen.files.clear();
 
-		fs.readFile(filepath, function (err, data) {
+		fs.readFile(openPath, function (err, data) {
 			editor.setContent(data);
 		});
 
