@@ -1,3 +1,10 @@
+// ----- Requires ----- //
+
+var fileMenu = require('./fileMenu.js');
+
+
+// ----- Export ----- //
+
 exports.build = function buildMenus (gui, file) {
 
 	// ----- Setup ----- //
@@ -21,41 +28,11 @@ exports.build = function buildMenus (gui, file) {
 
 	}
 
-	// The items to be placed in the file menu.
-	function fileMenuItems () {
-
-		var openFile = {
-			label: 'Open',
-			key: 'o',
-			modifiers: 'cmd',
-			click: file.open
-		};
-
-		var saveFile = {
-			label: 'Save',
-			key: 's',
-			modifiers: 'cmd',
-			click: file.save
-		};
-
-		var newFile = {
-			label: 'New',
-			key: 'n',
-			modifiers: 'cmd',
-			click: function () {
-				gui.Window.open('editor.html', { "toolbar": false });
-			}
-		};
-
-		return [newFile, openFile, saveFile];
-
-	}
-
 	// Creates the File submenu (to hold Open, Save, etc.).
 	function buildFileSubmenu () {
 
 		var fileSubmenu = new gui.Menu();
-		var menuItems = fileMenuItems();
+		var menuItems = fileMenu.items(gui, file);
 
 		for (var item in menuItems) {
 			addMenuItem(fileSubmenu, menuItems[item]);
