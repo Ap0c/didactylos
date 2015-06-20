@@ -36,6 +36,14 @@ body {
 	background-color: #bbbbbb;
 }
 
+#italics_insert {
+	font-style: italic;
+}
+
+#bold_insert {
+	font-weight: bold;
+}
+
 
 /* ----- Editor Windows ----- */
 
