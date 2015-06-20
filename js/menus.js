@@ -13,53 +13,41 @@ exports.build = function buildMenus (gui, file) {
 		menu.createMacBuiltin('Didactylos');
 	}
 
-	// Adds the File > New menu item.
-	function buildFileNew (fileMenu) {
+	// Adds an item to the menu.
+	function addMenuItem (menu, item) {
 
-		var fileNew = new gui.MenuItem({
+		var menuItem = new gui.MenuItem(item);
+		menu.append(menuItem);
 
+	}
+
+	// The items to be placed in the file menu.
+	function fileMenuItems () {
+
+		var openFile = {
+			label: 'Open',
+			key: 'o',
+			modifiers: 'cmd',
+			click: file.open
+		};
+
+		var saveFile = {
+			label: 'Save',
+			key: 's',
+			modifiers: 'cmd',
+			click: file.save
+		};
+
+		var newFile = {
 			label: 'New',
 			key: 'n',
 			modifiers: 'cmd',
 			click: function () {
 				gui.Window.open('editor.html', { "toolbar": false });
 			}
+		};
 
-		});
-
-		fileMenu.append(fileNew);
-
-	}
-
-	// Adds the File > Open menu item.
-	function buildFileOpen (fileMenu) {
-
-		var fileOpen = new gui.MenuItem({
-
-			label: 'Open',
-			key: 'o',
-			modifiers: 'cmd',
-			click: file.open
-
-		});
-
-		fileMenu.append(fileOpen);
-
-	}
-
-	// Adds the File > Save menu item.
-	function buildFileSave (fileMenu) {
-
-		var fileSave = new gui.MenuItem({
-
-			label: 'Save',
-			key: 's',
-			modifiers: 'cmd',
-			click: file.save
-
-		});
-
-		fileMenu.append(fileSave);
+		return [newFile, openFile, saveFile];
 
 	}
 
@@ -67,10 +55,11 @@ exports.build = function buildMenus (gui, file) {
 	function buildFileSubmenu () {
 
 		var fileSubmenu = new gui.Menu();
+		var menuItems = fileMenuItems();
 
-		buildFileNew(fileSubmenu);
-		buildFileOpen(fileSubmenu);
-		buildFileSave(fileSubmenu);
+		for (var item in menuItems) {
+			addMenuItem(fileSubmenu, menuItems[item]);
+		}
 
 		return fileSubmenu;
 
