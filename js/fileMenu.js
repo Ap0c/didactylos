@@ -12,7 +12,7 @@ exports.items = function items (gui, file) {
 	};
 
 	var openFile = {
-		label: 'Open',
+		label: 'Open...',
 		key: 'o',
 		modifiers: 'cmd',
 		click: file.open
@@ -25,6 +25,11 @@ exports.items = function items (gui, file) {
 		click: file.save
 	};
 
-	return [newFile, openFile, saveFile];
+	var saveFileAs = {
+		label: 'Save As...',
+		click: file.saveAs
+	};
+
+	return [newFile, openFile, saveFile, saveFileAs];
 
 };
