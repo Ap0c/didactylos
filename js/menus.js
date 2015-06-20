@@ -20,39 +20,39 @@ exports.build = function buildMenus (gui, file) {
 		menu.createMacBuiltin('Didactylos');
 	}
 
-	// Adds an item to the menu.
-	function addMenuItem (menu, item) {
+	// Adds a submenu to the menubar.
+	function addSubmenu (menuItems) {
 
-		var menuItem = new gui.MenuItem(item);
-		menu.append(menuItem);
-
-	}
-
-	// Creates the File submenu (to hold Open, Save, etc.).
-	function buildFileSubmenu () {
-
-		var fileSubmenu = new gui.Menu();
-		var menuItems = fileMenu.items(gui, file);
+		var subMenu = new gui.Menu();
 
 		for (var item in menuItems) {
-			addMenuItem(fileSubmenu, menuItems[item]);
+			var menuItem = new gui.MenuItem(menuItems[item]);
+			subMenu.append(menuItem);
 		}
 
-		return fileSubmenu;
+		return subMenu;
 
 	}
 
-	// Creates the File option on the menu bar.
-	function addFileMenu () {
+	// Adds a menu to the menubar.
+	function addMenu (name, position, items) {
 
-		var fileSubmenu = buildFileSubmenu();
+		var subMenu = addSubmenu(items);
 
-		var fileMenu = new gui.MenuItem({
-			label: 'File',
-			submenu: fileSubmenu
+		var newMenu = new gui.MenuItem({
+			label: name,
+			submenu: subMenu
 		});
 
-		menu.insert(fileMenu, 1);
+		menu.insert(newMenu, position);
+
+	}
+
+	// Builds out the menubar with menus.
+	function buildMenubar () {
+
+		var fileMenuItems = fileMenu.items(gui, file);
+		addMenu('File', 1, fileMenuItems);
 
 	}
 
@@ -61,7 +61,7 @@ exports.build = function buildMenus (gui, file) {
 
 	// Builds the menus.
 	buildMacMenu();
-	addFileMenu();
+	buildMenubar();
 
 	// Adds the menu to the window.
 	gui.Window.get().menu = menu;
