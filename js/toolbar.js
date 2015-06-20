@@ -17,6 +17,17 @@ module.exports = function Toolbar (window) {
 
 	}
 
+	// Simulates a click on a toolbar button.
+	function click (buttonName) {
+
+		if (toolButtons[buttonName]) {
+			toolButtons[buttonName].button.click();
+		} else {
+			throw new Error('Button ' + buttonName + ' not found.');
+		}
+
+	}
+
 	// Retrieves a button from the toolbar.
 	function getButton (name) {
 
@@ -52,7 +63,8 @@ module.exports = function Toolbar (window) {
 	init();
 
 	return {
-		listen: listen
+		listen: listen,
+		click: click
 	};
 
 };

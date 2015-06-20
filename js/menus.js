@@ -1,11 +1,12 @@
 // ----- Requires ----- //
 
 var fileMenu = require('./fileMenu.js');
+var insertMenu = require('./insertMenu.js');
 
 
 // ----- Export ----- //
 
-exports.build = function buildMenus (gui, file) {
+exports.build = function buildMenus (gui, file, toolbar) {
 
 	// ----- Setup ----- //
 
@@ -53,6 +54,9 @@ exports.build = function buildMenus (gui, file) {
 
 		var fileMenuItems = fileMenu.items(gui, file);
 		addMenu('File', 1, fileMenuItems);
+
+		var insertMenuItems = insertMenu.items(gui, toolbar);
+		addMenu('Insert', 3, insertMenuItems);
 
 	}
 

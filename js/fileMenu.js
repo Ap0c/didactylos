@@ -1,5 +1,7 @@
 exports.items = function items (gui, file) {
 
+	// ----- Menu Items ----- //
+
 	var newFile = {
 
 		label: 'New',
@@ -29,6 +31,9 @@ exports.items = function items (gui, file) {
 		label: 'Save As...',
 		click: file.saveAs
 	};
+
+
+	// ----- Return ----- //
 
 	return [newFile, openFile, saveFile, saveFileAs];
 

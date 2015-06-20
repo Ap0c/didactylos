@@ -18,7 +18,7 @@ var setup = function () {
 	var file = File(window, editor);
 	var toolbar = Toolbar(window);
 
-	menus.build(gui, file);
+	menus.build(gui, file, toolbar);
 	tools.setup(toolbar, editor);
 	editor.focus();
 
