@@ -1,11 +1,11 @@
 {
   "name": "didactylos",
   "version": "0.0.1",
-  "main": "./html/editor.html",
+  "main": "./html/startup.html",
   "url": "https://github.com/Ap0c/didactylos",
   "window": {
-    "width": 1200,
-    "height": 640
+    "width": 800,
+    "height": 400
   },
   "dependencies": {
     "marked": "^0.3.3"

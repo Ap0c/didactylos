@@ -1,0 +1,38 @@
+/* ----- General ----- */
+
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
+}
+
+
+/* ----- Buttons ----- */
+
+#options {
+	width: 60%;
+	margin: 15% auto;
+}
+
+button {
+	border: none;
+	background-color: #005c8a;
+	color: #ffffff;
+	width: 30%;
+	margin: 0 auto;
+	margin-left: 14%;
+	padding: 8% 5% 8% 5%;
+	font-size: x-large;
+}
+
+button:hover {
+	background-color: #116d9b;
+	cursor: pointer;
+}
+
+button:active {
+	background-color: #004b79;
+}
