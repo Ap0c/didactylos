@@ -1,19 +1,23 @@
 // ----- Requires ----- //
 
 var gui = require('nw.gui');
+var fs = require('fs');
 
 
 // ----- Functions ----- //
 
-// Creates a new project directory, prompts user for name.
-function createProject () {
+// Saves the new project to disk.
+function setupSave () {
 
-	var win = gui.Window.get();
-	var name = prompt('Name Your Project:', 'My Project');
+	var projectSave = document.getElementById('project_save');
 
-	if (name !== null) {
+	projectSave.addEventListener('change', function () {
 
-		localStorage.setItem('projectName', name);
+		var projectName = localStorage.getItem('projectName');
+		var projectPath = projectSave.value + '/' + projectName;
+
+		localStorage.setItem('projectPath', projectPath);
+		fs.mkdir(projectSave.value + '/' + projectName);
 
 		gui.Window.open('editor.html', {
 			"toolbar": true,
@@ -22,6 +26,22 @@ function createProject () {
 		});
 
 		win.close();
+
+	});
+
+}
+
+// Creates a new project directory, prompts user for name.
+function createProject () {
+
+	var win = gui.Window.get();
+	var projectSave = document.getElementById('project_save');
+	var name = prompt('Name Your Project:', 'My Project');
+
+	if (name !== null) {
+
+		localStorage.setItem('projectName', name);
+		projectSave.click();
 
 	}
 
@@ -32,6 +52,8 @@ function setup () {
 
 	var newProject = document.getElementById('new_project');
 	var openProject = document.getElementById('open_project');
+
+	setupSave();
 
 	newProject.addEventListener('click', createProject);
 
