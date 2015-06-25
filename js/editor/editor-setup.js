@@ -14,6 +14,11 @@ var tools = require('../js/editor/editing-tools.js');
 // Sets up various components of the editor (e.g. file handling).
 var setup = function () {
 
+	window.focus();
+
+	var projectName = localStorage.getItem('projectName');
+	document.title = projectName;
+
 	var editor = Editor(window);
 	var file = File(window, editor);
 	var toolbar = Toolbar(window);
