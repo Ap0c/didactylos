@@ -2,11 +2,11 @@
 
 var gui = require('nw.gui');
 
-var Editor = require('../js/editor.js');
-var File = require('../js/file.js');
-var Toolbar = require('../js/toolbar.js');
-var menus = require('../js/menus.js');
-var tools = require('../js/editing-tools.js');
+var Editor = require('../js/editor/editor.js');
+var File = require('../js/editor/file.js');
+var Toolbar = require('../js/editor/toolbar.js');
+var menus = require('../js/editor/menus.js');
+var tools = require('../js/editor/editing-tools.js');
 
 
 // ----- Functions ----- //
