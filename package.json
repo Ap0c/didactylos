@@ -5,7 +5,8 @@
   "url": "https://github.com/Ap0c/didactylos",
   "window": {
     "width": 800,
-    "height": 400
+    "height": 400,
+    "resizable": false
   },
   "dependencies": {
     "marked": "^0.3.3"

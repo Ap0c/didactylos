@@ -46,7 +46,6 @@ function buildSidebar (sidebar, file) {
 
 }
 
-
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
 

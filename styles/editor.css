@@ -94,11 +94,3 @@ body {
 	padding: 2% 4%;
 	color: #222222;
 }
-
-
-/* ----- File IO ----- */
-
-#file_open, #file_save {
-	display: none;
-}
-
