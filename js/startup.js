@@ -2,6 +2,7 @@
 
 var gui = require('nw.gui');
 var fs = require('fs');
+var path = require('path');
 
 
 // ----- Functions ----- //
@@ -14,7 +15,7 @@ function setupSave () {
 	projectSave.addEventListener('change', function () {
 
 		var projectName = localStorage.getItem('projectName');
-		var projectPath = projectSave.value + '/' + projectName;
+		var projectPath = path.join(projectSave.value, projectName);
 
 		localStorage.setItem('projectPath', projectPath);
 		fs.mkdir(projectSave.value + '/' + projectName);
