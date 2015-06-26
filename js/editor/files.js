@@ -37,6 +37,22 @@ module.exports = function File (window, editor) {
 
 	}
 
+	// Creates a new file.
+	function newFile () {
+
+		var name = window.prompt('Name Of File:', 'My File');
+
+		if (name !== null) {
+
+			save();
+			var projectPath = window.localStorage.getItem('projectPath');
+			filepath = path.join(projectPath, name);
+			editor.setContent('');
+
+		}
+
+	}
+
 	// Reads a file and puts its content into the editor area.
 	function open (projectPath, filename) {
 
@@ -56,9 +72,11 @@ module.exports = function File (window, editor) {
 
 	}
 
+
 	// ----- Constructor ----- //
 
 	var files = {
+		newFile: newFile,
 		open: open,
 		save: save,
 		projectFiles: projectFiles
