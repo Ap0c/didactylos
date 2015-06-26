@@ -10,6 +10,7 @@ var path = require('path');
 // Saves the new project to disk.
 function setupSave () {
 
+	var win = gui.Window.get();
 	var projectSave = document.getElementById('project_save');
 
 	projectSave.addEventListener('change', function () {
@@ -35,7 +36,6 @@ function setupSave () {
 // Creates a new project directory, prompts user for name.
 function createProject () {
 
-	var win = gui.Window.get();
 	var projectSave = document.getElementById('project_save');
 	var name = prompt('Name Your Project:', 'My Project');
 

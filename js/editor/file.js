@@ -1,87 +1,109 @@
 // ----- Requires ----- //
 
 var fs = require('fs');
+var path = require('path');
 
 
 // ----- Export ----- //
 
-module.exports = function File (window, editor) {
+module.exports = function File (editor, sidebar) {
 
 	// ----- Internal Properties ----- //
 
-	var document = window.document;
-	var fileOpen = document.getElementById('file_open');
-	var fileSave = document.getElementById('file_save');
 	var filepath = null;
 
 
 	// ----- Functions ----- //
 
+	// Obtains an array of project files and passes it to the callback.
+	function projectFiles (projectPath, callback) {
+
+		console.log(projectPath);
+
+		fs.readdir(projectPath, onlyFiles);
+
+		function onlyFiles (err, directoryContents) {
+
+			console.log(directoryContents);
+
+			var files = directoryContents.filter(function (file) {
+
+				var fullPath = path.join(projectPath, file);
+				var isFile = !fs.statSync(fullPath).isDirectory();
+				var notDotfile = file[0] !== '.';
+				return isFile && notDotfile;
+
+			});
+
+			callback(files);
+
+		}
+
+	}
+
+	// Creates a new file.
+	function newFile () {
+
+		var file = sidebar.newFile('Name Of New File:');
+
+		if (file !== null) {
+
+			save();
+			filepath = path.join(file.path, file.name + '.md');
+			editor.setContent('');
+			save();
+			sidebar.addFile(file.name);
+
+		}
+
+	}
+
 	// Reads a file and puts its content into the editor area.
-	function open () {
+	function open (projectPath, filename) {
 
-		var openPath = fileOpen.value;
-		filepath = openPath;
+		filepath = path.join(projectPath, filename);
 
-		fileOpen.files.clear();
-
-		fs.readFile(openPath, function (err, data) {
+		fs.readFile(filepath, function (err, data) {
 			editor.setContent(data);
 		});
 
 	}
 
-	// Saves the contents of the editor area to user-specified location.
-	function saveAs () {
-
-		filepath = fileSave.value;
-		fileSave.files.clear();
-
-		save();
-
-	}
-
-	// Saves editor contents to disk.
+	// Saves the current file.
 	function save () {
 
-		if (filepath) {
+		if (filepath !== null) {
+
+			console.log('In save');
 			var data = editor.getContent();
 			fs.writeFile(filepath, data);
+
 		} else {
-			fileSave.click();
+
+			console.log('In save as.');
+			var file = sidebar.newFile('Name To Save Current File:');
+
+			if (file !== null) {
+				console.log(file);
+				filepath = path.join(file.path, file.name + '.md');
+				save();
+				sidebar.addFile(file.name);
+			}
+
 		}
 
 	}
 
-	// Displays the file open dialog.
-	function openDialog () {
-		fileOpen.click();
-	}
-
-	// Displays the file save dialog.
-	function saveDialog () {
-		fileSave.click();
-	}
-
-	// Sets up event listeners.
-	function init () {
-
-		fileOpen.addEventListener('change', open);
-		fileSave.addEventListener('change', saveAs);
-
-	}
 
 	// ----- Constructor ----- //
 
-	var file = {
-
-		open: openDialog,
-		saveAs: saveDialog,
-		save: save
-
+	var files = {
+		newFile: newFile,
+		open: open,
+		save: save,
+		projectFiles: projectFiles
 	};
 
-	init();
-	return file;
+	return files;
 
 };

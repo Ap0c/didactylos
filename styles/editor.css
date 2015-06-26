@@ -54,6 +54,14 @@ body {
 	height: 100%;
 }
 
+#sidebar > div {
+	width: 100%;
+	padding: 5% 0 0 5%;
+	color: #005c8a;
+	box-sizing: border-box;
+	font-size: small;
+}
+
 
 /* ----- Editor Windows ----- */
 
