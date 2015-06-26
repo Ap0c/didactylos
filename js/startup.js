@@ -33,6 +33,30 @@ function setupSave () {
 
 }
 
+// Opens an existing project.
+function setupLoad () {
+
+	var projectLoad = document.getElementById('project_load');
+
+	projectLoad.addEventListener('change', function () {
+
+		var projectPath = projectLoad.value;
+		var projectName = path.basename(projectPath);
+		localStorage.setItem('projectPath', projectPath);
+		localStorage.setItem('projectName', projectName);
+
+		gui.Window.open('editor.html', {
+			"toolbar": true,
+			"width": 1200,
+			"height": 640
+		});
+
+		win.close();
+
+	});
+
+}
+
 // Creates a new project directory, prompts user for name.
 function createProject () {
 
@@ -48,6 +72,14 @@ function createProject () {
 
 }
 
+// Opens an existing project.
+function openProject () {
+
+	var projectLoad = document.getElementById('project_load');
+	projectLoad.click();
+
+}
+
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
 
@@ -55,6 +87,7 @@ function setup () {
 	var openProject = document.getElementById('open_project');
 
 	setupSave();
+	setupLoad();
 
 	newProject.addEventListener('click', createProject);
 
