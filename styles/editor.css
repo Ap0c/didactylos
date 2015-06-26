@@ -13,23 +13,23 @@ body {
 /* ----- Toolbar ----- */
 
 #toolbar {
-	width: 100%;
+	width: 55%;
 	height: 5%;
-	background-color: #ffffff;
-	padding: 0 0 0 0.2%;
+	background-color: #005c8a;
+	/*padding: 0 0 0 5%;*/
 	box-sizing: border-box;
 	border-bottom: 0.1em solid #005c8a;
 }
 
 .tool_button {
 	border: none;
-	background-color: #005c8a;
-	color: #ffffff;
+	background-color: #ffffff;
+	color: #005c8a;
 	height: 80%;
-	width: 3em;
-	margin: 0.3em 0.1% 0;
+	width: 6%;
+	margin: 0.3em 0.3% 0;
 	padding: 0;
-	/*position: absolute;*/
+	cursor: pointer;
 }
 
 .tool_button:active {
@@ -45,10 +45,20 @@ body {
 }
 
 
+/* ----- File Sidebar ----- */
+
+#files {
+	width: 10%;
+	background-color: #ffffff;
+	float: left;
+	height: 100%;
+}
+
+
 /* ----- Editor Windows ----- */
 
 .editor_window {
-	width: 50%;
+	width: 45%;
 	height: 95%;
 	float: left;
 	margin: 0;
