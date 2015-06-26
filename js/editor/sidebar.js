@@ -1,4 +1,4 @@
-module.exports = function Sidebar (window, file) {
+module.exports = function Sidebar (window) {
 
 	// ----- Internal Properties ----- //
 
@@ -10,11 +10,13 @@ module.exports = function Sidebar (window, file) {
 	// Adds a file to the sidebar.
 	function addFile (name) {
 
+		console.log('append bit');
+
 		var fileDiv = document.createElement('div');
 		var filename = document.createTextNode(name);
 
-		fileDiv.append(filename);
-		sidebar.append(fileDiv);
+		fileDiv.appendChild(filename);
+		sidebar.appendChild(fileDiv);
 
 	}
 
@@ -29,12 +31,32 @@ module.exports = function Sidebar (window, file) {
 
 	}
 
-	// Fills the sidebar with files.
-	function init () {
+	// Prompts the user for a new file name.
+	function newFile (message) {
 
-		var projectPath = window.localStorage.getItem('projectPath');
-		file.projectFiles(projectPath, populateFiles);
+		var name = window.prompt(message, 'My File');
+
+		if (name !== null) {
+
+			var projectPath = window.localStorage.getItem('projectPath');
+
+			return {
+				name: name,
+				path: projectPath
+			};
+
+		} else {
+			return null;
+		}
 
 	}
+
+	// ----- Constructor ----- //
+
+	return {
+		addFile: addFile,
+		build: populateFiles,
+		newFile: newFile
+	};
 
 };

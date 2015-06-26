@@ -7,17 +7,8 @@ exports.items = function items (gui, file) {
 		label: 'New',
 		key: 'n',
 		modifiers: 'cmd',
-		click: function () {
-			gui.Window.open('editor.html', { "toolbar": false });
-		}
+		click: file.newFile
 
-	};
-
-	var openFile = {
-		label: 'Open...',
-		key: 'o',
-		modifiers: 'cmd',
-		click: file.open
 	};
 
 	var saveFile = {
@@ -27,14 +18,9 @@ exports.items = function items (gui, file) {
 		click: file.save
 	};
 
-	var saveFileAs = {
-		label: 'Save As...',
-		click: file.saveAs
-	};
-
 
 	// ----- Return ----- //
 
-	return [newFile, openFile, saveFile, saveFileAs];
+	return [newFile, saveFile];
 
 };

@@ -18,7 +18,7 @@ function setupSave () {
 		var projectPath = path.join(projectSave.value, projectName);
 
 		localStorage.setItem('projectPath', projectPath);
-		fs.mkdir(projectSave.value + '/' + projectName);
+		fs.mkdir(projectPath);
 
 		gui.Window.open('editor.html', {
 			"toolbar": true,

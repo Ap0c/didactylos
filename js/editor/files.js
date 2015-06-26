@@ -6,7 +6,7 @@ var path = require('path');
 
 // ----- Export ----- //
 
-module.exports = function File (window, editor) {
+module.exports = function File (editor, sidebar) {
 
 	// ----- Internal Properties ----- //
 
@@ -18,9 +18,13 @@ module.exports = function File (window, editor) {
 	// Obtains an array of project files and passes it to the callback.
 	function projectFiles (projectPath, callback) {
 
+		console.log(projectPath);
+
 		fs.readdir(projectPath, onlyFiles);
 
-		function onlyFiles (directoryContents) {
+		function onlyFiles (err, directoryContents) {
+
+			console.log(directoryContents);
 
 			var files = directoryContents.filter(function (file) {
 
@@ -40,14 +44,15 @@ module.exports = function File (window, editor) {
 	// Creates a new file.
 	function newFile () {
 
-		var name = window.prompt('Name Of File:', 'My File');
+		var file = sidebar.newFile('Name Of New File:');
 
-		if (name !== null) {
+		if (file !== null) {
 
 			save();
-			var projectPath = window.localStorage.getItem('projectPath');
-			filepath = path.join(projectPath, name);
+			filepath = path.join(file.path, file.name + '.md');
 			editor.setContent('');
+			save();
+			sidebar.addFile(file.name);
 
 		}
 
@@ -67,8 +72,25 @@ module.exports = function File (window, editor) {
 	// Saves the current file.
 	function save () {
 
-		var data = editor.getContent();
-		fs.writeFile(filepath, data);
+		if (filepath !== null) {
+
+			console.log('In save');
+			var data = editor.getContent();
+			fs.writeFile(filepath, data);
+
+		} else {
+
+			console.log('In save as.');
+			var file = sidebar.newFile('Name To Save Current File:');
+
+			if (file !== null) {
+				console.log(file);
+				filepath = path.join(file.path, file.name + '.md');
+				save();
+				sidebar.addFile(file.name);
+			}
+
+		}
 
 	}
 
