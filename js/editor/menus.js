@@ -6,7 +6,7 @@ var insertMenu = require('./insertMenu.js');
 
 // ----- Export ----- //
 
-exports.build = function buildMenus (gui, file, toolbar) {
+module.exports = function Menus (gui, file, toolbar) {
 
 	// ----- Setup ----- //
 
@@ -19,6 +19,7 @@ exports.build = function buildMenus (gui, file, toolbar) {
 	// Creates the default OS X menu controls.
 	function buildMacMenu () {
 		menu.createMacBuiltin('Didactylos');
+		gui.Window.get().menu = menu;
 	}
 
 	// Adds a submenu to the menubar.
@@ -50,7 +51,7 @@ exports.build = function buildMenus (gui, file, toolbar) {
 	}
 
 	// Builds out the menubar with menus.
-	function buildMenubar () {
+	function editorMenubar () {
 
 		var fileMenuItems = fileMenu.items(gui, file);
 		addMenu('File', 1, fileMenuItems);
@@ -63,11 +64,9 @@ exports.build = function buildMenus (gui, file, toolbar) {
 
 	// ----- Build GUI ----- //
 
-	// Builds the menus.
-	buildMacMenu();
-	buildMenubar();
-
-	// Adds the menu to the window.
-	gui.Window.get().menu = menu;
+	return {
+		macMenu: buildMacMenu,
+		editor: editorMenubar
+	};
 
 };

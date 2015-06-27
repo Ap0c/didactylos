@@ -49,6 +49,6 @@ button:active {
 
 /* ----- File IO ----- */
 
-#project_save {
+.project_select {
 	display: none;
 }

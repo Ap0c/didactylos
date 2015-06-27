@@ -36,6 +36,7 @@ function setupSave () {
 // Opens an existing project.
 function setupLoad () {
 
+	var win = gui.Window.get();
 	var projectLoad = document.getElementById('project_load');
 
 	projectLoad.addEventListener('change', function () {
@@ -73,7 +74,7 @@ function createProject () {
 }
 
 // Opens an existing project.
-function openProject () {
+function loadProject () {
 
 	var projectLoad = document.getElementById('project_load');
 	projectLoad.click();
@@ -90,6 +91,7 @@ function setup () {
 	setupLoad();
 
 	newProject.addEventListener('click', createProject);
+	openProject.addEventListener('click', loadProject);
 
 }
 

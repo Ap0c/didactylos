@@ -6,7 +6,7 @@ var Editor = require('../js/editor/editor.js');
 var Toolbar = require('../js/editor/toolbar.js');
 var Sidebar = require('../js/editor/sidebar.js');
 var File = require('../js/editor/file.js');
-var menus = require('../js/editor/menus.js');
+var Menus = require('../js/editor/menus.js');
 var tools = require('../js/editor/editing-tools.js');
 
 
@@ -46,6 +46,15 @@ function buildSidebar (sidebar, file) {
 
 }
 
+// Builds the editor menubar.
+function buildMenubar (file, toolbar) {
+
+	var menus = Menus(gui, file, toolbar);
+	menus.macMenu();
+	menus.editor();
+
+}
+
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
 
@@ -56,7 +65,7 @@ function setup () {
 	var file = File(view.editor, view.sidebar);
 
 	buildSidebar(view.sidebar, file);
-	menus.build(gui, file, view.toolbar);
+	buildMenubar(file, view.toolbar);
 	tools.setup(view.toolbar, view.editor);
 
 	editor.focus();
