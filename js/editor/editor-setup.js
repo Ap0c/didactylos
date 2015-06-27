@@ -6,7 +6,7 @@ var Editor = require('../js/editor/editor.js');
 var Toolbar = require('../js/editor/toolbar.js');
 var Sidebar = require('../js/editor/sidebar.js');
 var File = require('../js/editor/file.js');
-var Menus = require('../js/editor/menus.js');
+var Menus = require('../js/menus.js');
 var tools = require('../js/editor/editing-tools.js');
 
 

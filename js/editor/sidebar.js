@@ -10,8 +10,6 @@ module.exports = function Sidebar (window) {
 	// Adds a file to the sidebar.
 	function addFile (name) {
 
-		console.log('append bit');
-
 		var fileDiv = document.createElement('div');
 		var filename = document.createTextNode(name);
 

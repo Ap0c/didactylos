@@ -18,13 +18,9 @@ module.exports = function File (editor, sidebar) {
 	// Obtains an array of project files and passes it to the callback.
 	function projectFiles (projectPath, callback) {
 
-		console.log(projectPath);
-
 		fs.readdir(projectPath, onlyFiles);
 
 		function onlyFiles (err, directoryContents) {
-
-			console.log(directoryContents);
 
 			var files = directoryContents.filter(function (file) {
 
@@ -74,17 +70,14 @@ module.exports = function File (editor, sidebar) {
 
 		if (filepath !== null) {
 
-			console.log('In save');
 			var data = editor.getContent();
 			fs.writeFile(filepath, data);
 
 		} else {
 
-			console.log('In save as.');
 			var file = sidebar.newFile('Name To Save Current File:');
 
 			if (file !== null) {
-				console.log(file);
 				filepath = path.join(file.path, file.name + '.md');
 				save();
 				sidebar.addFile(file.name);
