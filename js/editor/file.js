@@ -45,10 +45,11 @@ module.exports = function File (editor, sidebar) {
 		if (file !== null) {
 
 			save();
-			filepath = path.join(file.path, file.name + '.md');
+			var filename = file.name + '.md';
+			filepath = path.join(file.path, filename);
 			editor.setContent('');
 			save();
-			sidebar.addFile(file.name);
+			sidebar.addFile(filename);
 
 		}
 
@@ -78,9 +79,10 @@ module.exports = function File (editor, sidebar) {
 			var file = sidebar.newFile('Name To Save Current File:');
 
 			if (file !== null) {
-				filepath = path.join(file.path, file.name + '.md');
+				var filename = file.name + '.md';
+				filepath = path.join(file.path, filename);
 				save();
-				sidebar.addFile(file.name);
+				sidebar.addFile(filename);
 			}
 
 		}

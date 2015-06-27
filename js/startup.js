@@ -86,22 +86,20 @@ function loadProject () {
 // Builds the app menubar.
 function buildMenubar() {
 
-
+	var menus = Menus(gui);
+	menus.macMenu();
 
 }
 
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
 
-	var menus = Menus(gui);
-	menus.macMenu();
-
-	var newProject = document.getElementById('new_project');
-	var openProject = document.getElementById('open_project');
-
+	buildMenubar();
 	setupSave();
 	setupLoad();
 
+	var newProject = document.getElementById('new_project');
+	var openProject = document.getElementById('open_project');
 	newProject.addEventListener('click', createProject);
 	openProject.addEventListener('click', loadProject);
 
