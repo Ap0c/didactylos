@@ -6,7 +6,7 @@ var insertMenu = require('./editor/insertMenu.js');
 
 // ----- Export ----- //
 
-module.exports = function Menus (gui, file, toolbar) {
+module.exports = function Menus (gui) {
 
 	// ----- Setup ----- //
 
@@ -51,7 +51,7 @@ module.exports = function Menus (gui, file, toolbar) {
 	}
 
 	// Builds out the menubar with menus.
-	function editorMenubar () {
+	function editorMenubar (file, toolbar) {
 
 		var fileMenuItems = fileMenu.items(gui, file);
 		addMenu('File', 1, fileMenuItems);

@@ -49,9 +49,9 @@ function buildSidebar (sidebar, file) {
 // Builds the editor menubar.
 function buildMenubar (file, toolbar) {
 
-	var menus = Menus(gui, file, toolbar);
+	var menus = Menus(gui);
 	menus.macMenu();
-	menus.editor();
+	menus.editor(file, toolbar);
 
 }
 

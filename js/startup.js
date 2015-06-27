@@ -4,6 +4,8 @@ var gui = require('nw.gui');
 var fs = require('fs');
 var path = require('path');
 
+var Menus = require('../js/menus.js');
+
 
 // ----- Functions ----- //
 
@@ -81,8 +83,18 @@ function loadProject () {
 
 }
 
+// Builds the app menubar.
+function buildMenubar() {
+
+
+
+}
+
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
+
+	var menus = Menus(gui);
+	menus.macMenu();
 
 	var newProject = document.getElementById('new_project');
 	var openProject = document.getElementById('open_project');
