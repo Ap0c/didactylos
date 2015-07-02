@@ -3,12 +3,10 @@ exports.items = function items (gui, file) {
 	// ----- Menu Items ----- //
 
 	var newFile = {
-
 		label: 'New',
 		key: 'n',
 		modifiers: 'cmd',
 		click: file.newFile
-
 	};
 
 	var saveFile = {

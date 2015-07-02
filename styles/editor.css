@@ -56,10 +56,17 @@ body {
 
 #sidebar > div {
 	width: 100%;
-	padding: 5% 0 0 5%;
+	padding: 5% 0 5% 5%;
 	color: #005c8a;
 	box-sizing: border-box;
 	font-size: small;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+#sidebar > .selected_file {
+	background-color: #005c8a;
+	color: #ffffff;
 }
 
 

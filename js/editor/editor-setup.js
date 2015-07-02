@@ -40,8 +40,12 @@ function buildSidebar (sidebar, file) {
 
 	var projectPath = localStorage.getItem('projectPath');
 
+	function clickEvent (filename) {
+		file.open(projectPath, filename);
+	}
+
 	file.projectFiles(projectPath, function (files) {
-		sidebar.build(files);
+		sidebar.build(files, clickEvent);
 	});
 
 }
