@@ -38,12 +38,8 @@ function updateTitle () {
 // Populates the sidebar with project files.
 function buildSidebar (sidebar, file) {
 
-	function clickEvent (filename) {
-		file.open(filename);
-	}
-
 	file.projectFiles(function (files) {
-		sidebar.build(files, clickEvent);
+		sidebar.build(files, file.open);
 	});
 
 }

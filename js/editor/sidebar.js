@@ -22,7 +22,7 @@ module.exports = function Sidebar (window) {
 	}
 
 	// Adds a file to the sidebar.
-	function addFile (name, clickEvent) {
+	function addFile (name, fileOpen) {
 
 		var fileDiv = document.createElement('div');
 		var filename = document.createTextNode(name);
@@ -31,20 +31,22 @@ module.exports = function Sidebar (window) {
 		sidebar.appendChild(fileDiv);
 
 		fileDiv.addEventListener('click', function () {
-			clickEvent(name);
+			fileOpen(name);
 			updateSelection(fileDiv);
 		});
 
 	}
 
 	// Fills the sidebar with project files.
-	function populateFiles (files, clickEvent) {
+	function populateFiles (files, fileOpen) {
 
 		var noFiles = files.length;
 
 		for (var i = 0; i < noFiles; i++) {
-			addFile(files[i], clickEvent);
+			addFile(files[i], fileOpen);
 		}
+
+		sidebar.firstChild.click();
 
 	}
 

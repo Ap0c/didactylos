@@ -22,8 +22,6 @@ module.exports = function File (editor, sidebar, projectPath) {
 
 		function onlyFiles (err, directoryContents) {
 
-			console.log(directoryContents);
-
 			var files = directoryContents.filter(function (file) {
 
 				var fullPath = path.join(projectPath, file);
@@ -39,6 +37,7 @@ module.exports = function File (editor, sidebar, projectPath) {
 
 	}
 
+	// Marks the file as markdown, saves it, and updates the sidebar.
 	function createFile (file) {
 
 		var filename = file.name + '.md';
@@ -46,9 +45,7 @@ module.exports = function File (editor, sidebar, projectPath) {
 
 		save();
 
-		sidebar.addFile(filename, function clickEvent (name) {
-			openFile(name);
-		});
+		sidebar.addFile(filename, openFile);
 
 	}
 
