@@ -39,21 +39,29 @@ module.exports = function File (editor, sidebar, projectPath) {
 
 	}
 
+	function createFile (file) {
+
+		var filename = file.name + '.md';
+		filepath = path.join(file.path, filename);
+
+		save();
+
+		sidebar.addFile(filename, function clickEvent (name) {
+			openFile(name);
+		});
+
+	}
+
 	// Creates a new file.
 	function newFile () {
 
+		save();
 		var file = sidebar.newFile('Name Of New File:');
 
 		if (file !== null) {
 
-			save();
 			editor.setContent('');
-			var filename = file.name + '.md';
-			filepath = path.join(file.path, filename);
-			save();
-			sidebar.addFile(filename, function clickEvent (name) {
-				openFile(name);
-			});
+			createFile(file);
 
 		}
 
@@ -83,12 +91,7 @@ module.exports = function File (editor, sidebar, projectPath) {
 			var file = sidebar.newFile('Name To Save Current File:');
 
 			if (file !== null) {
-				var filename = file.name + '.md';
-				filepath = path.join(file.path, filename);
-				save();
-				sidebar.addFile(filename, function clickEvent (name) {
-					openFile(name);
-				});
+				createFile(file);
 			}
 
 		}
