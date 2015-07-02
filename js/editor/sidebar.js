@@ -46,7 +46,9 @@ module.exports = function Sidebar (window) {
 			addFile(files[i], fileOpen);
 		}
 
-		sidebar.firstChild.click();
+		if (sidebar.firstChild) {
+			sidebar.firstChild.click();
+		}
 
 	}
 
