@@ -38,13 +38,11 @@ function updateTitle () {
 // Populates the sidebar with project files.
 function buildSidebar (sidebar, file) {
 
-	var projectPath = localStorage.getItem('projectPath');
-
 	function clickEvent (filename) {
-		file.open(projectPath, filename);
+		file.open(filename);
 	}
 
-	file.projectFiles(projectPath, function (files) {
+	file.projectFiles(function (files) {
 		sidebar.build(files, clickEvent);
 	});
 
@@ -64,9 +62,10 @@ function setup () {
 
 	window.focus();
 	updateTitle();
+	var projectPath = localStorage.getItem('projectPath');
 
 	var view = viewComponents();
-	var file = File(view.editor, view.sidebar);
+	var file = File(view.editor, view.sidebar, projectPath);
 
 	buildSidebar(view.sidebar, file);
 	buildMenubar(file, view.toolbar);

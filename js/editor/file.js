@@ -6,7 +6,7 @@ var path = require('path');
 
 // ----- Export ----- //
 
-module.exports = function File (editor, sidebar) {
+module.exports = function File (editor, sidebar, projectPath) {
 
 	// ----- Internal Properties ----- //
 
@@ -16,11 +16,13 @@ module.exports = function File (editor, sidebar) {
 	// ----- Functions ----- //
 
 	// Obtains an array of project files and passes it to the callback.
-	function projectFiles (projectPath, callback) {
+	function projectFiles (callback) {
 
 		fs.readdir(projectPath, onlyFiles);
 
 		function onlyFiles (err, directoryContents) {
+
+			console.log(directoryContents);
 
 			var files = directoryContents.filter(function (file) {
 
@@ -45,18 +47,20 @@ module.exports = function File (editor, sidebar) {
 		if (file !== null) {
 
 			save();
+			editor.setContent('');
 			var filename = file.name + '.md';
 			filepath = path.join(file.path, filename);
-			editor.setContent('');
 			save();
-			sidebar.addFile(filename);
+			sidebar.addFile(filename, function clickEvent (name) {
+				openFile(name);
+			});
 
 		}
 
 	}
 
 	// Reads a file and puts its content into the editor area.
-	function open (projectPath, filename) {
+	function openFile (filename) {
 
 		filepath = path.join(projectPath, filename);
 
@@ -82,7 +86,9 @@ module.exports = function File (editor, sidebar) {
 				var filename = file.name + '.md';
 				filepath = path.join(file.path, filename);
 				save();
-				sidebar.addFile(filename);
+				sidebar.addFile(filename, function clickEvent (name) {
+					openFile(name);
+				});
 			}
 
 		}
@@ -94,7 +100,7 @@ module.exports = function File (editor, sidebar) {
 
 	var files = {
 		newFile: newFile,
-		open: open,
+		open: openFile,
 		save: save,
 		projectFiles: projectFiles
 	};
