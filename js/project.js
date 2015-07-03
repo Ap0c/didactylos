@@ -70,6 +70,11 @@ function setupLoad () {
 		localStorage.setItem('projectPath', projectPath);
 		localStorage.setItem('projectName', projectName);
 
+		var projectInfo = path.join(projectPath, 'didactylos.json');
+		if (!fs.statSync(projectInfo).isFile()) {
+			console.log('Missing didactylos.json');
+		}
+
 		gui.Window.open('editor.html', {
 			"toolbar": true,
 			"width": 1200,

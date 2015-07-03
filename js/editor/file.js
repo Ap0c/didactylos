@@ -71,6 +71,7 @@ module.exports = function File (editor, sidebar, projectPath) {
 
 		fs.readFile(filepath, function (err, data) {
 			editor.setContent(data);
+			editor.focus();
 		});
 
 	}
