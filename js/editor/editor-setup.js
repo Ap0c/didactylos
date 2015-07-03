@@ -12,6 +12,14 @@ var tools = require('../js/editor/editing-tools.js');
 
 // ----- Functions ----- //
 
+// Retrieves and parses the project info held in local storage.
+function readInfo () {
+
+	var projectJson = localStorage.getItem('projectInfo');
+	return JSON.parse(projectJson);
+
+}
+
 // Builds the components linked to objects on the page.
 function viewComponents () {
 
