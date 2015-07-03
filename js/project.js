@@ -10,12 +10,12 @@ var Menus = require('../js/menus.js');
 // ----- Functions ----- //
 
 // Writes the project info to file.
-function writeInfo (projectInfo) {
+function writeInfo (projectInfo, callback) {
 
 	var projectJson = JSON.stringify(projectInfo, null, 4);
 	var dataPath = path.join(projectInfo.path, 'didactylos.json');
 
-	fs.writeFile(dataPath, projectJson, mainWindow);
+	fs.writeFile(dataPath, projectJson, callback);
 
 }
 
@@ -33,25 +33,49 @@ function mainWindow () {
 
 }
 
-// Saves the new project to disk.
-function setupSave () {
+// Checks if the directory contains a didactylos project.
+function checkProject (projectFile, callback) {
 
-	var projectSave = document.getElementById('project_save');
+	fs.stat(projectFile, function (err, stats) {
 
-	projectSave.addEventListener('change', function () {
+		if (err) {
+			alert('This directory does not appear to contain a didactylos' +
+				' project.');
+		} else {
+			callback();
+		}
 
-		var projectName = localStorage.getItem('projectName');		
-		var projectPath = path.join(projectSave.value, projectName);
+	});
 
-		localStorage.setItem('projectPath', projectPath);
-		fs.mkdir(projectPath);
+}
 
-		var projectInfo = {
-			name: projectName,
-			path: projectPath
-		};
+// Obtains information about the project and returns it as an object.
+function retrieveInfo (projectLocation) {
 
-		writeInfo(projectInfo);
+	var projectName = localStorage.getItem('projectName');
+	var projectPath = path.join(projectLocation, projectName);
+	localStorage.setItem('projectPath', projectPath);
+
+	var projectInfo = {
+		name: projectName,
+		path: projectPath
+	};
+
+	return projectInfo;
+
+}
+
+// Creates the new project on disk.
+function setupNew () {
+
+	var projectNew = document.getElementById('project_new');
+
+	projectNew.addEventListener('change', function () {
+
+		var projectInfo = retrieveInfo(projectNew.value);
+		fs.mkdir(projectInfo.path);
+
+		writeInfo(projectInfo, mainWindow);
 
 	});
 
@@ -71,17 +95,8 @@ function setupLoad () {
 		localStorage.setItem('projectName', projectName);
 
 		var projectInfo = path.join(projectPath, 'didactylos.json');
-		if (!fs.statSync(projectInfo).isFile()) {
-			console.log('Missing didactylos.json');
-		}
 
-		gui.Window.open('editor.html', {
-			"toolbar": true,
-			"width": 1200,
-			"height": 640
-		});
-
-		win.close();
+		checkProject(projectInfo, mainWindow);
 
 	});
 
@@ -90,13 +105,13 @@ function setupLoad () {
 // Creates a new project directory, prompts user for name.
 function createProject () {
 
-	var projectSave = document.getElementById('project_save');
+	var projectNew = document.getElementById('project_new');
 	var name = prompt('Name Your Project:', 'My Project');
 
 	if (name !== null) {
 
 		localStorage.setItem('projectName', name);
-		projectSave.click();
+		projectNew.click();
 
 	}
 
@@ -122,7 +137,7 @@ function buildMenubar() {
 function setup () {
 
 	buildMenubar();
-	setupSave();
+	setupNew();
 	setupLoad();
 
 	var newProject = document.getElementById('new_project');
