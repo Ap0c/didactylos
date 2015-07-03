@@ -9,13 +9,38 @@ var Menus = require('../js/menus.js');
 
 // ----- Functions ----- //
 
-// Writes the project info to file.
-function writeInfo (projectInfo, callback) {
+// Writes the project info to file and local storage.
+function writeInfo (projectName, projectPath, callback) {
+
+	var projectInfo = {
+		name: projectName,
+		path: projectPath,
+		files: []
+	};
 
 	var projectJson = JSON.stringify(projectInfo, null, 4);
-	var dataPath = path.join(projectInfo.path, 'didactylos.json');
 
+	localStorage.setItem('projectPath', projectPath);
+	localStorage.setItem('projectInfo', projectJson);
+
+	var dataPath = path.join(projectPath, 'didactylos.json');
 	fs.writeFile(dataPath, projectJson, callback);
+
+}
+
+// Reads the project info from file.
+function readInfo (projectPath, infoFile) {
+
+	var projectJson = fs.readFileSync(infoFile);
+	var info = JSON.parse(projectJson);
+
+	if (info.path !== projectPath) {
+		info.path = projectPath;
+	}
+
+	localStorage.setItem('projectName', info.name);
+	localStorage.setItem('projectPath', projectPath);
+	localStorage.setItem('projectInfo', JSON.stringify(info));
 
 }
 
@@ -63,22 +88,6 @@ function createDir (dirPath, callback) {
 
 }
 
-// Obtains information about the project and returns it as an object.
-function retrieveInfo (projectLocation) {
-
-	var projectName = localStorage.getItem('projectName');
-	var projectPath = path.join(projectLocation, projectName);
-	localStorage.setItem('projectPath', projectPath);
-
-	var projectInfo = {
-		name: projectName,
-		path: projectPath
-	};
-
-	return projectInfo;
-
-}
-
 // Creates the new project on disk.
 function setupNew () {
 
@@ -86,13 +95,15 @@ function setupNew () {
 
 	projectNew.addEventListener('change', function () {
 
-		var projectInfo = retrieveInfo(projectNew.value);
-		projectNew.value = '';
-		createDir(projectInfo.path, afterCreate);
+		var projectLocation = projectNew.value;
+		var projectName = localStorage.getItem('projectName');
+		var projectPath = path.join(projectLocation, projectName);
 
-		function afterCreate () {
-			writeInfo(projectInfo, mainWindow);
-		}
+		projectNew.value = '';
+
+		createDir(projectPath, function afterCreate () {
+			writeInfo(projectName, projectPath, mainWindow);
+		});
 
 	});
 
@@ -107,13 +118,12 @@ function setupLoad () {
 	projectLoad.addEventListener('change', function () {
 
 		var projectPath = projectLoad.value;
-		var projectName = path.basename(projectPath);
-		localStorage.setItem('projectPath', projectPath);
-		localStorage.setItem('projectName', projectName);
+		var infoFile = path.join(projectPath, 'didactylos.json');
 
-		var projectInfo = path.join(projectPath, 'didactylos.json');
-
-		checkProject(projectInfo, mainWindow);
+		checkProject(infoFile, function afterCheck () {
+			readInfo(projectPath, infoFile);
+			mainWindow();
+		});
 
 	});
 
