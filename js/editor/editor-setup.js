@@ -7,18 +7,11 @@ var Toolbar = require('../js/editor/toolbar.js');
 var Sidebar = require('../js/editor/sidebar.js');
 var File = require('../js/editor/file.js');
 var Menus = require('../js/menus.js');
+var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
 
 
 // ----- Functions ----- //
-
-// Retrieves and parses the project info held in local storage.
-function readInfo () {
-
-	var projectJson = localStorage.getItem('projectInfo');
-	return JSON.parse(projectJson);
-
-}
 
 // Builds the components linked to objects on the page.
 function viewComponents () {
@@ -44,11 +37,10 @@ function updateTitle () {
 }
 
 // Populates the sidebar with project files.
-function buildSidebar (sidebar, file) {
+function buildSidebar (sidebar, file, project) {
 
-	file.projectFiles(function (files) {
-		sidebar.build(files, file.open);
-	});
+	var files = project.files();
+	sidebar.build(files, file.open);
 
 }
 
@@ -66,14 +58,14 @@ function setup () {
 
 	window.focus();
 	updateTitle();
-	var projectPath = localStorage.getItem('projectPath');
 
-	var view = viewComponents();
-	var file = File(view.editor, view.sidebar, projectPath);
+	var views = viewComponents();
+	var project = Project(localStorage.getItem('projectInfo'));
+	var file = File(views, project);
 
-	buildSidebar(view.sidebar, file);
-	buildMenubar(file, view.toolbar);
-	tools.setup(view.toolbar, view.editor);
+	buildSidebar(views.sidebar, file, project);
+	buildMenubar(file, views.toolbar);
+	tools.setup(views.toolbar, views.editor);
 
 	editor.focus();
 

@@ -27,9 +27,19 @@ module.exports = function Project (projectJson) {
 		return info.files;
 	}
 
+	// Retrieves the project path.
+	function getPath () {
+		return info.path;
+	}
+
+	// Returns the filename of a file.
+	function getFile (name) {
+		return info.files[name];
+	}
+
 	// Adds a file to the list of files.
-	function addFile (name) {
-		info.files[name] = name;
+	function addFile (name, filename) {
+		info.files[name] = filename;
 		syncInfo();
 	}
 
@@ -51,7 +61,9 @@ module.exports = function Project (projectJson) {
 	init();
 
 	return {
-		getFiles: getFiles,
+		files: getFiles,
+		path: getPath,
+		file: getFile,
 		addFile: addFile,
 		deleteFile: deleteFile
 	};

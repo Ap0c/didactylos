@@ -29,6 +29,7 @@ module.exports = function Sidebar (window) {
 
 		fileDiv.appendChild(filename);
 		sidebar.appendChild(fileDiv);
+		updateSelection(fileDiv);
 
 		fileDiv.addEventListener('click', function () {
 			fileOpen(name);
@@ -42,8 +43,8 @@ module.exports = function Sidebar (window) {
 
 		var noFiles = files.length;
 
-		for (var i = 0; i < noFiles; i++) {
-			addFile(files[i], fileOpen);
+		for (var file in files) {
+			addFile(file, fileOpen);
 		}
 
 		if (sidebar.firstChild) {
@@ -55,20 +56,7 @@ module.exports = function Sidebar (window) {
 	// Prompts the user for a new file name.
 	function newFile (message) {
 
-		var name = window.prompt(message, 'My File');
-
-		if (name !== null) {
-
-			var projectPath = window.localStorage.getItem('projectPath');
-
-			return {
-				name: name,
-				path: projectPath
-			};
-
-		} else {
-			return null;
-		}
+		return window.prompt(message, 'My File');
 
 	}
 
