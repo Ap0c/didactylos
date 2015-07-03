@@ -49,6 +49,20 @@ function checkProject (projectFile, callback) {
 
 }
 
+// Attempts to create the project directory, and warns user if it exists.
+function createDir (dirPath, callback) {
+
+	fs.mkdir(dirPath, function (err) {
+		if (err) {
+			alert('A folder already exists with that name.');
+			createProject();
+		} else {
+			callback();
+		}
+	});
+
+}
+
 // Obtains information about the project and returns it as an object.
 function retrieveInfo (projectLocation) {
 
@@ -73,9 +87,12 @@ function setupNew () {
 	projectNew.addEventListener('change', function () {
 
 		var projectInfo = retrieveInfo(projectNew.value);
-		fs.mkdir(projectInfo.path);
+		projectNew.value = '';
+		createDir(projectInfo.path, afterCreate);
 
-		writeInfo(projectInfo, mainWindow);
+		function afterCreate () {
+			writeInfo(projectInfo, mainWindow);
+		}
 
 	});
 
