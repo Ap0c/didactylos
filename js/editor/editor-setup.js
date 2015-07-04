@@ -40,7 +40,7 @@ function updateTitle () {
 function buildSidebar (sidebar, file, project) {
 
 	var files = project.files();
-	sidebar.build(files, file.open);
+	sidebar.build(files, file.open, file.switch);
 
 }
 

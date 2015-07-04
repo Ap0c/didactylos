@@ -17,28 +17,6 @@ module.exports = function File (views, project) {
 
 	// ----- Functions ----- //
 
-	// Obtains an array of project files and passes it to the callback.
-	function projectFiles (callback) {
-
-		fs.readdir(project.path(), onlyFiles);
-
-		function onlyFiles (err, directoryContents) {
-
-			var files = directoryContents.filter(function (file) {
-
-				var fullPath = path.join(project.path(), file);
-				var isFile = !fs.statSync(fullPath).isDirectory();
-				var notDotfile = file[0] !== '.';
-				return isFile && notDotfile;
-
-			});
-
-			callback(files);
-
-		}
-
-	}
-
 	// Marks the file as markdown, saves it, and updates the sidebar.
 	function createFile (name) {
 
@@ -48,7 +26,7 @@ module.exports = function File (views, project) {
 		save();
 
 		project.addFile(name, filename);
-		sidebar.addFile(name, openFile);
+		sidebar.addFile(name, switchFile);
 
 	}
 
@@ -71,7 +49,6 @@ module.exports = function File (views, project) {
 	function openFile (name) {
 
 		var filename = project.file(name);
-		console.log(name);
 		filepath = path.join(project.path(), filename);
 
 		fs.readFile(filepath, function (err, data) {
@@ -101,6 +78,14 @@ module.exports = function File (views, project) {
 
 	}
 
+	// Switches to specified file, saving current in process.
+	function switchFile (name) {
+
+		save();
+		openFile(name);
+
+	}
+
 
 	// ----- Constructor ----- //
 
@@ -108,7 +93,7 @@ module.exports = function File (views, project) {
 		newFile: newFile,
 		open: openFile,
 		save: save,
-		projectFiles: projectFiles
+		switch: switchFile
 	};
 
 	return files;
