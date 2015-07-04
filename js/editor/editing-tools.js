@@ -50,7 +50,7 @@ function setupHeadings (toolbar, editor) {
 	}
 
 	for (var heading in HEADINGS) {
-		toolbar.listen(heading, 'click', addHeading);
+		toolbar.action(heading, addHeading);
 	}
 
 }
@@ -84,7 +84,7 @@ function setupSyntax (toolbar, editor) {
 
 	for (var item in SYNTAX) {
 		var syntaxPiece = SYNTAX[item];
-		toolbar.listen(item, 'click', insertSyntax(syntaxPiece, editor));
+		toolbar.action(item, insertSyntax(syntaxPiece, editor));
 	}
 
 }

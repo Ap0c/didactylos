@@ -10,10 +10,10 @@ module.exports = function Toolbar (window) {
 	// ----- Functions ----- //
 
 	// Listens for a specified event on the button.
-	function listen (buttonName, event, callback) {
+	function action (buttonName, callback) {
 
-		var toolButton = getButton(buttonName);
-		toolButton.button.addEventListener(event, callback);
+		var toolButton = toolButtons[buttonName];
+		toolButton.addEventListener('click', callback);
 
 	}
 
@@ -21,20 +21,9 @@ module.exports = function Toolbar (window) {
 	function click (buttonName) {
 
 		if (toolButtons[buttonName]) {
-			toolButtons[buttonName].button.click();
+			toolButtons[buttonName].click();
 		} else {
 			throw new Error('Button ' + buttonName + ' not found.');
-		}
-
-	}
-
-	// Retrieves a button from the toolbar.
-	function getButton (name) {
-
-		if (toolButtons[name]) {
-			return toolButtons[name];
-		} else {
-			throw new Error('Button ' + name + ' not found.');
 		}
 
 	}
@@ -47,11 +36,7 @@ module.exports = function Toolbar (window) {
 		for (var i = buttons.length - 1; i >= 0; i--) {
 
 			var button = buttons[i];
-
-			toolButtons[button.name] = {
-				button: button,
-				listen: listen
-			};
+			toolButtons[button.name] = button;
 
 		}
 
@@ -63,7 +48,7 @@ module.exports = function Toolbar (window) {
 	init();
 
 	return {
-		listen: listen,
+		action: action,
 		click: click
 	};
 
