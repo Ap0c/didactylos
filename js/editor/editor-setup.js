@@ -67,6 +67,12 @@ function setup () {
 	buildMenubar(file, views.toolbar);
 	tools.setup(views.toolbar, views.editor);
 
+	var win = gui.Window.get();
+	win.on('close', function () {
+		file.save();
+		this.close(true);
+	});
+
 	editor.focus();
 
 }

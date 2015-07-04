@@ -14,7 +14,7 @@ var SYNTAX = {
 	bullet: { before: '- ', after: '', caretMove: null },
 	italics: { before: '*', after: '*', caretMove: 1 },
 	bold: { before: '**', after: '**', caretMove: 2 },
-	link: { before: '[text](https://', after: ')', caretMove: 1 },
+	link: { before: '[', after: '](link here)', caretMove: 12 },
 	code: { before: '```\n', after: '\n```', caretMove: 4 }
 
 };
