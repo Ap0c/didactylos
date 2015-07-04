@@ -24,7 +24,15 @@ module.exports = function Project (projectJson) {
 
 	// Retrieves the project markdown files.
 	function getFiles () {
-		return info.files;
+
+		var files = [];
+
+		for (var file in info.files) {
+			files.push(file);
+		}
+
+		return files;
+
 	}
 
 	// Retrieves the project path.
@@ -34,13 +42,19 @@ module.exports = function Project (projectJson) {
 
 	// Returns the filename of a file.
 	function getFile (name) {
-		return info.files[name];
+		return info.files[name].filename;
 	}
 
 	// Adds a file to the list of files.
 	function addFile (name, filename) {
-		info.files[name] = filename;
+
+		info.files[name] = {
+			filename: filename,
+			styles: {}
+		};
+
 		syncInfo();
+
 	}
 
 	// Removes a file from the list of files.

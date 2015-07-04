@@ -43,8 +43,8 @@ module.exports = function Sidebar (window) {
 
 		var noFiles = files.length;
 
-		for (var file in files) {
-			addFile(file, switchFile);
+		for (var i = 0; i < noFiles; i++) {
+			addFile(files[i], switchFile);
 		}
 
 		var firstFile = sidebar.firstChild;
