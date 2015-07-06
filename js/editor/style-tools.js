@@ -1,12 +1,13 @@
 // ----- Functions ----- //
 
 // Updates the font size.
-function fontSize (project, stylebar, sidebar) {
+function fontSize (project, views) {
 
-	stylebar.action('font_size', function (value) {
+	views.stylebar.action('font_size', function (value) {
 
-		var file = sidebar.activeFile();
-		stylebar.setStyle('font_size', value);
+		var file = views.sidebar.activeFile();
+		views.stylebar.setStyle('font_size', value);
+		views.editor.focus();
 		project.updateStyle(file, 'font_size', value);
 
 	});
@@ -14,9 +15,9 @@ function fontSize (project, stylebar, sidebar) {
 }
 
 // Builds the stylebar.
-function setup (project, stylebar, sidebar) {
+function setup (project, views) {
 
-	fontSize(project, stylebar, sidebar);
+	fontSize(project, views);
 
 }
 
