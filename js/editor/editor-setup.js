@@ -5,10 +5,12 @@ var gui = require('nw.gui');
 var Editor = require('../js/editor/editor.js');
 var Toolbar = require('../js/editor/toolbar.js');
 var Sidebar = require('../js/editor/sidebar.js');
+var Stylebar = require('../js/editor/stylebar.js');
 var File = require('../js/editor/file.js');
 var Menus = require('../js/menus.js');
 var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
+var styles = require('../js/editor/style-tools.js');
 
 
 // ----- Functions ----- //
@@ -19,11 +21,13 @@ function viewComponents () {
 	var editor = Editor(window);
 	var toolbar = Toolbar(window);
 	var sidebar = Sidebar(window);
+	var stylebar = Stylebar(window);
 
 	return {
 		editor: editor,
 		toolbar: toolbar,
-		sidebar: sidebar
+		sidebar: sidebar,
+		stylebar: stylebar
 	};
 
 }
@@ -66,6 +70,7 @@ function setup () {
 	buildSidebar(views.sidebar, file, project);
 	buildMenubar(file, views.toolbar);
 	tools.setup(views.toolbar, views.editor);
+	styles.setup(project, views.stylebar, views.sidebar);
 
 	var win = gui.Window.get();
 	win.on('close', function () {

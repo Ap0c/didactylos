@@ -57,6 +57,15 @@ module.exports = function Project (projectJson) {
 
 	}
 
+	// Assigns a style to a file.
+	function updateStyle (filename, style, value) {
+
+		var file = info.files[filename];
+		file.styles[style] = value;
+		syncInfo();
+
+	}
+
 	// Removes a file from the list of files.
 	function deleteFile (name) {
 		delete info.files[name];
@@ -79,6 +88,7 @@ module.exports = function Project (projectJson) {
 		path: getPath,
 		file: getFile,
 		addFile: addFile,
+		updateStyle: updateStyle,
 		deleteFile: deleteFile
 	};
 

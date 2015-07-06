@@ -63,12 +63,18 @@ module.exports = function Sidebar (window) {
 
 	}
 
+	// Returns the name of the current file.
+	function activeFile () {
+		return currentFile.textContent;
+	}
+
 	// ----- Constructor ----- //
 
 	return {
 		addFile: addFile,
 		build: populateFiles,
-		newFile: newFile
+		newFile: newFile,
+		activeFile: activeFile
 	};
 
 };

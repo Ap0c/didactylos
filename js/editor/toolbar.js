@@ -9,7 +9,7 @@ module.exports = function Toolbar (window) {
 
 	// ----- Functions ----- //
 
-	// Listens for a specified event on the button.
+	// Listens for a click event on the button.
 	function action (buttonName, callback) {
 
 		var toolButton = toolButtons[buttonName];
