@@ -13,6 +13,7 @@ module.exports = function File (views, project) {
 	var filepath = null;
 	var editor = views.editor;
 	var sidebar = views.sidebar;
+	var stylebar = views.stylebar;
 
 
 	// ----- Functions ----- //
@@ -52,8 +53,13 @@ module.exports = function File (views, project) {
 		filepath = path.join(project.path(), filename);
 
 		fs.readFile(filepath, function (err, data) {
+
+			var styles = project.styles(name);
+
 			editor.setContent(data);
+			stylebar.loadStyles(styles);
 			editor.focus();
+
 		});
 
 	}

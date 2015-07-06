@@ -67,18 +67,16 @@ function setup () {
 	var project = Project(localStorage.getItem('projectInfo'));
 	var file = File(views, project);
 
+	styles.setup(project, views.stylebar, views.sidebar);
 	buildSidebar(views.sidebar, file, project);
 	buildMenubar(file, views.toolbar);
 	tools.setup(views.toolbar, views.editor);
-	styles.setup(project, views.stylebar, views.sidebar);
 
 	var win = gui.Window.get();
 	win.on('close', function () {
 		file.save();
 		this.close(true);
 	});
-
-	console.log(document.styleSheets);
 
 	editor.focus();
 

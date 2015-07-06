@@ -33,6 +33,38 @@ module.exports = function Stylebar (window) {
 
 	}
 
+	// Loads up a specific style into the stylebar.
+	function loadStyle (tool, value) {
+
+		var toolOptions = tool.options;
+
+		for (var i = 0, length = toolOptions.length; i < length; i++) {
+
+			if (toolOptions[i].value === value) {
+				tool.selectedIndex = i;
+				var changeEvent = document.createEvent("HTMLEvents");
+				changeEvent.initEvent("change", false, true);
+				tool.dispatchEvent(changeEvent);
+			}
+
+		}
+
+	}
+
+	// Loads a set of styles into the stylebar.
+	function loadStyles (styles) {
+
+		for (var style in styles) {
+
+			var styleTool = styleTools[style];
+			var value = styles[style];
+
+			loadStyle(styleTool, value);
+
+		}
+
+	}
+
 	// Sets the style for a particular type of element.
 	function setStyle (style, value) {
 
@@ -70,6 +102,7 @@ module.exports = function Stylebar (window) {
 
 	return {
 		action: action,
+		loadStyles: loadStyles,
 		setStyle: setStyle
 	};
 

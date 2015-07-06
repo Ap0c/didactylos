@@ -66,16 +66,25 @@ module.exports = function Project (projectJson) {
 
 	}
 
+	// Retrieves the saved styles for a file.
+	function getStyles (filename) {
+		return info.files[filename].styles;
+	}
+
 	// Removes a file from the list of files.
 	function deleteFile (name) {
+
 		delete info.files[name];
 		syncInfo();
+
 	}
 
 	// Parses the project information into an object.
 	function init () {
+
 		info = JSON.parse(projectJson);
 		infoFile = path.join(info.path, 'didactylos.json');
+
 	}
 
 
@@ -89,6 +98,7 @@ module.exports = function Project (projectJson) {
 		file: getFile,
 		addFile: addFile,
 		updateStyle: updateStyle,
+		styles: getStyles,
 		deleteFile: deleteFile
 	};
 
