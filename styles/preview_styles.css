@@ -1,0 +1,19 @@
+.smallest_font > p {
+	font-size: x-small;
+}
+
+.small_font > p {
+	font-size: small;
+}
+
+.medium_font > p {
+	font-size: medium;
+}
+
+.large_font > p {
+	font-size: large;
+}
+
+.largest_font > p {
+	font-size: x-large;
+}

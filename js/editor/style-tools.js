@@ -6,8 +6,8 @@ function fontSize (project, stylebar, sidebar) {
 	stylebar.action('font_size', function (value) {
 
 		var file = sidebar.activeFile();
-		stylebar.setStyle('p', 'font-size', value);
-		project.updateStyle(file, 'fontSize', value);
+		stylebar.setStyle('font_size', value);
+		project.updateStyle(file, 'font_size', value);
 
 	});
 

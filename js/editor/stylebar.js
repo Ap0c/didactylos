@@ -6,10 +6,17 @@ module.exports = function Stylebar (window) {
 	var preview = document.getElementById('preview');
 	var styleBar = document.getElementById('stylebar');
 	var styleSheet = document.styleSheets[1];
-	var styleLocations = {
-		"font-size": 0
-	};
 	var styleTools = {};
+
+	var rules = {
+		font_size: {
+			smallest: 'smallest_font',
+			small: 'small_font',
+			medium: 'medium_font',
+			large: 'large_font',
+			largest: 'largest_font'
+		}
+	};
 
 
 	// ----- Functions ----- //
@@ -18,7 +25,6 @@ module.exports = function Stylebar (window) {
 	function action (toolName, callback) {
 
 		var tool = styleTools[toolName];
-		console.log(tool.tagName);
 		if (tool.tagName === 'SELECT') {
 			tool.addEventListener('change', function eventHandler (event) {
 				callback(event.target.value);
@@ -28,14 +34,18 @@ module.exports = function Stylebar (window) {
 	}
 
 	// Sets the style for a particular type of element.
-	function setStyle (tagName, style, value) {
+	function setStyle (style, value) {
 
-		var ruleNumber = styleLocations[style];
+		var ruleClass = rules[style][value];
+		var previewClasses = preview.classList;
 
-		if (styleSheet.cssRules[String(ruleNumber)]) {
-			styleSheet.deleteRule(ruleNumber);
+		for (var rule in rules[style]) {
+			if (previewClasses.contains(rules[style][rule])) {
+				previewClasses.remove(rules[style][rule]);
+			}
 		}
-		styleSheet.insertRule('#preview > ' + tagName + ' { ' + style + ': ' + value + '; }', ruleNumber);
+
+		previewClasses.add(ruleClass);
 
 	}
 
