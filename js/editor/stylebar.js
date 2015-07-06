@@ -4,7 +4,11 @@ module.exports = function Stylebar (window) {
 
 	var document = window.document;
 	var preview = document.getElementById('preview');
-	var stylebar = document.getElementById('stylebar');
+	var styleBar = document.getElementById('stylebar');
+	var styleSheet = document.styleSheets[1];
+	var styleLocations = {
+		"font-size": 0
+	};
 	var styleTools = {};
 
 
@@ -26,18 +30,19 @@ module.exports = function Stylebar (window) {
 	// Sets the style for a particular type of element.
 	function setStyle (tagName, style, value) {
 
-		var elements = preview.getElementsByTagName(tagName);
+		var ruleNumber = styleLocations[style];
 
-		for (var i = elements.length - 1; i >= 0; i--) {
-			elements[i].style[style] = value;
+		if (styleSheet.cssRules[String(ruleNumber)]) {
+			styleSheet.deleteRule(ruleNumber);
 		}
+		styleSheet.insertRule('#preview > ' + tagName + ' { ' + style + ': ' + value + '; }', ruleNumber);
 
 	}
 
 	// Sets up the style bar.
 	function init () {
 
-		var tools = stylebar.getElementsByClassName('style_tool');
+		var tools = styleBar.getElementsByClassName('style_tool');
 
 		for (var i = tools.length - 1; i >= 0; i--) {
 

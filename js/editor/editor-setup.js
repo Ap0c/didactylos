@@ -78,6 +78,8 @@ function setup () {
 		this.close(true);
 	});
 
+	console.log(document.styleSheets);
+
 	editor.focus();
 
 }
