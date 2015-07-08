@@ -17,3 +17,11 @@
 .largest_font > p {
 	font-size: x-large;
 }
+
+.serif_font {
+	font-family: Times, "Times New Roman", Georgia, serif;
+}
+
+.sans_serif_font {
+	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
+}

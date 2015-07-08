@@ -103,7 +103,7 @@ body {
 	background-color: #ffffff;
 	display: inline-block;
 	box-sizing: border-box;
-	padding-top: 0.5%;
+	padding: 0.5% 0 0 1%;
 }
 
 #stylebar > input {
@@ -111,8 +111,8 @@ body {
 	visibility: hidden;
 }
 
-.select_label {
-	margin: 0 1% 0 2%;
+#stylebar > select {
+	margin: 0 1%%;
 }
 
 .colour_label {
@@ -163,4 +163,5 @@ body {
 
 #preview > h1, h2, h3, h4, h5, h6 {
 	color: #222222;
+	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
 }

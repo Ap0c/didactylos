@@ -26,6 +26,13 @@ module.exports = function Stylebar (window) {
 		background_colour: {
 			type: 'inline',
 			ruleName: 'background-color'
+		},
+		font_family: {
+			type: 'class',
+			classes: {
+				serif: 'serif_font',
+				sans_serif: 'sans_serif_font'
+			}
 		}
 	};
 
@@ -97,6 +104,20 @@ module.exports = function Stylebar (window) {
 
 	}
 
+	// Removes a rule's classes from the preview element.
+	function resetClasses (rule) {
+
+		var classes = rules[rule].classes;
+		var previewClasses = preview.classList;
+
+		for (var className in classes) {
+			if (previewClasses.contains(classes[className])) {
+				previewClasses.remove(classes[className]);
+			}
+		}
+
+	}
+
 	// Resets a select element to its default value.
 	function resetSelect (tool) {
 
@@ -130,9 +151,12 @@ module.exports = function Stylebar (window) {
 	function resetStyle (tool, rule) {
 
 		var ruleName = rules[rule].ruleName;
+		var previewClasses = preview.classList;
 
 		if (rules[rule].type === 'inline') {
 			preview.style.removeProperty(ruleName);
+		} else if (rules[rule].type === 'class') {
+			resetClasses(rule);
 		}
 
 		if (tool.tagName === 'SELECT') {
@@ -164,15 +188,10 @@ module.exports = function Stylebar (window) {
 	// Adds a class to the preview element, removes old class.
 	function setClass (style, value) {
 
+		resetClasses(style);
+
 		var classes = rules[style].classes;
 		var previewClasses = preview.classList;
-
-		for (var className in classes) {
-			if (previewClasses.contains(classes[className])) {
-				previewClasses.remove(classes[className]);
-			}
-		}
-
 		previewClasses.add(classes[value]);
 
 	}

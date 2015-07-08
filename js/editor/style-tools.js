@@ -40,12 +40,26 @@ function backgroundColour (project, views) {
 
 }
 
+function fontFamily (project, views) {
+
+	views.stylebar.action('font_family', function (value) {
+
+		var file = views.sidebar.activeFile();
+		views.stylebar.setStyle('font_family', value);
+		views.editor.focus();
+		project.updateStyle(file, 'font_family', value);
+
+	});
+
+}
+
 // Builds the stylebar.
 function setup (project, views) {
 
 	fontSize(project, views);
 	fontColour(project, views);
 	backgroundColour(project, views);
+	fontFamily(project, views);
 
 }
 
