@@ -22,6 +22,10 @@ module.exports = function Stylebar (window) {
 		font_colour: {
 			type: 'inline',
 			ruleName: 'color'
+		},
+		background_colour: {
+			type: 'inline',
+			ruleName: 'background-color'
 		}
 	};
 
@@ -33,10 +37,8 @@ module.exports = function Stylebar (window) {
 
 		var tool = styleTools[toolName];
 		var eventType = tool.tagName === 'SELECT' ? 'change' : 'input';
-		console.log(eventType);
 
 		tool.addEventListener(eventType, function eventHandler (event) {
-			console.log('here');
 			callback(event.target.value);
 		});
 
@@ -139,13 +141,10 @@ module.exports = function Stylebar (window) {
 
 		for (var i = tools.length - 1; i >= 0; i--) {
 
-			console.log(tools[i]);
 			var tool = tools[i];
 			styleTools[tool.id] = tool;
 
 		}
-
-		console.log(styleTools);
 
 	}
 

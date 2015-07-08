@@ -25,6 +25,18 @@ function fontColour (project, views) {
 
 	});
 
+}
+
+function backgroundColour (project, views) {
+
+	views.stylebar.action('background_colour', function (value) {
+
+		var file = views.sidebar.activeFile();
+		views.stylebar.setStyle('background_colour', value);
+		views.editor.focus();
+		project.updateStyle(file, 'background_colour', value);
+
+	});
 
 }
 
@@ -33,6 +45,7 @@ function setup (project, views) {
 
 	fontSize(project, views);
 	fontColour(project, views);
+	backgroundColour(project, views);
 
 }
 
