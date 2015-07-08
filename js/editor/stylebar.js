@@ -20,7 +20,8 @@ module.exports = function Stylebar (window) {
 			}
 		},
 		font_colour: {
-			type: 'inline'
+			type: 'inline',
+			ruleName: 'color'
 		}
 	};
 
@@ -31,7 +32,11 @@ module.exports = function Stylebar (window) {
 	function action (toolName, callback) {
 
 		var tool = styleTools[toolName];
-		tool.addEventListener('change', function eventHandler (event) {
+		var eventType = tool.tagName === 'SELECT' ? 'change' : 'input';
+		console.log(eventType);
+
+		tool.addEventListener(eventType, function eventHandler (event) {
+			console.log('here');
 			callback(event.target.value);
 		});
 
@@ -55,13 +60,23 @@ module.exports = function Stylebar (window) {
 
 	}
 
+	// Loads a given style into an input-element based tool.
+	function loadInput (tool, value) {
+
+		tool.value = value;
+		var inputEvent = document.createEvent("HTMLEvents");
+		inputEvent.initEvent("input", false, true);
+		tool.dispatchEvent(inputEvent);
+
+	}
+
 	// Loads up a specific style into the stylebar.
 	function loadStyle (tool, value) {
 
 		if (tool.tagName === 'SELECT') {
 			loadSelect(tool, value);
 		} else if (tool.tagName === 'INPUT') {
-			tool.value = value;
+			loadInput(tool, value);
 		}
 
 	}
@@ -96,11 +111,23 @@ module.exports = function Stylebar (window) {
 
 	}
 
-	// Sets the style for a particular type of element.
+	// Sets the inline style on the preview element.
+	function setInline (style, value) {
+
+		var ruleName = rules[style].ruleName;
+		preview.style[ruleName] = value;
+
+	}
+
+	// Sets the style for a particular type of rule.
 	function setStyle (style, value) {
 
-		if (rules[style].type === 'class') {
+		var ruleType = rules[style].type;
+
+		if (ruleType === 'class') {
 			setClass(style, value);
+		} else if (ruleType === 'inline') {
+			setInline(style, value);
 		}
 
 	}
@@ -112,10 +139,13 @@ module.exports = function Stylebar (window) {
 
 		for (var i = tools.length - 1; i >= 0; i--) {
 
+			console.log(tools[i]);
 			var tool = tools[i];
-			styleTools[tool.name] = tool;
+			styleTools[tool.id] = tool;
 
 		}
+
+		console.log(styleTools);
 
 	}
 

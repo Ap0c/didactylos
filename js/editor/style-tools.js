@@ -12,14 +12,19 @@ function fontSize (project, views) {
 
 	});
 
-	// views.stylebar.action('font_colour', function (value) {
+}
 
-	// 	var file = views.sidebar.activeFile();
-	// 	views.stylebar.setStyle('font_colour', value);
-	// 	views.editor.focus();
-	// 	project.updateStyle(file, 'font_colour', value);
+function fontColour (project, views) {
 
-	// });
+	views.stylebar.action('font_colour', function (value) {
+
+		var file = views.sidebar.activeFile();
+		views.stylebar.setStyle('font_colour', value);
+		views.editor.focus();
+		project.updateStyle(file, 'font_colour', value);
+
+	});
+
 
 }
 
@@ -27,6 +32,7 @@ function fontSize (project, views) {
 function setup (project, views) {
 
 	fontSize(project, views);
+	fontColour(project, views);
 
 }
 
