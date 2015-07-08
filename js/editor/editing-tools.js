@@ -92,6 +92,8 @@ function setupSyntax (toolbar, editor) {
 // Sets up handling of tab key.
 function setupTab (editor) {
 
+	editor.keyDown(onTab);
+
 	function onTab (keyEvent) {
 
 		if (keyEvent.keyCode === 9) {
@@ -107,8 +109,6 @@ function setupTab (editor) {
 		}
 
 	}
-
-	editor.keyDown(onTab);
 
 }
 

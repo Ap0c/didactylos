@@ -34,6 +34,17 @@ body {
 	color: #ffffff;
 }
 
+#sidebar > header {
+	width: 100%;
+	height: 5%;
+	box-sizing: border-box;
+	padding: 5% 0 0 5%;
+	text-decoration: underline;
+	font-size: large;
+	color: #005c8a;
+}
+
+
 /* ----- Top Bar ----- */
 
 #topbar {
@@ -53,13 +64,20 @@ body {
 	float: left;
 }
 
+#toolbar > div {
+	float: left;
+	width: 9.09%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
 .tool_button {
 	border: none;
 	background-color: #ffffff;
 	color: #005c8a;
 	height: 80%;
-	width: 7%;
-	margin: 0.3em 0.3% 0;
+	width: 80%;
+	margin: 7% 10%;
 	padding: 0;
 	cursor: pointer;
 }
@@ -84,6 +102,22 @@ body {
 	height: 100%;
 	background-color: #ffffff;
 	display: inline-block;
+}
+
+#stylebar > input {
+	margin: 0.5% 0 0;
+	width: 4%;
+}
+
+.select_label {
+	margin: 0 1% 0 2%;
+}
+
+.colour_label {
+	border-bottom: 0.2em solid #bb3333;
+	margin: 0 1% 0 2%;
+	box-sizing: border-box;
+	padding: 0 1%;
 }
 
 

@@ -9,26 +9,28 @@
 </head>
 <body>
 
-	<section id="sidebar"></section>
+	<section id="sidebar">
+		<header>Files</header>
+	</section>
 
 	<section id="topbar">
 
 		<section id="toolbar">
-			<button id="h1_insert" class="tool_button heading_button" name="h1" type="button">H1</button>
-			<button id="h2_insert" class="tool_button heading_button" name="h2" type="button">H2</button>
-			<button id="h3_insert" class="tool_button heading_button" name="h3" type="button">H3</button>
-			<button id="h4_insert" class="tool_button heading_button" name="h4" type="button">H4</button>
-			<button id="h5_insert" class="tool_button heading_button" name="h5" type="button">H5</button>
-			<button id="h6_insert" class="tool_button heading_button" name="h6" type="button">H6</button>
-			<button id="bullet_insert" class="tool_button" name="bullet" type="button">&#8226;</button>
-			<button id="italics_insert" class="tool_button" name="italics" type="button">I</button>
-			<button id="bold_insert" class="tool_button" name="bold" type="button">B</button>
-			<button id="link_insert" class="tool_button" name="link" type="button">link</button>
-			<button id="code_insert" class="tool_button" name="code" type="button">&#60;&#62;</button>
+			<div><button id="h1_insert" class="tool_button heading_button" name="h1" type="button">H1</button></div>
+			<div><button id="h2_insert" class="tool_button heading_button" name="h2" type="button">H2</button></div>
+			<div><button id="h3_insert" class="tool_button heading_button" name="h3" type="button">H3</button></div>
+			<div><button id="h4_insert" class="tool_button heading_button" name="h4" type="button">H4</button></div>
+			<div><button id="h5_insert" class="tool_button heading_button" name="h5" type="button">H5</button></div>
+			<div><button id="h6_insert" class="tool_button heading_button" name="h6" type="button">H6</button></div>
+			<div><button id="bullet_insert" class="tool_button" name="bullet" type="button">&#8226;</button></div>
+			<div><button id="italics_insert" class="tool_button" name="italics" type="button">I</button></div>
+			<div><button id="bold_insert" class="tool_button" name="bold" type="button">B</button></div>
+			<div><button id="link_insert" class="tool_button" name="link" type="button">link</button></div>
+			<div><button id="code_insert" class="tool_button" name="code" type="button">&#60;&#62;</button></div>
 		</section>
 
 		<section id="stylebar">
-			<label for="font_size">Font Size</label>
+			<label for="font_size" class="select_label">Aa</label>
 			<select name="font_size" id="font_size" class="style_tool">
 				<option value="largest">largest</option>
 				<option value="large">large</option>
@@ -36,9 +38,9 @@
 				<option value="small">small</option>
 				<option value="smallest">smallest</option>
 			</select>
-			<label for="font_colour">Font Colour</label>
+			<label for="font_colour" class="colour_label">A</label>
 			<input type="color" id="font_colour" class="style_tool">
-			<label for="background_colour">Background Colour</label>
+			<label for="background_colour" class="colour_label">Fill</label>
 			<input type="color" id="background_colour" class="style_tool">
 		</section>
 

@@ -47,7 +47,8 @@ module.exports = function Sidebar (window) {
 			addFile(files[i], switchFile);
 		}
 
-		var firstFile = sidebar.firstChild;
+		var fileDivs = sidebar.getElementsByTagName('div');
+		var firstFile = fileDivs[0];
 
 		if (firstFile) {
 			fileOpen(firstFile.textContent);
