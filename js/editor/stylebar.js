@@ -56,6 +56,7 @@ module.exports = function Stylebar (window) {
 				var changeEvent = document.createEvent("HTMLEvents");
 				changeEvent.initEvent("change", false, true);
 				tool.dispatchEvent(changeEvent);
+				return;
 			}
 
 		}
@@ -83,17 +84,89 @@ module.exports = function Stylebar (window) {
 
 	}
 
+	// Converts an rgb colour to its hex equivalent.
+	function rgbToHex (rgbString) {
+
+		var rgbArray = rgbString.split('(')[1].split(')')[0].split(',');
+
+		var hexArray = rgbArray.map(function (x) {
+			return parseInt(x).toString(16);
+		});
+
+		return `#${hexArray.join('')}`;
+
+	}
+
+	// Resets a select element to its default value.
+	function resetSelect (tool) {
+
+		var toolOptions = tool.options;
+
+		for (var i = 0, length = toolOptions.length; i < length; i++) {
+
+			if (toolOptions[i].defaultSelected) {
+				tool.selectedIndex = toolOptions[i].index;
+				return;
+			}
+
+		}
+
+	}
+
+	// Resets an input element to its default value.
+	function resetInput (tool, rule) {
+
+		var value = window.getComputedStyle(preview).getPropertyValue(rule);
+
+		if (rule === 'color' || rule === 'background-color') {
+			value = rgbToHex(value);
+		}
+
+		tool.value = value;
+
+	}
+
+	// Resets both the style and tool to the default defined in the stylesheet.
+	function resetStyle (tool, rule) {
+
+		var ruleName = rules[rule].ruleName;
+
+		if (rules[rule].type === 'inline') {
+			preview.style.removeProperty(ruleName);
+		}
+
+		if (tool.tagName === 'SELECT') {
+			resetSelect(tool);
+		} else if (tool.tagName === 'INPUT') {
+			resetInput(tool, ruleName);
+		}
+
+	}
+
 	// Loads a set of styles into the stylebar.
 	function loadStyles (styles) {
 
-		for (var style in styles) {
+		for (var rule in rules) {
 
-			var styleTool = styleTools[style];
-			var value = styles[style];
+			var styleTool = styleTools[rule];
 
-			loadStyle(styleTool, value);
+			if (rule in styles) {
+				var value = styles[rule];
+				loadStyle(styleTool, value);
+			} else {
+				resetStyle(styleTool, rule);
+			}
 
 		}
+
+		// for (var style in styles) {
+
+		// 	var styleTool = styleTools[style];
+		// 	var value = styles[style];
+
+		// 	loadStyle(styleTool, value);
+
+		// }
 
 	}
 
