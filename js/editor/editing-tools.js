@@ -89,11 +89,30 @@ function setupSyntax (toolbar, editor) {
 
 }
 
+// Sets up handling of tab key.
+function setupTab (editor) {
+
+	function onTab (keyEvent) {
+
+		if (keyEvent.keyCode === 9) {
+
+			insert('    ', '', editor);
+			keyEvent.preventDefault();
+
+		}
+
+	}
+
+	editor.keyDown(onTab);
+
+}
+
 // Builds the insert toolbar.
 function setup (toolbar, editor) {
 
 	setupHeadings(toolbar, editor);
 	setupSyntax(toolbar, editor);
+	setupTab(editor);
 
 }
 

@@ -71,6 +71,13 @@ module.exports = function Editor (window) {
 		editArea.selectionEnd = selection.end;
 	}
 
+	// Listens for a keydown event.
+	function keyDown (callback) {
+		editArea.addEventListener('keydown', function (keyEvent) {
+			callback(keyEvent);
+		});
+	}
+
 	// Sets the focus on the editing textarea.
 	function focus () {
 		editArea.focus();
@@ -94,6 +101,7 @@ module.exports = function Editor (window) {
 		getContent: getContent,
 		getSelection: getSelection,
 		setSelection: setSelection,
+		keyDown: keyDown,
 		focus: focus,
 		updatePreview: updatePreview
 
