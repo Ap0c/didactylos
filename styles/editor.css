@@ -102,11 +102,13 @@ body {
 	height: 100%;
 	background-color: #ffffff;
 	display: inline-block;
+	box-sizing: border-box;
+	padding-top: 0.5%;
 }
 
 #stylebar > input {
-	margin: 0.5% 0 0;
-	width: 4%;
+	position: absolute;
+	visibility: hidden;
 }
 
 .select_label {
@@ -115,9 +117,14 @@ body {
 
 .colour_label {
 	border-bottom: 0.2em solid #bb3333;
-	margin: 0 1% 0 2%;
+	margin: 0 1%%;
 	box-sizing: border-box;
 	padding: 0 1%;
+	cursor: pointer;
+}
+
+.colour_label:hover {
+	background-color: #dddddd;
 }
 
 
