@@ -20,7 +20,7 @@ module.exports = function Stylebar (window) {
 			}
 		},
 		font_colour: {
-			
+			type: 'inline'
 		}
 	};
 
@@ -31,16 +31,14 @@ module.exports = function Stylebar (window) {
 	function action (toolName, callback) {
 
 		var tool = styleTools[toolName];
-		// if (tool.tagName === 'SELECT') {
-			tool.addEventListener('change', function eventHandler (event) {
-				callback(event.target.value);
-			});
-		// }
+		tool.addEventListener('change', function eventHandler (event) {
+			callback(event.target.value);
+		});
 
 	}
 
-	// Loads up a specific style into the stylebar.
-	function loadStyle (tool, value) {
+	// Loads a given style into a select-element based tool.
+	function loadSelect (tool, value) {
 
 		var toolOptions = tool.options;
 
@@ -53,6 +51,17 @@ module.exports = function Stylebar (window) {
 				tool.dispatchEvent(changeEvent);
 			}
 
+		}
+
+	}
+
+	// Loads up a specific style into the stylebar.
+	function loadStyle (tool, value) {
+
+		if (tool.tagName === 'SELECT') {
+			loadSelect(tool, value);
+		} else if (tool.tagName === 'INPUT') {
+			tool.value = value;
 		}
 
 	}
