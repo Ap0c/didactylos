@@ -10,11 +10,17 @@ module.exports = function Stylebar (window) {
 
 	var rules = {
 		font_size: {
-			smallest: 'smallest_font',
-			small: 'small_font',
-			medium: 'medium_font',
-			large: 'large_font',
-			largest: 'largest_font'
+			type: 'class',
+			classes: {
+				smallest: 'smallest_font',
+				small: 'small_font',
+				medium: 'medium_font',
+				large: 'large_font',
+				largest: 'largest_font'
+			}
+		},
+		font_colour: {
+			
 		}
 	};
 
@@ -25,11 +31,11 @@ module.exports = function Stylebar (window) {
 	function action (toolName, callback) {
 
 		var tool = styleTools[toolName];
-		if (tool.tagName === 'SELECT') {
+		// if (tool.tagName === 'SELECT') {
 			tool.addEventListener('change', function eventHandler (event) {
 				callback(event.target.value);
 			});
-		}
+		// }
 
 	}
 
@@ -65,19 +71,28 @@ module.exports = function Stylebar (window) {
 
 	}
 
-	// Sets the style for a particular type of element.
-	function setStyle (style, value) {
+	// Adds a class to the preview element, removes old class.
+	function setClass (style, value) {
 
-		var ruleClass = rules[style][value];
+		var classes = rules[style].classes;
 		var previewClasses = preview.classList;
 
-		for (var rule in rules[style]) {
-			if (previewClasses.contains(rules[style][rule])) {
-				previewClasses.remove(rules[style][rule]);
+		for (var className in classes) {
+			if (previewClasses.contains(classes[className])) {
+				previewClasses.remove(classes[className]);
 			}
 		}
 
-		previewClasses.add(ruleClass);
+		previewClasses.add(classes[value]);
+
+	}
+
+	// Sets the style for a particular type of element.
+	function setStyle (style, value) {
+
+		if (rules[style].type === 'class') {
+			setClass(style, value);
+		}
 
 	}
 
