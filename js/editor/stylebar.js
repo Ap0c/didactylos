@@ -33,6 +33,13 @@ module.exports = function Stylebar (window) {
 				serif: 'serif_font',
 				sans_serif: 'sans_serif_font'
 			}
+		},
+		heading_family: {
+			type: 'class',
+			classes: {
+				serif: 'serif_headings',
+				sans_serif: 'sans_serif_headings'
+			}
 		}
 	};
 

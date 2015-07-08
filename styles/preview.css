@@ -25,3 +25,11 @@
 .sans_serif_font {
 	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
 }
+
+.serif_headings > h1, h2, h3, h4, h5, h6 {
+	font-family: Times, "Times New Roman", Georgia, serif !important;
+}
+
+.sans_serif_headings > h1, h2, h3, h4, h5, h6 {
+	font-family: HelveticaNeue, Verdana, Arial, sans-serif !important;
+}

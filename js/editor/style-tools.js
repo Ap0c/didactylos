@@ -53,6 +53,19 @@ function fontFamily (project, views) {
 
 }
 
+function headingFamily (project, views) {
+
+	views.stylebar.action('heading_family', function (value) {
+
+		var file = views.sidebar.activeFile();
+		views.stylebar.setStyle('heading_family', value);
+		views.editor.focus();
+		project.updateStyle(file, 'heading_family', value);
+
+	});
+
+}
+
 // Builds the stylebar.
 function setup (project, views) {
 
@@ -60,6 +73,7 @@ function setup (project, views) {
 	fontColour(project, views);
 	backgroundColour(project, views);
 	fontFamily(project, views);
+	headingFamily(project, views);
 
 }
 
