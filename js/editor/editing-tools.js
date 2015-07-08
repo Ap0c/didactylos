@@ -96,7 +96,12 @@ function setupTab (editor) {
 
 		if (keyEvent.keyCode === 9) {
 
+			var selection = editor.getSelection();
+
 			insert('    ', '', editor);
+			editor.setSelection(selection);
+			moveCaret(-4, editor);
+
 			keyEvent.preventDefault();
 
 		}

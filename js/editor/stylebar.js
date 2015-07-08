@@ -159,15 +159,6 @@ module.exports = function Stylebar (window) {
 
 		}
 
-		// for (var style in styles) {
-
-		// 	var styleTool = styleTools[style];
-		// 	var value = styles[style];
-
-		// 	loadStyle(styleTool, value);
-
-		// }
-
 	}
 
 	// Adds a class to the preview element, removes old class.
