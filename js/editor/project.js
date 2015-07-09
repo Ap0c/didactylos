@@ -79,6 +79,11 @@ module.exports = function Project (projectJson) {
 
 	}
 
+	// Returns true if a file already exists, false if not.
+	function fileExists (name) {
+		return info.files[name] ? true : false;
+	}
+
 	// Parses the project information into an object.
 	function init () {
 
@@ -99,7 +104,8 @@ module.exports = function Project (projectJson) {
 		addFile: addFile,
 		updateStyle: updateStyle,
 		styles: getStyles,
-		deleteFile: deleteFile
+		deleteFile: deleteFile,
+		fileExists: fileExists
 	};
 
 };
