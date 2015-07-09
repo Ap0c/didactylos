@@ -28,6 +28,7 @@ module.exports = function File (views, project) {
 
 		project.addFile(name, filename);
 		sidebar.addFile(name, switchFile);
+		stylebar.loadStyles({});
 
 	}
 
@@ -41,7 +42,6 @@ module.exports = function File (views, project) {
 			sidebar.message('That file already exists.');
 			newFile();
 		} else if (file === '') {
-			console.log('here');
 			sidebar.message('Please specify a file name.');
 			newFile();
 		} else if (file !== null) {

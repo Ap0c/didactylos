@@ -71,7 +71,6 @@ module.exports = function Sidebar (window) {
 
 	// Displays a message to the user.
 	function message (messageText) {
-		console.log('got here?');
 		window.alert(messageText);
 	}
 
