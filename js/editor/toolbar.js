@@ -5,6 +5,9 @@ module.exports = function Toolbar (window) {
 	var document = window.document;
 	var toolbar = document.getElementById('toolbar');
 	var toolButtons = {};
+	var overlays = {
+		link_type: document.getElementById('link_type_overlay')
+	};
 
 
 	// ----- Functions ----- //
@@ -25,6 +28,14 @@ module.exports = function Toolbar (window) {
 		} else {
 			throw new Error('Button ' + buttonName + ' not found.');
 		}
+
+	}
+
+	// Opens a modal dialog.
+	function openOverlay (name) {
+
+		var overlay = overlays[name];
+		overlay.showModal();
 
 	}
 
@@ -49,7 +60,8 @@ module.exports = function Toolbar (window) {
 
 	return {
 		action: action,
-		click: click
+		click: click,
+		overlay: openOverlay
 	};
 
 };

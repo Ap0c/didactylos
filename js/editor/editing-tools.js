@@ -14,7 +14,7 @@ var SYNTAX = {
 	bullet: { before: '- ', after: '', caretMove: null },
 	italics: { before: '*', after: '*', caretMove: 1 },
 	bold: { before: '**', after: '**', caretMove: 2 },
-	link: { before: '[', after: '](link here)', caretMove: 12 },
+	// link: { before: '[', after: '](link here)', caretMove: 12 },
 	code: { before: '```\n', after: '\n```', caretMove: 4 }
 
 };
@@ -112,12 +112,26 @@ function setupTab (editor) {
 
 }
 
+// Sets up handling of link insertion.
+function setupLink (toolbar, editor) {
+
+	var linkSyntax = { before: '[', after: '](link here)', caretMove: 12 };
+	toolbar.action('link', insertLink);
+
+	function insertLink () {
+		toolbar.overlay('link_type');
+		insertSyntax(linkSyntax, editor)();
+	}
+
+}
+
 // Builds the insert toolbar.
 function setup (toolbar, editor) {
 
 	setupHeadings(toolbar, editor);
 	setupSyntax(toolbar, editor);
 	setupTab(editor);
+	setupLink(toolbar, editor);
 
 }
 
