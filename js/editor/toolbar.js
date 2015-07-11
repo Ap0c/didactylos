@@ -5,21 +5,28 @@ module.exports = function Toolbar (window) {
 	var document = window.document;
 	var toolbar = document.getElementById('toolbar');
 	var toolButtons = {};
+
 	var overlays = {
 		link_type: {
 			dialog: document.getElementById('link_type_overlay'),
-			processData: linkType,
-			cancel: document.getElementById('cancel_link_choice')
+			form: document.getElementById('link_type'),
+			cancel: document.getElementById('cancel_link_choice'),
+			dataElement: document.getElementById('link_type_web'),
+			dataAttribute: 'checked'
 		},
 		web_link: {
 			dialog: document.getElementById('web_link_overlay'),
-			processData: webInsert,
-			cancel: document.getElementById('cancel_web_link')
+			form: document.getElementById('web_link'),
+			cancel: document.getElementById('cancel_web_link'),
+			dataElement: document.getElementById('link_text'),
+			dataAttribute: 'value'
 		},
 		file_link: {
 			dialog: document.getElementById('file_link_overlay'),
-			processData: fileInsert,
-			cancel: document.getElementById('cancel_file_link')
+			form: document.getElementById('file_link'),
+			cancel: document.getElementById('cancel_file_link'),
+			dataElement: document.getElementById('file_select'),
+			dataAttribute: 'value'
 		}
 	};
 
@@ -45,66 +52,22 @@ module.exports = function Toolbar (window) {
 
 	}
 
-	// Returns the results from the linktype form as an object.
-	function linkType (overlay, callback) {
+	// Closes the overlay, processes the data submitted and passes to callback.
+	function overlayData (overlay, callback) {
 
-		form = document.getElementById('link_type');
-		form.addEventListener('submit', linkChoice);
+		overlay.form.addEventListener('submit', formHandler);
 
-		function linkChoice (submitEvent) {
-
-			submitEvent.preventDefault();
-			form.removeEventListener('submit', linkChoice);
-			webLink = document.getElementById('link_type_web').checked;
-			data = {web: webLink};
-			closeOverlay(overlay, afterClose);
-
-			function afterClose () {
-				callback(data);
-			}
-
-		}
-
-	}
-
-	// Returns the results from the linkinsert form as an object.
-	function webInsert (overlay, callback) {
-
-		form = document.getElementById('web_link');
-		form.addEventListener('submit', webLink);
-
-		function webLink (submitEvent) {
+		function formHandler (submitEvent) {
 
 			submitEvent.preventDefault();
-			form.removeEventListener('submit', webLink);
-			linkText = document.getElementById('link_text').value;
-			data = {text: linkText};
-			closeOverlay(overlay, afterClose);
+			overlay.form.removeEventListener('submit', formHandler);
 
-			function afterClose () {
+			var data = overlay.dataElement[overlay.dataAttribute];
+
+			closeOverlay(overlay, function afterClose () {
 				callback(data);
-			}
-		}
+			});
 
-	}
-
-	// Returns the results from the linkinsert form as an object.
-	function fileInsert (overlay, callback) {
-
-		form = document.getElementById('file_link');
-		form.addEventListener('submit', insertFile);
-
-		function insertFile (submitEvent) {
-
-			submitEvent.preventDefault();
-			form.removeEventListener('submit', insertFile);
-			filename = document.getElementById('file_select').value;
-			data = {name: filename};
-			closeOverlay(overlay, afterClose);
-
-			function afterClose () {
-				callback(data);
-			}
 		}
 
 	}
@@ -115,7 +78,7 @@ module.exports = function Toolbar (window) {
 		var overlay = overlays[name];
 
 		if (accept) {
-			overlay.processData(overlay, accept);
+			overlayData(overlay, accept);
 		}
 
 		overlay.cancel.addEventListener('click', cancelOverlay);
@@ -135,7 +98,7 @@ module.exports = function Toolbar (window) {
 		callback();
 	}
 
-	// Removes files from the list if they no longer exist in the project.
+	// Removes files from the file insert dialog if they no longer exist.
 	function deleteFiles (fileSelect, files) {
 
 		for (var file in fileSelect) {

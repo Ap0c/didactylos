@@ -130,7 +130,7 @@ function webLink (toolbar, editor) {
 
 	function insertWeb (link) {
 
-		var linkText = formatLink(link.text);
+		var linkText = formatLink(link);
 
 		var linkSyntax = {
 			before: '[label',
@@ -150,9 +150,7 @@ function fileLink (toolbar, editor, project) {
 	toolbar.updateFiles(project.files());
 	toolbar.overlay('file_link', insertFile, editor.focus);
 
-	function insertFile (file) {
-
-		var filename = file.name;
+	function insertFile (filename) {
 
 		var linkSyntax = {
 			before: '[label',
@@ -175,8 +173,8 @@ function setupLink (toolbar, editor, project) {
 		toolbar.overlay('link_type', linkChoice, editor.focus);
 	}
 
-	function linkChoice (choice) {
-		if (choice.web) {
+	function linkChoice (isWebLink) {
+		if (isWebLink) {
 			webLink(toolbar, editor);
 		} else {
 			fileLink(toolbar, editor, project);
