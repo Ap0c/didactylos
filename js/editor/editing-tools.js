@@ -112,6 +112,17 @@ function setupTab (editor) {
 
 }
 
+// Formats a link to make sure that it is web compatible.
+function formatLink (link) {
+
+	if (link.substr(0, 3) !== 'http') {
+		link = 'https://' + link;
+	}
+
+	return link;
+
+}
+
 // Asks the user for a web link, and inserts it.
 function webLink (editor, toolbar) {
 
@@ -119,9 +130,11 @@ function webLink (editor, toolbar) {
 
 	function insertWeb (link) {
 
+		var linkText = formatLink(link.text);
+
 		var linkSyntax = {
 			before: '[label',
-			after: `](${link.text})`,
+			after: `](${linkText})`,
 			caretMove: null
 		};
 
