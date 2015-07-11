@@ -24,15 +24,7 @@ module.exports = function Project (projectJson) {
 
 	// Retrieves the project markdown files.
 	function getFiles () {
-
-		var files = [];
-
-		for (var file in info.files) {
-			files.push(file);
-		}
-
-		return files;
-
+		return Object.keys(info.files);
 	}
 
 	// Retrieves the project path.

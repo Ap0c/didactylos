@@ -69,7 +69,7 @@ function setup () {
 
 	buildSidebar(views.sidebar, file, project);
 	buildMenubar(file, views.toolbar);
-	tools.setup(views.toolbar, views.editor);
+	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
 
 	var win = gui.Window.get();

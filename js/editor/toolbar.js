@@ -11,10 +11,15 @@ module.exports = function Toolbar (window) {
 			processData: linkType,
 			cancel: document.getElementById('cancel_link_choice')
 		},
-		insert_link: {
-			dialog: document.getElementById('insert_link_overlay'),
-			processData: linkInsert,
-			cancel: document.getElementById('cancel_link')
+		web_link: {
+			dialog: document.getElementById('web_link_overlay'),
+			processData: webInsert,
+			cancel: document.getElementById('cancel_web_link')
+		},
+		file_link: {
+			dialog: document.getElementById('file_link_overlay'),
+			processData: fileInsert,
+			cancel: document.getElementById('cancel_file_link')
 		}
 	};
 
@@ -63,17 +68,38 @@ module.exports = function Toolbar (window) {
 	}
 
 	// Returns the results from the linkinsert form as an object.
-	function linkInsert (overlay, callback) {
+	function webInsert (overlay, callback) {
 
-		form = document.getElementById('insert_link');
-		form.addEventListener('submit', insertLink);
+		form = document.getElementById('web_link');
+		form.addEventListener('submit', webLink);
 
-		function insertLink (submitEvent) {
+		function webLink (submitEvent) {
 
 			submitEvent.preventDefault();
-			form.removeEventListener('submit', insertLink);
+			form.removeEventListener('submit', webLink);
 			linkText = document.getElementById('link_text').value;
 			data = {text: linkText};
+			closeOverlay(overlay, afterClose);
+
+			function afterClose () {
+				callback(data);
+			}
+		}
+
+	}
+
+	// Returns the results from the linkinsert form as an object.
+	function fileInsert (overlay, callback) {
+
+		form = document.getElementById('file_link');
+		form.addEventListener('submit', insertFile);
+
+		function insertFile (submitEvent) {
+
+			submitEvent.preventDefault();
+			form.removeEventListener('submit', insertFile);
+			filename = document.getElementById('file_select').value;
+			data = {name: filename};
 			closeOverlay(overlay, afterClose);
 
 			function afterClose () {
@@ -109,6 +135,44 @@ module.exports = function Toolbar (window) {
 		callback();
 	}
 
+	// Removes files from the list if they no longer exist in the project.
+	function deleteFiles (fileSelect, files) {
+
+		for (var file in fileSelect) {
+
+			var optionId = file + '_option';
+
+			if (files.indexOf(optionId) < 0) {
+				fileSelect.remove(optionId);
+			}
+
+		}
+
+	}
+
+	// Updates the file list in the file insert dialog.
+	function updateFiles (files) {
+
+		var fileSelect = document.getElementById('file_select');
+		deleteFiles(fileSelect, files);
+
+		for (var i = files.length - 1; i >= 0; i--) {
+
+			var file = files[i];
+
+			if (!fileSelect[file]) {
+
+				var option = document.createElement('option');
+				option.value = option.text = file;
+				option.id = file + '_option';
+				fileSelect.add(option);
+
+			}
+
+		}
+
+	}
+
 	// Sets up the toolbar.
 	function init () {
 
@@ -131,7 +195,8 @@ module.exports = function Toolbar (window) {
 	return {
 		action: action,
 		click: click,
-		overlay: openOverlay
+		overlay: openOverlay,
+		updateFiles: updateFiles
 	};
 
 };

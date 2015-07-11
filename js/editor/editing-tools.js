@@ -115,7 +115,7 @@ function setupTab (editor) {
 // Formats a link to make sure that it is web compatible.
 function formatLink (link) {
 
-	if (link.substr(0, 3) !== 'http') {
+	if (link.substr(0, 4) !== 'http') {
 		link = 'https://' + link;
 	}
 
@@ -124,9 +124,9 @@ function formatLink (link) {
 }
 
 // Asks the user for a web link, and inserts it.
-function webLink (editor, toolbar) {
+function webLink (toolbar, editor) {
 
-	toolbar.overlay('insert_link', insertWeb, editor.focus);
+	toolbar.overlay('web_link', insertWeb, editor.focus);
 
 	function insertWeb (link) {
 
@@ -144,10 +144,31 @@ function webLink (editor, toolbar) {
 
 }
 
-// Sets up handling of link insertion.
-function setupLink (toolbar, editor) {
+// Asks the user to pick a file, and fills in the link syntax.
+function fileLink (toolbar, editor, project) {
 
-	var linkSyntax = { before: '[label', after: '](http://)', caretMove: 2 };
+	toolbar.updateFiles(project.files());
+	toolbar.overlay('file_link', insertFile, editor.focus);
+
+	function insertFile (file) {
+
+		var filename = file.name;
+
+		var linkSyntax = {
+			before: '[label',
+			after: `](file:${filename})`,
+			caretMove: null
+		};
+
+		insertSyntax(linkSyntax, editor)();
+
+	}
+
+}
+
+// Sets up handling of link insertion.
+function setupLink (toolbar, editor, project) {
+
 	toolbar.action('link', insertLink);
 
 	function insertLink () {
@@ -156,19 +177,21 @@ function setupLink (toolbar, editor) {
 
 	function linkChoice (choice) {
 		if (choice.web) {
-			webLink(editor, toolbar);
+			webLink(toolbar, editor);
+		} else {
+			fileLink(toolbar, editor, project);
 		}
 	}
 
 }
 
 // Builds the insert toolbar.
-function setup (toolbar, editor) {
+function setup (toolbar, editor, project) {
 
 	setupHeadings(toolbar, editor);
 	setupSyntax(toolbar, editor);
 	setupTab(editor);
-	setupLink(toolbar, editor);
+	setupLink(toolbar, editor, project);
 
 }
 

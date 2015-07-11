@@ -65,19 +65,28 @@
 			<input id="link_type_web" type="radio" name="link_type" value="web" checked>
 			<label for="link_type_web">Web</label>
 			<input id="link_type_local" type="radio" name="link_type" value="local">
-			<label for="link_type_local">Project</label>
+			<label for="link_type_local">File</label>
 			<input type="submit" value="Add">
 		</form>
 		<button id="cancel_link_choice">Cancel</button>
 	</dialog>
 
-	<dialog id="insert_link_overlay">
-		<form method="dialog" id="insert_link">
+	<dialog id="web_link_overlay">
+		<form method="dialog" id="web_link">
 			<input id="link_text" type="text">
 			<label for="link_text">Link</label>
 			<input type="submit" value="Insert">
 		</form>
-		<button id="cancel_link">Cancel</button>
+		<button id="cancel_web_link">Cancel</button>
+	</dialog>
+
+	<dialog id="file_link_overlay">
+		<form method="dialog" id="file_link">
+			<select id="file_select"></select>
+			<label for="file_select">File</label>
+			<input type="submit" value="Insert">
+		</form>
+		<button id="cancel_file_link">Cancel</button>
 	</dialog>
 
 </body>
