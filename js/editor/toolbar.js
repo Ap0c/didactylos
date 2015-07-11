@@ -63,10 +63,8 @@ module.exports = function Toolbar (window) {
 			overlay.form.removeEventListener('submit', formHandler);
 
 			var data = overlay.dataElement[overlay.dataAttribute];
-
-			closeOverlay(overlay, function afterClose () {
-				callback(data);
-			});
+			overlay.dialog.close();
+			callback(data);
 
 		}
 
@@ -77,35 +75,29 @@ module.exports = function Toolbar (window) {
 
 		var overlay = overlays[name];
 
-		if (accept) {
-			overlayData(overlay, accept);
-		}
-
+		overlayData(overlay, accept);
 		overlay.cancel.addEventListener('click', cancelOverlay);
 
 		function cancelOverlay (clickEvent) {
+
 			clickEvent.target.removeEventListener('click', cancelOverlay);
-			closeOverlay(overlay, cancel);
+			overlay.dialog.close();
+			cancel();
+
 		}
 
 		overlay.dialog.showModal();
 
 	}
 
-	// Closes a specified overlay.
-	function closeOverlay (overlay, callback) {
-		overlay.dialog.close();
-		callback();
-	}
-
 	// Removes files from the file insert dialog if they no longer exist.
-	function deleteFiles (fileSelect, files) {
+	function deleteFiles (fileSelect, projectFiles) {
 
 		for (var file in fileSelect) {
 
 			var optionId = file + '_option';
 
-			if (files.indexOf(optionId) < 0) {
+			if (projectFiles.indexOf(optionId) < 0) {
 				fileSelect.remove(optionId);
 			}
 

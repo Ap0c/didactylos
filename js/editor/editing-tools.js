@@ -123,23 +123,26 @@ function formatLink (link) {
 
 }
 
+// Inserts a link into the editor.
+function insertLink (editor, linkText) {
+
+	var linkSyntax = {
+		before: '[label',
+		after: `](${linkText})`,
+		caretMove: null
+	};
+
+	insertSyntax(linkSyntax, editor)();
+
+}
+
 // Asks the user for a web link, and inserts it.
 function webLink (toolbar, editor) {
 
 	toolbar.overlay('web_link', insertWeb, editor.focus);
 
 	function insertWeb (link) {
-
-		var linkText = formatLink(link);
-
-		var linkSyntax = {
-			before: '[label',
-			after: `](${linkText})`,
-			caretMove: null
-		};
-
-		insertSyntax(linkSyntax, editor)();
-
+		insertLink(editor, formatLink(link));
 	}
 
 }
@@ -151,15 +154,7 @@ function fileLink (toolbar, editor, project) {
 	toolbar.overlay('file_link', insertFile, editor.focus);
 
 	function insertFile (filename) {
-
-		var linkSyntax = {
-			before: '[label',
-			after: `](file:${filename})`,
-			caretMove: null
-		};
-
-		insertSyntax(linkSyntax, editor)();
-
+		insertLink(editor, `file:${filename}`);
 	}
 
 }
@@ -167,18 +162,18 @@ function fileLink (toolbar, editor, project) {
 // Sets up handling of link insertion.
 function setupLink (toolbar, editor, project) {
 
-	toolbar.action('link', insertLink);
-
-	function insertLink () {
+	toolbar.action('link', function insertLink () {
 		toolbar.overlay('link_type', linkChoice, editor.focus);
-	}
+	});
 
 	function linkChoice (isWebLink) {
+
 		if (isWebLink) {
 			webLink(toolbar, editor);
 		} else {
 			fileLink(toolbar, editor, project);
 		}
+
 	}
 
 }
