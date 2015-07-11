@@ -112,15 +112,39 @@ function setupTab (editor) {
 
 }
 
+// Asks the user for a web link, and inserts it.
+function webLink (editor, toolbar) {
+
+	toolbar.overlay('insert_link', insertWeb, editor.focus);
+
+	function insertWeb (link) {
+
+		var linkSyntax = {
+			before: '[label',
+			after: `](${link.text})`,
+			caretMove: null
+		};
+
+		insertSyntax(linkSyntax, editor)();
+
+	}
+
+}
+
 // Sets up handling of link insertion.
 function setupLink (toolbar, editor) {
 
-	var linkSyntax = { before: '[', after: '](link here)', caretMove: 12 };
+	var linkSyntax = { before: '[label', after: '](http://)', caretMove: 2 };
 	toolbar.action('link', insertLink);
 
 	function insertLink () {
-		toolbar.overlay('link_type');
-		insertSyntax(linkSyntax, editor)();
+		toolbar.overlay('link_type', linkChoice, editor.focus);
+	}
+
+	function linkChoice (choice) {
+		if (choice.web) {
+			webLink(editor, toolbar);
+		}
 	}
 
 }
