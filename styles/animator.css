@@ -10,24 +10,39 @@ body {
 }
 
 
+/* ----- Sidebars ----- */
+
+.sidebar > h3 {
+	color: #005c8a;
+	text-align: center;
+}
+
+
 /* ----- Assets ----- */
 
 #assets {
 	width: 10%;
 	height: 100%;
 	float: left;
-	background-color: #ffffff;
 	overflow-y: hidden;
+	box-sizing: border-box;
 }
 
 
 /* ----- Canvas ----- */
 
-#canvas {
+#canvas_area {
 	width: 70%;
 	height: 100%;
 	float: left;
-	background-color: #bb3333;
+	background-color: #aaaaaa;
+	box-sizing: border-box;
+	padding-top: 1%;
+}
+
+#canvas {
+	width: 90%;
+	margin: 0 5%;
 }
 
 
@@ -37,5 +52,5 @@ body {
 	width: 20%;
 	height: 100%;
 	float: left;
-	background-color: #ffffff;
+	box-sizing: border-box;
 }
