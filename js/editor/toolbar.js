@@ -53,40 +53,42 @@ module.exports = function Toolbar (window) {
 	}
 
 	// Closes the overlay, processes the data submitted and passes to callback.
-	function overlayData (overlay, callback) {
+	function setupOverlay (name, callback, cancel) {
 
+		var overlay = overlays[name];
 		overlay.form.addEventListener('submit', formHandler);
+		overlay.cancel.addEventListener('click', cancelOverlay);
 
 		function formHandler (submitEvent) {
 
-			submitEvent.preventDefault();
-			overlay.form.removeEventListener('submit', formHandler);
-
+			closeOverlay(overlay, submitEvent);
 			var data = overlay.dataElement[overlay.dataAttribute];
-			overlay.dialog.close();
 			callback(data);
+
+		}
+
+		function cancelOverlay (clickEvent) {
+
+			closeOverlay(overlay, clickEvent);
+			cancel();
 
 		}
 
 	}
 
 	// Opens a modal dialog, calls function based upon user input.
-	function openOverlay (name, accept, cancel) {
+	function openOverlay (name) {
 
 		var overlay = overlays[name];
-
-		overlayData(overlay, accept);
-		overlay.cancel.addEventListener('click', cancelOverlay);
-
-		function cancelOverlay (clickEvent) {
-
-			clickEvent.target.removeEventListener('click', cancelOverlay);
-			overlay.dialog.close();
-			cancel();
-
-		}
-
 		overlay.dialog.showModal();
+
+	}
+
+	// Closes a modal dialog.
+	function closeOverlay (overlay, closeEvent) {
+
+		closeEvent.preventDefault();
+		overlay.dialog.close();
 
 	}
 
@@ -150,6 +152,7 @@ module.exports = function Toolbar (window) {
 	return {
 		action: action,
 		click: click,
+		setupOverlay: setupOverlay,
 		overlay: openOverlay,
 		updateFiles: updateFiles
 	};

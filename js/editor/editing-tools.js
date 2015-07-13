@@ -136,10 +136,27 @@ function insertLink (editor, linkText) {
 
 }
 
-// Asks the user for a web link, and inserts it.
-function webLink (toolbar, editor) {
+// Sets up the overlays that handle link insertion.
+function setupOverlays (toolbar, editor, project) {
 
-	toolbar.overlay('web_link', insertWeb, editor.focus);
+	toolbar.setupOverlay('link_type', linkChoice, editor.focus);
+	toolbar.setupOverlay('file_link', insertFile, editor.focus);
+	toolbar.setupOverlay('web_link', insertWeb, editor.focus);
+
+	function linkChoice (isWebLink) {
+
+		if (isWebLink) {
+			toolbar.overlay('web_link');
+		} else {
+			toolbar.updateFiles(project.files());
+			toolbar.overlay('file_link');
+		}
+
+	}
+
+	function insertFile (filename) {
+		insertLink(editor, `file:${filename}`);
+	}
 
 	function insertWeb (link) {
 		insertLink(editor, formatLink(link));
@@ -147,34 +164,14 @@ function webLink (toolbar, editor) {
 
 }
 
-// Asks the user to pick a file, and fills in the link syntax.
-function fileLink (toolbar, editor, project) {
-
-	toolbar.updateFiles(project.files());
-	toolbar.overlay('file_link', insertFile, editor.focus);
-
-	function insertFile (filename) {
-		insertLink(editor, `file:${filename}`);
-	}
-
-}
-
 // Sets up handling of link insertion.
 function setupLink (toolbar, editor, project) {
 
+	setupOverlays(toolbar, editor, project);
+
 	toolbar.action('link', function insertLink () {
-		toolbar.overlay('link_type', linkChoice, editor.focus);
+		toolbar.overlay('link_type');
 	});
-
-	function linkChoice (isWebLink) {
-
-		if (isWebLink) {
-			webLink(toolbar, editor);
-		} else {
-			fileLink(toolbar, editor, project);
-		}
-
-	}
 
 }
 
