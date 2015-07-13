@@ -1,66 +1,14 @@
 // ----- Functions ----- //
 
-// Updates the font size.
-function fontSize (project, views) {
+// Sets up a tool in the stylebar.
+function setupStyle(project, views, styleName) {
 
-	views.stylebar.action('font_size', function (value) {
-
-		var file = views.sidebar.activeFile();
-		views.stylebar.setStyle('font_size', value);
-		views.editor.focus();
-		project.updateStyle(file, 'font_size', value);
-
-	});
-
-}
-
-function fontColour (project, views) {
-
-	views.stylebar.action('font_colour', function (value) {
+	views.stylebar.action(styleName, function (value) {
 
 		var file = views.sidebar.activeFile();
-		views.stylebar.setStyle('font_colour', value);
+		views.stylebar.setStyle(styleName, value);
 		views.editor.focus();
-		project.updateStyle(file, 'font_colour', value);
-
-	});
-
-}
-
-function backgroundColour (project, views) {
-
-	views.stylebar.action('background_colour', function (value) {
-
-		var file = views.sidebar.activeFile();
-		views.stylebar.setStyle('background_colour', value);
-		views.editor.focus();
-		project.updateStyle(file, 'background_colour', value);
-
-	});
-
-}
-
-function fontFamily (project, views) {
-
-	views.stylebar.action('font_family', function (value) {
-
-		var file = views.sidebar.activeFile();
-		views.stylebar.setStyle('font_family', value);
-		views.editor.focus();
-		project.updateStyle(file, 'font_family', value);
-
-	});
-
-}
-
-function headingFamily (project, views) {
-
-	views.stylebar.action('heading_family', function (value) {
-
-		var file = views.sidebar.activeFile();
-		views.stylebar.setStyle('heading_family', value);
-		views.editor.focus();
-		project.updateStyle(file, 'heading_family', value);
+		project.updateStyle(file, styleName, value);
 
 	});
 
@@ -69,11 +17,12 @@ function headingFamily (project, views) {
 // Builds the stylebar.
 function setup (project, views) {
 
-	fontSize(project, views);
-	fontColour(project, views);
-	backgroundColour(project, views);
-	fontFamily(project, views);
-	headingFamily(project, views);
+	var styleTools = ['font_size', 'font_colour', 'background_colour',
+	'font_family', 'heading_family'];
+
+	for (var i = styleTools.length - 1; i >= 0; i--) {
+		setupStyle(project, views, styleTools[i]);
+	}
 
 }
 
