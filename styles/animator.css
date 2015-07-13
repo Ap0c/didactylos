@@ -1,0 +1,41 @@
+/* ----- General ----- */
+
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
+}
+
+
+/* ----- Assets ----- */
+
+#assets {
+	width: 10%;
+	height: 100%;
+	float: left;
+	background-color: #ffffff;
+	overflow-y: hidden;
+}
+
+
+/* ----- Canvas ----- */
+
+#canvas {
+	width: 70%;
+	height: 100%;
+	float: left;
+	background-color: #bb3333;
+}
+
+
+/* ----- Properties ----- */
+
+#properties {
+	width: 20%;
+	height: 100%;
+	float: left;
+	background-color: #ffffff;
+}
