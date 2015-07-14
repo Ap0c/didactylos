@@ -3,6 +3,7 @@
 var gui = require('nw.gui');
 
 var Menus = require('../js/menus.js');
+var Canvas = require('../js/animator/canvas.js');
 
 
 // ----- Functions ----- //
@@ -21,11 +22,11 @@ function setup () {
 	window.focus();
 	buildMenubar();
 
-	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d');
+	var canvas = Canvas(window);
+	canvas.drawBackground();
 
-	ctx.fillStyle = '#ffffff';
-	ctx.fillRect(0, 0, 500, 400);
+	canvas.addDrawing('circle', {x: 50, y: 50, r: 20});
+	canvas.paint();
 
 }
 
