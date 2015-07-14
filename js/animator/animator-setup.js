@@ -26,6 +26,7 @@ function setup () {
 	canvas.drawBackground();
 
 	canvas.addDrawing('circle', {x: 50, y: 50, r: 20});
+	canvas.addDrawing('rectangle', {x: 250, y: 250, w: 80, h: 40});
 	canvas.paint();
 
 }

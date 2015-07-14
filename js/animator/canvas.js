@@ -14,7 +14,8 @@ module.exports = function Canvas (window) {
 		background: '#ffffff'
 	};
 	var drawingTypes = {
-		circle: drawCircle
+		circle: drawCircle,
+		rectangle: drawRect
 	};
 
 
@@ -32,15 +33,29 @@ module.exports = function Canvas (window) {
 
 	}
 
-	// Creates a 2D path containing a circle.
-	function drawCircle () {
+	// Adds a circle to a shape path.
+	function drawCircle (shape, props) {
+		shape.arc(props.x, props.y, props.r, 0, Math.PI*2, false);
+	}
 
-		var props = this.attrs;
+	// Adds a rectangle to a shape path.
+	function drawRect (shape, props) {
+		shape.rect(props.x, props.y, props.w, props.h);
+	}
 
-		var circle = new window.Path2D();
-		circle.arc(props.x, props.y, props.r, 0, Math.PI*2, false);
+	// Returns a function that generates a path for the specified shape.
+	function drawShape (type) {
 
-		this.path = circle;
+		return function draw () {
+
+			var props = this.attrs;
+
+			var shape = new window.Path2D();
+			drawingTypes[type](shape, props);
+
+			this.path = shape;
+
+		};
 
 	}
 
@@ -49,11 +64,9 @@ module.exports = function Canvas (window) {
 
 		if (type in drawingTypes) {
 
-			var drawFunction = drawingTypes[type];
-
 			var drawing = {
 				attrs: attributes,
-				draw: drawFunction,
+				draw: drawShape(type),
 				changed: false
 			};
 
