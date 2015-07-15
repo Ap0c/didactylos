@@ -5,12 +5,14 @@ module.exports = function Canvas (window) {
 	var document = window.document;
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d');
+
 	var drawings = [];
 	var dragging = {
 		current: false,
-		moveFunction: null
+		moveFunction: null,
+		dx: 0,
+		dy: 0
 	};
-
 	var properties = {
 		width: 500,
 		height: 400,
@@ -136,9 +138,11 @@ module.exports = function Canvas (window) {
 		return function updateDrag (cursor) {
 
 			var coords = clickCoords(cursor);
-			drawing.attrs.x = coords.x;
-			drawing.attrs.y = coords.y;
+
+			drawing.attrs.x = coords.x - dragging.dx;
+			drawing.attrs.y = coords.y - dragging.dy;
 			drawing.changed = true;
+
 			paint();
 
 		};
@@ -152,8 +156,12 @@ module.exports = function Canvas (window) {
 
 			if (ctx.isPointInPath(drawings[i].path, coords.x, coords.y)) {
 
+				var drawing = drawings[i];
+
+				dragging.dx = coords.x - drawing.attrs.x;
+				dragging.dy = coords.y - drawing.attrs.y;
 				dragging.current = true;
-				dragging.moveFunction = drag(drawings[i]);
+				dragging.moveFunction = drag(drawing);
 				canvas.addEventListener('mousemove', dragging.moveFunction);
 				return;
 
@@ -167,8 +175,6 @@ module.exports = function Canvas (window) {
 	function setupDrag () {
 
 		canvas.addEventListener('mousedown', function (downEvent) {
-
-			console.log('mousedown');
 
 			var coords = clickCoords(downEvent);
 			inDrawing(coords);
