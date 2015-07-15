@@ -162,6 +162,7 @@ module.exports = function Canvas (window) {
 				dragging.dy = coords.y - drawing.attrs.y;
 				dragging.current = true;
 				dragging.moveFunction = drag(drawing);
+
 				canvas.addEventListener('mousemove', dragging.moveFunction);
 				return;
 

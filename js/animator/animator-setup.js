@@ -4,6 +4,7 @@ var gui = require('nw.gui');
 
 var Menus = require('../js/menus.js');
 var Canvas = require('../js/animator/canvas.js');
+var Assets = require('../js/animator/assets.js');
 
 
 // ----- Functions ----- //
@@ -21,6 +22,9 @@ function setup () {
 
 	window.focus();
 	buildMenubar();
+
+	var assets = Assets(window);
+	assets.add('circle', 'circle.svg');
 
 	var canvas = Canvas(window);
 	canvas.drawBackground();
