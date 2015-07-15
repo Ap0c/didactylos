@@ -13,17 +13,42 @@ module.exports = function Assets (window) {
 	var assets = document.getElementById('assets');
 	var assetPath = '../assets';
 
+	var assetList = {};
+
 
 	// ----- Functions ----- //
 
 	// Adds an asset to the asset sidebar.
 	function addAsset (name, assetFile) {
 
-		// var assetDiv = document.createElement('div');
-		var assetImage = document.createElement('img');
-		assetImage.src = path.join(assetPath, assetFile);
+		if (assetList[name]) {
+			throw new Error(`Asset '${name}' already exists.`);
+		} else {
 
-		assets.appendChild(assetImage);
+			var assetImage = document.createElement('img');
+			assetImage.src = path.join(assetPath, assetFile);
+
+			assets.appendChild(assetImage);
+			assetList[name] = assetImage;
+
+		}
+
+	}
+
+	// Assigns a function to be called when an asset is selected.
+	function clickAsset (name, callback) {
+
+		var asset = assetList[name];
+
+		if (asset) {
+
+			asset.addEventListener('click', function assetClick () {
+				callback();
+			});
+
+		} else {
+			throw new Error(`Asset '${name}' does not exist.`);
+		}
 
 	}
 
@@ -31,7 +56,8 @@ module.exports = function Assets (window) {
 	// ----- Constructor ----- //
 
 	return {
-		add: addAsset
+		add: addAsset,
+		click: clickAsset
 	};
 
 };

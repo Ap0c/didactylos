@@ -25,6 +25,7 @@ function setup () {
 
 	var assets = Assets(window);
 	assets.add('circle', 'circle.svg');
+	assets.click('circle', function () { alert('Clicked'); });
 
 	var canvas = Canvas(window);
 	canvas.drawBackground();
