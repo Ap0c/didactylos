@@ -30,8 +30,8 @@ body {
 
 #assets > img {
 	display: block;
-	width: 60%;
-	margin: 0 auto;
+	width: 50%;
+	margin: 5% auto;
 	cursor: pointer;
 }
 

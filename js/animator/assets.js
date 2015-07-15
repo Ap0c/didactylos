@@ -19,14 +19,14 @@ module.exports = function Assets (window) {
 	// ----- Functions ----- //
 
 	// Adds an asset to the asset sidebar.
-	function addAsset (name, assetFile) {
+	function addAsset (name) {
 
 		if (assetList[name]) {
 			throw new Error(`Asset '${name}' already exists.`);
 		} else {
 
 			var assetImage = document.createElement('img');
-			assetImage.src = path.join(assetPath, assetFile);
+			assetImage.src = path.join(assetPath, `${name}.svg`);
 
 			assets.appendChild(assetImage);
 			assetList[name] = assetImage;
@@ -52,10 +52,20 @@ module.exports = function Assets (window) {
 
 	}
 
+	// Populates the assets sidebar with drawings.
+	function build (assetNames) {
+
+		for (var i = assetNames.length - 1; i >= 0; i--) {
+			addAsset(assetNames[i]);
+		}
+
+	}
+
 
 	// ----- Constructor ----- //
 
 	return {
+		build: build,
 		add: addAsset,
 		click: clickAsset
 	};

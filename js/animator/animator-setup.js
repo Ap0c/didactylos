@@ -5,6 +5,7 @@ var gui = require('nw.gui');
 var Menus = require('../js/menus.js');
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');
+// var Drawings = require('../js/animator/drawings.js');
 
 
 // ----- Functions ----- //
@@ -24,15 +25,20 @@ function setup () {
 	buildMenubar();
 
 	var assets = Assets(window);
-	assets.add('circle', 'circle.svg');
-	assets.click('circle', function () { alert('Clicked'); });
-
 	var canvas = Canvas(window);
-	canvas.drawBackground();
 
-	canvas.addDrawing('circle', {x: 50, y: 50, r: 20});
-	canvas.addDrawing('rectangle', {x: 250, y: 250, w: 80, h: 40});
-	canvas.paint();
+	canvas.drawBackground();
+	assets.build(canvas.drawingTypes());
+
+	assets.click('circle', function () {
+		canvas.addDrawing('circle', {x: 250, y: 200, r: 20});
+		canvas.paint();
+	});
+
+	assets.click('rectangle', function () {
+		canvas.addDrawing('rectangle', {x: 225, y: 180, w: 50, h: 40});
+		canvas.paint();
+	});
 
 }
 
