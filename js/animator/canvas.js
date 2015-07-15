@@ -9,8 +9,6 @@ module.exports = function Canvas (window) {
 	var drawings = [];
 	
 	var properties = {
-		width: 500,
-		height: 400,
 		brush: '#bb3333',
 		background: '#ffffff'
 	};
@@ -30,7 +28,7 @@ module.exports = function Canvas (window) {
 		}
 
 		ctx.fillStyle = properties.background;
-		ctx.fillRect(0, 0, properties.width, properties.height);
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	}
 
@@ -61,14 +59,15 @@ module.exports = function Canvas (window) {
 	}
 
 	// Adds a drawing to the drawings on the canvas.
-	function addDrawing (type, attributes) {
+	function addDrawing (type, attributes, method) {
 
 		if (type in drawingTypes) {
 
 			var drawing = {
 				attrs: attributes,
 				draw: drawShape(type),
-				changed: false
+				changed: false,
+				method: method ? method : 'fill'
 			};
 
 			drawing.draw();
@@ -81,12 +80,25 @@ module.exports = function Canvas (window) {
 
 	}
 
+	// Applies the brush colour and draw style (fill or stroke);
+	function paintDrawing (drawing) {
+
+		var colour = drawing.attrs.colour;
+
+		ctx.fillStyle = colour ? colour : properties.brush;
+
+		if (drawing.method === 'fill') {
+			ctx.fill(drawing.path);
+		} else {
+			ctx.stroke(drawing.path);
+		}
+
+	}
+
 	// Paints the drawings onto the canvas.
 	function paint () {
 
 		drawBackground();
-
-		ctx.fillStyle = properties.brush;
 
 		for (var i = drawings.length - 1; i >= 0; i--) {
 
@@ -96,7 +108,7 @@ module.exports = function Canvas (window) {
 				drawing.draw();
 			}
 
-			ctx.fill(drawing.path);
+			paintDrawing(drawing);
 
 		}
 
@@ -107,18 +119,8 @@ module.exports = function Canvas (window) {
 		return Object.keys(drawingTypes);
 	}
 
-	// Initialises the canvas object.
-	function init () {
-
-		properties.width = canvas.width;
-		properties.height = canvas.height;
-
-	}
-
 
 	// ----- Constructor ----- //
-
-	init();
 
 	return {
 		drawBackground: drawBackground,
