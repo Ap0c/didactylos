@@ -72,8 +72,7 @@ function setup () {
 	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
 
-	var win = gui.Window.get();
-	win.on('close', function () {
+	window.on('close', function () {
 		file.save();
 		gui.App.quit();
 	});

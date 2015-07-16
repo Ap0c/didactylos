@@ -6,7 +6,10 @@ exports.items = function items (gui, file) {
 		label: 'New',
 		key: 'n',
 		modifiers: 'cmd',
-		click: file.newFile
+		click: function () {
+			file.newFile();
+			gui.Window.get().focus();
+		}
 	};
 
 	var saveFile = {
@@ -34,6 +37,6 @@ exports.items = function items (gui, file) {
 
 	// ----- Return ----- //
 
-	return [newFile, saveFile, newAnimation];
+	return [newFile, saveFile, { type: 'separator' }, newAnimation];
 
 };
