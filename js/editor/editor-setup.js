@@ -75,7 +75,7 @@ function setup () {
 	var win = gui.Window.get();
 	win.on('close', function () {
 		file.save();
-		this.close(true);
+		gui.App.quit();
 	});
 
 	editor.focus();

@@ -16,9 +16,24 @@ exports.items = function items (gui, file) {
 		click: file.save
 	};
 
+	var newAnimation = {
+		label: 'New Animation',
+		key: 'Shift+a',
+		modifiers: 'cmd',
+		click: function () {
+
+			gui.Window.open('animator.html', {
+				"toolbar": true,
+				"width": 1000,
+				"height": 600
+			});
+
+		}
+	};
+
 
 	// ----- Return ----- //
 
-	return [newFile, saveFile];
+	return [newFile, saveFile, newAnimation];
 
 };

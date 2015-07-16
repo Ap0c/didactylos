@@ -50,7 +50,7 @@ function assertInsertion (canvas, assets) {
 function setup () {
 
 	window.focus();
-	buildMenubar();
+	// buildMenubar();
 
 	var assets = Assets(window);
 	var canvas = Canvas(window);

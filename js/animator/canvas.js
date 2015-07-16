@@ -42,19 +42,15 @@ module.exports = function Canvas (window) {
 		shape.rect(props.x, props.y, props.w, props.h);
 	}
 
-	// Returns a function that generates a path for the specified shape.
-	function drawShape (type) {
+	// Generates a path for the specified shape.
+	function draw () {
 
-		return function draw () {
+		var props = this.attrs;
 
-			var props = this.attrs;
+		var shape = new window.Path2D();
+		drawingTypes[this.type](shape, props);
 
-			var shape = new window.Path2D();
-			drawingTypes[type](shape, props);
-
-			this.path = shape;
-
-		};
+		this.path = shape;
 
 	}
 
@@ -65,7 +61,8 @@ module.exports = function Canvas (window) {
 
 			var drawing = {
 				attrs: attributes,
-				draw: drawShape(type),
+				type: type,
+				draw: draw,
 				changed: false,
 				method: method ? method : 'fill'
 			};
