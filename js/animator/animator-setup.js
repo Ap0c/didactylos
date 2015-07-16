@@ -5,7 +5,8 @@ var gui = require('nw.gui');
 var Menus = require('../js/menus.js');
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');
-// var Drawings = require('../js/animator/drawings.js');
+
+var dragging = require('../js/animator/dragging.js');
 
 
 // ----- Setup ----- //
@@ -56,8 +57,8 @@ function setup () {
 
 	canvas.drawBackground();
 	assets.build(canvas.drawingTypes());
-
 	assertInsertion(canvas, assets);
+	dragging.setup(canvas);
 
 }
 

@@ -74,6 +74,11 @@ module.exports = function Sidebar (window) {
 		window.alert(messageText);
 	}
 
+	// Returns the number of drawings on the canvas.
+	function noDrawings () {
+		return drawings.length;
+	}
+
 
 	// ----- Constructor ----- //
 

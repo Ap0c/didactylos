@@ -9,7 +9,7 @@ module.exports = function Canvas (window) {
 	var drawings = [];
 	
 	var properties = {
-		brush: '#bb3333',
+		brush: '#005c8a',
 		background: '#ffffff'
 	};
 	var drawingTypes = {
@@ -114,9 +114,55 @@ module.exports = function Canvas (window) {
 
 	}
 
+	// Sets a callback for a specific canvas event.
+	function listen (canvasEvent, callback) {
+		canvas.addEventListener(canvasEvent, callback);
+	}
+
+	// Removes a callback from a specific canvas event.
+	function ignore (canvasEvent, callback) {
+		canvas.removeEventListener(canvasEvent, callback);
+	}
+
 	// Retrieves a list of the different types of drawing.
 	function getTypes () {
 		return Object.keys(drawingTypes);
+	}
+
+	// Returns information about the position of the canvas on the page.
+	function getPosition () {
+		return canvas.getBoundingClientRect();
+	}
+
+	// Returns the dimensions of the canvas context.
+	function getDimensions () {
+		return { width: canvas.width, height: canvas.height };
+	}
+
+	// Returns the attributes of a drawing.
+	function getDrawing (number) {
+		return drawings[number].attrs;
+	}
+
+	// Sets the attributes of a drawing.
+	function setDrawing (number, attributes) {
+
+		for (var attr in attributes) {
+			drawings[number].attrs[attr] = attributes[attr];
+		}
+
+		drawings[number].changed = true;
+
+	}
+
+	// Checks if a point is within a drawing.
+	function inDrawing (number, x, y) {
+		return ctx.isPointInPath(drawings[number].path, x, y);
+	}
+
+	// Returns the number of drawings on the canvas.
+	function noDrawings () {
+		return drawings.length;
 	}
 
 
@@ -126,7 +172,15 @@ module.exports = function Canvas (window) {
 		drawBackground: drawBackground,
 		addDrawing: addDrawing,
 		paint: paint,
-		drawingTypes: getTypes
+		listen: listen,
+		ignore: ignore,
+		drawingTypes: getTypes,
+		position: getPosition,
+		dimensions: getDimensions,
+		getDrawing: getDrawing,
+		setDrawing: setDrawing,
+		inDrawing: inDrawing,
+		drawings: noDrawings
 	};
 
 };

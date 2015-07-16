@@ -1,19 +1,20 @@
-var dragging = {
-	current: false,
-	moveFunction: null,
-	dx: 0,
-	dy: 0
-};
+// ----- Setup ----- //
+
+DRAGGING = false;
+
+
+// ----- Functions ----- //
 
 // Gets the canvas co-ordinates of a mouse click.
-function clickCoords (cursor) {
+function clickCoords (canvas, cursor) {
 
-	var canvasPos = canvas.getBoundingClientRect();
+	var canvasPos = canvas.position();
+	var canvasDim = canvas.dimensions();
 
 	var x = (cursor.pageX - canvasPos.left) *
-		(canvas.width / canvasPos.width);
+		(canvasDim.width / canvasPos.width);
 	var y = (cursor.pageY - canvasPos.top) *
-		(canvas.height / canvasPos.height);
+		(canvasDim.height / canvasPos.height);
 
 	return { x: x, y: y };
 
@@ -21,43 +22,48 @@ function clickCoords (cursor) {
 
 
 // Checks if the user click was inside one of the drawings.
-function inDrawing (coords) {
+function inDrawing (canvas, coords) {
 
-	for (var i = drawings.length - 1; i >= 0; i--) {
+	for (var i = canvas.drawings() - 1; i >= 0; i--) {
 
-		if (ctx.isPointInPath(drawings[i].path, coords.x, coords.y)) {
+		if (canvas.inDrawing(i, coords.x, coords.y)) {
 
-			var drawing = drawings[i];
+			DRAGGING = true;
 
-			dragging.dx = coords.x - drawing.attrs.x;
-			dragging.dy = coords.y - drawing.attrs.y;
-			dragging.current = true;
-			dragging.moveFunction = drag(drawing);
+			var drawing = canvas.getDrawing(i);
+			var cursorDx = coords.x - drawing.x;
+			var cursorDy = coords.y - drawing.y;
+			var dragFunction = drag(canvas, i, cursorDx, cursorDy);
 
-			canvas.addEventListener('mousemove', dragging.moveFunction);
-			return;
+			canvas.listen('mousemove', dragFunction);
+			return dragFunction;
 
 		}
 
 	}
 
+	return null;
+
 }
 
 // Sets up the user's ability to drag drawings.
-function setupDrag () {
+function setupDrag (canvas) {
 
-	canvas.addEventListener('mousedown', function (downEvent) {
+	var dragFunction = function () { return; };
 
-		var coords = clickCoords(downEvent);
-		inDrawing(coords);
+	canvas.listen('mousedown', function (downEvent) {
+
+		var coords = clickCoords(canvas, downEvent);
+		var moveFunction = inDrawing(canvas, coords);
+		dragFunction = moveFunction ? moveFunction : dragFunction;
 
 	});
 
-	canvas.addEventListener('mouseup', function cancelDrag (upEvent) {
+	canvas.listen('mouseup', function cancelDrag (upEvent) {
 
-		if (dragging.current) {
-			dragging.current = false;
-			canvas.removeEventListener('mousemove', dragging.moveFunction);
+		if (DRAGGING) {
+			DRAGGING = false;
+			canvas.ignore('mousemove', dragFunction);
 		}
 
 	});
@@ -65,18 +71,26 @@ function setupDrag () {
 }
 
 // Returns function that updates the drawing position as it is dragged.
-function drag (drawing) {
+function drag (canvas, drawing, cursorDx, cursorDy) {
 
 	return function updateDrag (cursor) {
 
-		var coords = clickCoords(cursor);
+		var coords = clickCoords(canvas, cursor);
 
-		drawing.attrs.x = coords.x - dragging.dx;
-		drawing.attrs.y = coords.y - dragging.dy;
-		drawing.changed = true;
+		canvas.setDrawing(drawing, {
+			x: coords.x - cursorDx,
+			y: coords.y - cursorDy
+		});
 
-		paint();
+		canvas.paint();
 
 	};
 
 }
+
+
+// ----- Module Exports ----- //
+
+module.exports = {
+	setup: setupDrag
+};
