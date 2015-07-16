@@ -32,6 +32,7 @@ function writeInfo (projectName, projectPath, callback) {
 function readInfo (projectPath, infoFile) {
 
 	var projectJson = fs.readFileSync(infoFile);
+	console.log('here');
 	var info = JSON.parse(projectJson);
 
 	if (info.path !== projectPath) {
@@ -112,7 +113,6 @@ function setupNew () {
 // Opens an existing project.
 function setupLoad () {
 
-	var win = gui.Window.get();
 	var projectLoad = document.getElementById('project_load');
 
 	projectLoad.addEventListener('change', function () {

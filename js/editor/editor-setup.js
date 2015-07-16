@@ -72,9 +72,11 @@ function setup () {
 	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
 
-	window.on('close', function () {
+	var win = gui.Window.get();
+	win.on('close', function () {
 		file.save();
-		gui.App.quit();
+		// gui.App.quit();
+		win.close('force');
 	});
 
 	editor.focus();

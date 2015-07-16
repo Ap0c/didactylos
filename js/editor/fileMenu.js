@@ -6,10 +6,7 @@ exports.items = function items (gui, file) {
 		label: 'New',
 		key: 'n',
 		modifiers: 'cmd',
-		click: function () {
-			file.newFile();
-			gui.Window.get().focus();
-		}
+		click: file.newFile
 	};
 
 	var saveFile = {
