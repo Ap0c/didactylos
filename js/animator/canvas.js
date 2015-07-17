@@ -73,7 +73,6 @@ module.exports = function Canvas (window) {
 		} else {
 			throw new Error(`Unexpected drawing type: ${type}`);
 		}
-		
 
 	}
 

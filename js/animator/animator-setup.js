@@ -27,18 +27,31 @@ function buildMenubar () {
 
 }
 
+// Creates a new copy of the asset attributes.
+function cloneAttributes (attributes) {
+
+	var newAttrs = {};
+
+	for (var attr in attributes) {
+		newAttrs[attr] = attributes[attr];
+	}
+
+	return newAttrs;
+
+}
+
 // Returns a function that inserts a specified asset into the canvas.
 function insertAsset (canvas, asset, attrs) {
 
 	return function insert () {
-		canvas.addDrawing(asset, attrs);
+		canvas.addDrawing(asset, cloneAttributes(attrs));
 		canvas.paint();
 	};
 
 }
 
 // Sets up the insertion of assets into the canvas.
-function assertInsertion (canvas, assets) {
+function assetInsertion (canvas, assets) {
 
 	for (var asset in assetDefaults) {
 		assets.click(asset, insertAsset(canvas, asset, assetDefaults[asset]));
@@ -57,7 +70,7 @@ function setup () {
 
 	canvas.drawBackground();
 	assets.build(canvas.drawingTypes());
-	assertInsertion(canvas, assets);
+	assetInsertion(canvas, assets);
 	dragging.setup(canvas);
 
 }

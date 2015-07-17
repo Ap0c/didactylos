@@ -75,7 +75,6 @@ function setup () {
 	var win = gui.Window.get();
 	win.on('close', function () {
 		file.save();
-		// gui.App.quit();
 		win.close('force');
 	});
 

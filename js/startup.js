@@ -32,7 +32,6 @@ function writeInfo (projectName, projectPath, callback) {
 function readInfo (projectPath, infoFile) {
 
 	var projectJson = fs.readFileSync(infoFile);
-	console.log('here');
 	var info = JSON.parse(projectJson);
 
 	if (info.path !== projectPath) {
