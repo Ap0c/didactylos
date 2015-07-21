@@ -5,7 +5,7 @@ module.exports = function Stylebar (window) {
 	var document = window.document;
 	var preview = document.getElementById('preview');
 	var styleBar = document.getElementById('stylebar');
-	var styleSheet = document.styleSheets[1];
+	var pageStyle = document.styleSheets[2];
 	var styleTools = {};
 
 	var rules = {
@@ -39,6 +39,14 @@ module.exports = function Stylebar (window) {
 			classes: {
 				serif: 'serif_headings',
 				sans_serif: 'sans_serif_headings'
+			}
+		},
+		heading_colour: {
+			type: 'page',
+			ruleText: function (colour) {
+				return `#preview > h1, #preview > h2, #preview > h3,
+				#preview > h4, #preview > h5, #preview > h6
+				{ color: ${colour}; }`;
 			}
 		}
 	};
@@ -164,6 +172,8 @@ module.exports = function Stylebar (window) {
 			preview.style.removeProperty(ruleName);
 		} else if (rules[rule].type === 'class') {
 			resetClasses(rule);
+		} else if (rules[rule].type === 'page') {
+			deletePage(0);
 		}
 
 		if (tool.tagName === 'SELECT') {
@@ -189,6 +199,25 @@ module.exports = function Stylebar (window) {
 			}
 
 		}
+
+	}
+
+	// Delete a rule from the page stylesheet.
+	function deletePage (location) {
+
+		if (pageStyle.cssRules[String(0)]) {
+			pageStyle.deleteRule(0);
+		}
+
+	}
+
+	// Adds a rule to the page stylesheet.
+	function setPage (style, value) {
+
+		var rule = rules[style];
+
+		deletePage(0);
+		pageStyle.insertRule(rule.ruleText(value), 0);
 
 	}
 
@@ -220,6 +249,8 @@ module.exports = function Stylebar (window) {
 			setClass(style, value);
 		} else if (ruleType === 'inline') {
 			setInline(style, value);
+		} else if (ruleType === 'page') {
+			setPage(style, value);
 		}
 
 	}

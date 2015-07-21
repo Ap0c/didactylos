@@ -49,7 +49,7 @@ function mainWindow () {
 
 	gui.Window.open('editor.html', {
 		"toolbar": true,
-		"width": 1200,
+		"width": 1300,
 		"height": 640
 	});
 
