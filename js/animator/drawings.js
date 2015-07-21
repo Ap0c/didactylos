@@ -33,6 +33,16 @@ module.exports = function drawings (Path2D) {
 		shape.rect(attribs.x, attribs.y, attribs.w, attribs.h);
 	}
 
+	// Draws an asset according to its type.
+	function draw (type, attributes) {
+
+		var shape = new Path2D();
+		drawingTypes[type].drawFunc(shape, attributes);
+
+		return shape;
+
+	}
+
 	// Sets any or all of the attributes of an object.
 	function setAttrs (type, currentAttrs, newAttrs) {
 
@@ -78,21 +88,10 @@ module.exports = function drawings (Path2D) {
 	function newDrawing (type, drawingAttrs, brushType) {
 
 		var attributes = {};
+		setAttrs(type, attributes, drawingAttrs);
 		var brush = brushType ? setBrush(brushType) : 'fill';
 		var changed = false;
-
-		function draw () {
-
-			var shape = new Path2D();
-			drawingTypes[type].drawFunc(shape, attributes);
-			changed = false;
-
-			return shape;
-
-		}
-
-		setAttrs(type, attributes, drawingAttrs);
-		var path = draw();
+		var path = draw(type, attributes);
 
 		return {
 
@@ -100,13 +99,18 @@ module.exports = function drawings (Path2D) {
 			get brush () { return brush; },
 			get path () { return path; },
 			get attributes () { return getAttrs(attributes); },
-
 			set brush (brushType) { brush = setBrush(brushType); },
+
 			updateAttrs (newAttrs) {
 				setAttrs(type, attributes, newAttrs);
 				changed = true;
 			},
-			draw () { path = draw(); }
+
+			draw () {
+				path = draw(type, attributes);
+				changed = false;
+			}
+
 		};
 
 	}

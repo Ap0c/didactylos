@@ -69,7 +69,7 @@ function setup () {
 	var canvas = Canvas(window);
 
 	canvas.drawBackground();
-	assets.build(canvas.drawing().types);
+	assets.build(canvas.drawings().types);
 	assetInsertion(canvas, assets);
 	dragging.setup(canvas);
 
