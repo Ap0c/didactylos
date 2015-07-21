@@ -19,10 +19,6 @@ module.exports = function Canvas (window) {
 		brush: '#005c8a',
 		background: '#ffffff'
 	};
-	var drawingTypes = {
-		circle: drawCircle,
-		rectangle: drawRect
-	};
 
 
 	// ----- Functions ----- //
@@ -39,32 +35,11 @@ module.exports = function Canvas (window) {
 
 	}
 
-	// Adds a circle to a shape path.
-	function drawCircle (shape, props) {
-		shape.arc(props.x, props.y, props.r, 0, Math.PI*2, false);
-	}
-
-	// Adds a rectangle to a shape path.
-	function drawRect (shape, props) {
-		shape.rect(props.x, props.y, props.w, props.h);
-	}
-
-	// Generates a path for the specified shape.
-	function draw () {
-
-		var props = this.attrs;
-
-		var shape = new window.Path2D();
-		drawingTypes[this.type](shape, props);
-
-		this.path = shape;
-
-	}
-
 	// Adds a drawing to the drawings on the canvas.
 	function addDrawing (type, attributes, brushType) {
 
 		var newDrawing = Drawing.Drawing(type, attributes, brushType);
+		newDrawing.pointInside = inDrawing;
 		drawings.push(newDrawing);
 
 	}
@@ -113,11 +88,6 @@ module.exports = function Canvas (window) {
 		canvas.removeEventListener(canvasEvent, callback);
 	}
 
-	// Retrieves a list of the different types of drawing.
-	function getTypes () {
-		return Object.keys(drawingTypes);
-	}
-
 	// Returns information about the position of the canvas on the page.
 	function getPosition () {
 		return canvas.getBoundingClientRect();
@@ -128,25 +98,29 @@ module.exports = function Canvas (window) {
 		return { width: canvas.width, height: canvas.height };
 	}
 
-	// Returns the attributes of a drawing.
-	function getDrawing (number) {
-		return drawings[number].attributes;
-	}
-
-	// Sets the attributes of a drawing.
-	function setDrawing (number, attributes) {
-		drawings[number].updateAttrs(attributes);
-	}
-
 	// Checks if a point is within a drawing.
-	function inDrawing (number, x, y) {
-		return ctx.isPointInPath(drawings[number].path, x, y);
+	function inDrawing (x, y) {
+		return ctx.isPointInPath(this.path, x, y);
 	}
 
-	// Returns the number of drawings on the canvas.
-	function noDrawings () {
-		return drawings.length;
+	// Returns the drawings interface.
+	function getDrawings (number) {
+
+		if (number !== undefined) {
+			return drawings[number];
+		} else {
+			return drawingsMethods;
+		}
+
 	}
+
+
+	// ----- Drawing Object ----- //
+
+	drawingsMethods = {
+		get number () { return drawings.length; },
+		get types () { return Drawing.types(); }
+	};
 
 
 	// ----- Constructor ----- //
@@ -157,13 +131,9 @@ module.exports = function Canvas (window) {
 		paint: paint,
 		listen: listen,
 		ignore: ignore,
-		drawingTypes: getTypes,
 		position: getPosition,
 		dimensions: getDimensions,
-		getDrawing: getDrawing,
-		setDrawing: setDrawing,
-		inDrawing: inDrawing,
-		drawings: noDrawings
+		drawings: getDrawings
 	};
 
 };

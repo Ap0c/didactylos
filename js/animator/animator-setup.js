@@ -44,7 +44,7 @@ function cloneAttributes (attributes) {
 function insertAsset (canvas, asset, attrs) {
 
 	return function insert () {
-		canvas.addDrawing(asset, cloneAttributes(attrs));
+		canvas.addDrawing(asset, attrs);
 		canvas.paint();
 	};
 
@@ -69,7 +69,7 @@ function setup () {
 	var canvas = Canvas(window);
 
 	canvas.drawBackground();
-	assets.build(canvas.drawingTypes());
+	assets.build(canvas.drawing().types);
 	assetInsertion(canvas, assets);
 	dragging.setup(canvas);
 

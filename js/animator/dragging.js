@@ -24,13 +24,13 @@ function clickCoords (canvas, cursor) {
 // Checks if the user click was inside one of the drawings.
 function inDrawing (canvas, coords) {
 
-	for (var i = canvas.drawings() - 1; i >= 0; i--) {
+	for (var i = canvas.drawings().number - 1; i >= 0; i--) {
 
-		if (canvas.inDrawing(i, coords.x, coords.y)) {
+		if (canvas.drawings(i).pointInside(coords.x, coords.y)) {
 
 			DRAGGING = true;
 
-			var drawing = canvas.getDrawing(i);
+			var drawing = canvas.drawings(i).attributes;
 			var cursorDx = coords.x - drawing.x;
 			var cursorDy = coords.y - drawing.y;
 			var dragFunction = drag(canvas, i, cursorDx, cursorDy);
@@ -77,7 +77,7 @@ function drag (canvas, drawing, cursorDx, cursorDy) {
 
 		var coords = clickCoords(canvas, cursor);
 
-		canvas.setDrawing(drawing, {
+		canvas.drawings(drawing).updateAttrs({
 			x: coords.x - cursorDx,
 			y: coords.y - cursorDy
 		});

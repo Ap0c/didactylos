@@ -18,6 +18,11 @@ module.exports = function drawings (Path2D) {
 
 	// ----- Functions ----- //
 
+	// Returns the types of drawing.
+	function getTypes () {
+		return Object.keys(drawingTypes);
+	}
+
 	// Adds a circle to a shape path.
 	function drawCircle (shape, attribs) {
 		shape.arc(attribs.x, attribs.y, attribs.r, 0, Math.PI*2, false);
@@ -101,7 +106,7 @@ module.exports = function drawings (Path2D) {
 				setAttrs(type, attributes, newAttrs);
 				changed = true;
 			},
-			draw() { path = draw(); }
+			draw () { path = draw(); }
 		};
 
 	}
@@ -123,7 +128,8 @@ module.exports = function drawings (Path2D) {
 	// ----- Constructor ----- //
 
 	return {
-		Drawing: Drawing
+		Drawing: Drawing,
+		types: getTypes
 	};
 
 };
