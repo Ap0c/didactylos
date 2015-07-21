@@ -1,4 +1,11 @@
+// ----- Exports ----- //
+
 module.exports = function Canvas (window) {
+
+	// ----- Requires ----- //
+
+	var Drawing = require('./drawings.js')(window.Path2D);
+
 
 	// ----- Internal Properties ----- //
 
@@ -55,35 +62,21 @@ module.exports = function Canvas (window) {
 	}
 
 	// Adds a drawing to the drawings on the canvas.
-	function addDrawing (type, attributes, method) {
+	function addDrawing (type, attributes, brushType) {
 
-		if (type in drawingTypes) {
-
-			var drawing = {
-				attrs: attributes,
-				type: type,
-				draw: draw,
-				changed: false,
-				method: method ? method : 'fill'
-			};
-
-			drawing.draw();
-			drawings.push(drawing);
-
-		} else {
-			throw new Error(`Unexpected drawing type: ${type}`);
-		}
+		var newDrawing = Drawing.Drawing(type, attributes, brushType);
+		drawings.push(newDrawing);
 
 	}
 
 	// Applies the brush colour and draw style (fill or stroke);
 	function paintDrawing (drawing) {
 
-		var colour = drawing.attrs.colour;
+		var colour = drawing.attributes.colour;
 
 		ctx.fillStyle = colour ? colour : properties.brush;
 
-		if (drawing.method === 'fill') {
+		if (drawing.brush === 'fill') {
 			ctx.fill(drawing.path);
 		} else {
 			ctx.stroke(drawing.path);
@@ -100,7 +93,7 @@ module.exports = function Canvas (window) {
 
 			var drawing = drawings[i];
 
-			if (drawings[i].changed) {
+			if (drawing.changed) {
 				drawing.draw();
 			}
 
@@ -137,18 +130,12 @@ module.exports = function Canvas (window) {
 
 	// Returns the attributes of a drawing.
 	function getDrawing (number) {
-		return drawings[number].attrs;
+		return drawings[number].attributes;
 	}
 
 	// Sets the attributes of a drawing.
 	function setDrawing (number, attributes) {
-
-		for (var attr in attributes) {
-			drawings[number].attrs[attr] = attributes[attr];
-		}
-
-		drawings[number].changed = true;
-
+		drawings[number].updateAttrs(attributes);
 	}
 
 	// Checks if a point is within a drawing.
