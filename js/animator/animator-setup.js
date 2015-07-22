@@ -27,19 +27,6 @@ function buildMenubar () {
 
 }
 
-// Creates a new copy of the asset attributes.
-function cloneAttributes (attributes) {
-
-	var newAttrs = {};
-
-	for (var attr in attributes) {
-		newAttrs[attr] = attributes[attr];
-	}
-
-	return newAttrs;
-
-}
-
 // Returns a function that inserts a specified asset into the canvas.
 function insertAsset (canvas, asset, attrs) {
 
