@@ -102,6 +102,7 @@ module.exports = function drawings (Path2D) {
 
 		circle.interface.draw = function drawCircle () {
 			circle.arc(circle.x, circle.y, circle.r, 0, Math.PI*2, false);
+			drawing.changed = true;
 		};
 
 		return circle.interface;
@@ -120,6 +121,7 @@ module.exports = function drawings (Path2D) {
 
 		rectangle.interface.draw = function drawRectangle () {
 			rectangle.rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
+			drawing.changed = true;
 		};
 
 		return rectangle.interface;
