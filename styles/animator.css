@@ -35,6 +35,11 @@ body {
 	cursor: pointer;
 }
 
+#asset_canvas {
+	width: 100%;
+	height: 100%;
+}
+
 
 /* ----- Canvas ----- */
 

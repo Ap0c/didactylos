@@ -20,6 +20,8 @@ module.exports = function drawings (Path2D) {
 		}
 	};
 
+	var drawingTypes = ['circle', 'rectangle'];
+
 
 	// ----- Objects ----- //
 
@@ -44,9 +46,16 @@ module.exports = function drawings (Path2D) {
 			name: Attribute('name', 'drawing'),
 			visible: Attribute('visible', true),
 			changed: Attribute('changed', true),
-			brush: Attribute('brush', 'fill'),
-			path: new Path2D()
+			brush: Attribute('brush', 'fill')
 		};
+
+	}
+
+	// Updates an attribute of the drawing.
+	function setAttr (drawing, attr, value) {
+
+		drawing[attr].value = value;
+		drawing.changed.value = true;
 
 	}
 
@@ -62,12 +71,12 @@ module.exports = function drawings (Path2D) {
 			get changed() { return drawing.changed.value; },
 			get brush() { return drawing.brush.value; },
 			get path() { return drawing.path; },
-			set x(value) { drawing.x.value = value; },
-			set y(value) { drawing.y.value = value; },
-			set colour(value) { drawing.colour.value = value; },
-			set name(value) { drawing.name.value = value; },
-			set visible(value) { drawing.visible.value = value; },
-			set brush(value) { drawing.brush.value = value; }
+			set x(value) { setAttr(drawing, 'x', value); },
+			set y(value) { setAttr(drawing, 'y', value); },
+			set colour(value) { setAttr(drawing, 'colour', value); },
+			set name(value) { setAttr(drawing, 'name', value); },
+			set visible(value) { setAttr(drawing, 'visible', value); },
+			set brush(value) { setAttr(drawing, 'brush', value); }
 		};
 
 	}
@@ -88,41 +97,43 @@ module.exports = function drawings (Path2D) {
 
 	}
 
-	// Adds a circle to a shape path.
-	function drawCircle (shape, attribs) {
-		shape.arc(attribs.x, attribs.visible, attribs.r, 0, Math.PI*2, false);
-	}
-
 	// Creates a circle drawing, using a default or specified radius.
 	function Circle (attributes) {
 
-		attributes.r = attributes.r ? attributes.r : '20';
+		attributes = attributes ? attributes : {};
+		attributes.r = attributes.r ? attributes.r : 20;
 
 		var circle = Drawing(attributes);
 
 		circle.interface.draw = function drawCircle () {
-			circle.arc(circle.x, circle.y, circle.r, 0, Math.PI*2, false);
-			drawing.changed = true;
+			circle.path = new Path2D();
+			circle.path.arc(circle.x, circle.y, circle.r, 0, Math.PI*2, false);
+			circle.changed.value = false;
 		};
+		circle.interface.draw();
 
 		return circle.interface;
 
 	}
 
 	// Creates a rectangle drawing, using a default or specified w and h.
-	function Rectangle () {
+	function Rectangle (attributes) {
 
-		attributes.w = attributes.w ? attributes.w : '50';
-		attributes.h = attributes.h ? attributes.h : '40';
-		attributes.x = attributes.x ? attributes.x : '225';
-		attributes.y = attributes.y ? attributes.y : '180';
+		attributes = attributes ? attributes : {};
+		attributes.w = attributes.w ? attributes.w : 50;
+		attributes.h = attributes.h ? attributes.h : 40;
+		attributes.x = attributes.x ? attributes.x : 225;
+		attributes.y = attributes.y ? attributes.y : 180;
 
 		var rectangle = Drawing(attributes);
 
 		rectangle.interface.draw = function drawRectangle () {
-			rectangle.rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
-			drawing.changed = true;
+			rectangle.path = new Path2D();
+			rectangle.path.rect(
+				rectangle.x, rectangle.y, rectangle.w, rectangle.h);
+			rectangle.changed.value = false;
 		};
+		rectangle.interface.draw();
 
 		return rectangle.interface;
 
@@ -134,7 +145,8 @@ module.exports = function drawings (Path2D) {
 
 		return {
 			get number() { return drawingList.length; },
-			get(id) { return drawingList[id]; }
+			get(id) { return drawingList[id]; },
+			add(drawing) { drawingList.push(drawing); }
 		};
 
 	}
@@ -148,9 +160,10 @@ module.exports = function drawings (Path2D) {
 	}
 
 	return {
-		Drawing: Drawing,
+		Drawings: Drawings,
 		Circle: Circle,
-		Rectangle: Rectangle
+		Rectangle: Rectangle,
+		get types() { return drawingTypes.slice(0); }
 	};
 
 };

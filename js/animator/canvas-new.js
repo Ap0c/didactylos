@@ -31,7 +31,7 @@ module.exports = function Canvas (window, drawings) {
 	// Applies the brush colour and draw style (fill or stroke);
 	function paintDrawing (drawing) {
 
-		var colour = drawing.attributes.colour;
+		var colour = drawing.colour;
 
 		ctx.fillStyle = colour ? colour : properties.brush;
 
@@ -48,9 +48,10 @@ module.exports = function Canvas (window, drawings) {
 
 		drawBackground();
 
-		for (var i = drawings.length - 1; i >= 0; i--) {
+		for (var i = drawings.number - 1; i >= 0; i--) {
 
-			var drawing = drawings[i];
+			var drawing = drawings.get(i);
+			console.log(drawing);
 
 			if (drawing.changed) {
 				drawing.draw();
