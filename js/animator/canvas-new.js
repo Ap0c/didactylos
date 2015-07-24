@@ -84,7 +84,7 @@ module.exports = function Canvas (window, drawings) {
 
 	// Checks if a point is within a drawing.
 	function inDrawing (drawing, x, y) {
-		return ctx.isPointInPath(drawings(drawing).path, x, y);
+		return ctx.isPointInPath(drawings.get(drawing).path, x, y);
 	}
 
 

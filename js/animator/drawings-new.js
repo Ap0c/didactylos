@@ -128,6 +128,17 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	function Drawings () {
+
+		var drawingList = [];
+
+		return {
+			get number() { return drawingList.length; },
+			get(id) { return drawingList[id]; }
+		};
+
+	}
+
 	function Text () {
 
 	}
