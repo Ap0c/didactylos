@@ -64,8 +64,8 @@ function setup () {
 	canvas.drawBackground();
 	assets.build(drawings.types);
 	assetInsertion(drawingList, canvas, assets);
-	drawingList.on('newDrawing', function updateProperties (drawingEvent) {
-		properties.update(drawingEvent.drawing);
+	drawingList.on('newDrawing', function updateProperties (drawing) {
+		properties.update(drawing);
 	});
 	dragging.setup(canvas, drawingList);
 

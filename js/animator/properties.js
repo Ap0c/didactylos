@@ -38,7 +38,7 @@ module.exports = function Properties (window) {
 	}
 
 	// Sets the initial value of the field.
-	function entryValue (entry, value) {
+	function entryValue (entry, type, value) {
 
 		if (type === 'number' || type === 'string' || type === 'colour') {
 			entry.value = value;
@@ -55,9 +55,9 @@ module.exports = function Properties (window) {
 		var label = document.createElement('label');
 		var entry = document.createElement('input');
 
-		label.value = name;
+		label.textContent = name;
 		entry.type = entryType(type);
-		entryValue(entry, value);
+		entryValue(entry, type, value);
 
 		label.appendChild(entry);
 		field.appendChild(label);
