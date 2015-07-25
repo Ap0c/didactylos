@@ -7,7 +7,7 @@ var Properties = require('../js/animator/properties.js');
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');
 var drawings = require('../js/animator/drawings.js')(window.Path2D);
-var dragging = require('../js/animator/dragging.js');
+var selection = require('../js/animator/selection.js');
 
 
 // ----- Setup ----- //
@@ -64,10 +64,11 @@ function setup () {
 	canvas.drawBackground();
 	assets.build(drawings.types);
 	assetInsertion(drawingList, canvas, assets);
+	selection.setup(canvas, drawingList, properties);
+
 	drawingList.on('newDrawing', function updateProperties (drawing) {
 		properties.update(drawing);
 	});
-	dragging.setup(canvas, drawingList);
 
 }
 

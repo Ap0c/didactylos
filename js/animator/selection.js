@@ -20,25 +20,15 @@ function clickCoords (canvas, cursor) {
 
 }
 
-
 // Checks if the user click was inside one of the drawings.
-function inDrawing (canvas, drawings, coords) {
+function inDrawing (canvas, drawings, coords, callback) {
 
 	for (var i = drawings.number - 1; i >= 0; i--) {
 
 		var drawing = drawings.get(i);
 
 		if (canvas.pointInside(drawing, coords.x, coords.y)) {
-
-			DRAGGING = true;
-
-			var cursorDx = coords.x - drawing.x;
-			var cursorDy = coords.y - drawing.y;
-			var dragFunction = drag(canvas, drawing, cursorDx, cursorDy);
-
-			canvas.listen('mousemove', dragFunction);
-			return dragFunction;
-
+			return callback(drawing, canvas, coords);
 		}
 
 	}
@@ -48,18 +38,44 @@ function inDrawing (canvas, drawings, coords) {
 }
 
 // Returns function that updates the drawing position as it is dragged.
-function drag (canvas, drawing, cursorDx, cursorDy) {
+function drag (drawing, canvas, coords) {
 
-	return function updateDrag (cursor) {
+	DRAGGING = true;
+	var cursorDx = coords.x - drawing.x;
+	var cursorDy = coords.y - drawing.y;
+
+	canvas.listen('mousemove', updateDrag);
+
+	function updateDrag (cursor) {
 
 		var coords = clickCoords(canvas, cursor);
-
 		drawing.x = coords.x - cursorDx;
 		drawing.y = coords.y - cursorDy;
-
 		canvas.paint();
 
-	};
+	}
+
+	return updateDrag;
+
+}
+
+// Sets up the selection of drawings on the canvas.
+function setupSelection (canvas, drawings, properties) {
+
+	canvas.listen('click', function (clickEvent) {
+
+		var coords = clickCoords(canvas, clickEvent);
+
+		inDrawing(canvas, drawings, coords, updateProperties);
+
+		function updateProperties (drawing) {
+
+			properties.update(drawing);
+			return null;
+
+		}
+
+	});
 
 }
 
@@ -71,7 +87,7 @@ function setupDrag (canvas, drawings) {
 	canvas.listen('mousedown', function (downEvent) {
 
 		var coords = clickCoords(canvas, downEvent);
-		var moveFunction = inDrawing(canvas, drawings, coords);
+		var moveFunction = inDrawing(canvas, drawings, coords, drag);
 		dragFunction = moveFunction ? moveFunction : dragFunction;
 
 	});
@@ -87,9 +103,17 @@ function setupDrag (canvas, drawings) {
 
 }
 
+// Sets up drawing selection and dragging.
+function setup (canvas, drawings, properties) {
+
+	setupSelection(canvas, drawings, properties);
+	setupDrag(canvas, drawings);
+
+}
+
 
 // ----- Module Exports ----- //
 
 module.exports = {
-	setup: setupDrag
+	setup: setup
 };
