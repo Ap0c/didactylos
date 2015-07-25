@@ -71,7 +71,7 @@ function setup () {
 	canvas.drawBackground();
 	assets.build(drawings.types);
 	assetInsertion(drawingList, canvas, assets);
-	dragging.setup(canvas);
+	dragging.setup(canvas, drawingList);
 
 }
 

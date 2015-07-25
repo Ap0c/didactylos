@@ -22,18 +22,19 @@ function clickCoords (canvas, cursor) {
 
 
 // Checks if the user click was inside one of the drawings.
-function inDrawing (canvas, coords) {
+function inDrawing (canvas, drawings, coords) {
 
-	for (var i = canvas.drawings().number - 1; i >= 0; i--) {
+	for (var i = drawings.number - 1; i >= 0; i--) {
 
-		if (canvas.drawings(i).pointInside(coords.x, coords.y)) {
+		var drawing = drawings.get(i);
+
+		if (canvas.pointInside(drawing, coords.x, coords.y)) {
 
 			DRAGGING = true;
 
-			var drawing = canvas.drawings(i).attributes;
 			var cursorDx = coords.x - drawing.x;
 			var cursorDy = coords.y - drawing.y;
-			var dragFunction = drag(canvas, i, cursorDx, cursorDy);
+			var dragFunction = drag(canvas, drawing, cursorDx, cursorDy);
 
 			canvas.listen('mousemove', dragFunction);
 			return dragFunction;
@@ -46,15 +47,31 @@ function inDrawing (canvas, coords) {
 
 }
 
+// Returns function that updates the drawing position as it is dragged.
+function drag (canvas, drawing, cursorDx, cursorDy) {
+
+	return function updateDrag (cursor) {
+
+		var coords = clickCoords(canvas, cursor);
+
+		drawing.x = coords.x - cursorDx;
+		drawing.y = coords.y - cursorDy;
+
+		canvas.paint();
+
+	};
+
+}
+
 // Sets up the user's ability to drag drawings.
-function setupDrag (canvas) {
+function setupDrag (canvas, drawings) {
 
 	var dragFunction = function () { return; };
 
 	canvas.listen('mousedown', function (downEvent) {
 
 		var coords = clickCoords(canvas, downEvent);
-		var moveFunction = inDrawing(canvas, coords);
+		var moveFunction = inDrawing(canvas, drawings, coords);
 		dragFunction = moveFunction ? moveFunction : dragFunction;
 
 	});
@@ -67,24 +84,6 @@ function setupDrag (canvas) {
 		}
 
 	});
-
-}
-
-// Returns function that updates the drawing position as it is dragged.
-function drag (canvas, drawing, cursorDx, cursorDy) {
-
-	return function updateDrag (cursor) {
-
-		var coords = clickCoords(canvas, cursor);
-
-		canvas.drawings(drawing).updateAttrs({
-			x: coords.x - cursorDx,
-			y: coords.y - cursorDy
-		});
-
-		canvas.paint();
-
-	};
 
 }
 

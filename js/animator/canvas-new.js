@@ -51,7 +51,6 @@ module.exports = function Canvas (window, drawings) {
 		for (var i = drawings.number - 1; i >= 0; i--) {
 
 			var drawing = drawings.get(i);
-			console.log(drawing);
 
 			if (drawing.changed) {
 				drawing.draw();
@@ -84,8 +83,8 @@ module.exports = function Canvas (window, drawings) {
 	}
 
 	// Checks if a point is within a drawing.
-	function inDrawing (drawing, x, y) {
-		return ctx.isPointInPath(drawings.get(drawing).path, x, y);
+	function pointInside (drawing, x, y) {
+		return ctx.isPointInPath(drawing.path, x, y);
 	}
 
 
@@ -97,7 +96,8 @@ module.exports = function Canvas (window, drawings) {
 		listen: listen,
 		ignore: ignore,
 		position: getPosition,
-		dimensions: getDimensions
+		dimensions: getDimensions,
+		pointInside: pointInside
 	};
 
 };
