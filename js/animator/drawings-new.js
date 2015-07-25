@@ -81,6 +81,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Adds additional getters and setters for specific types of drawing.
 	function updateInterface (drawing, attr) {
 
 		if (!drawing.interface.hasOwnProperty(attr)) {
@@ -94,7 +95,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
-	// Creates a drawing object.
+	// Creates a drawing object, complete with interface for external access.
 	function Drawing (attributes) {
 
 		var drawing = defaultDrawing();
@@ -111,6 +112,17 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Creates a function used to draw the drawing.
+	function drawFunc (drawing, drawPath) {
+
+		return function drawDrawing () {
+			drawing.path = new Path2D();
+			drawPath();
+			drawing.changed.value = false;
+		};
+
+	}
+
 	// Creates a circle drawing, using a default or specified radius.
 	function Circle (attributes) {
 
@@ -119,13 +131,10 @@ module.exports = function drawings (Path2D) {
 
 		var circle = Drawing(attributes);
 
-		circle.interface.draw = function drawCircle () {
-			circle.path = new Path2D();
+		circle.interface.draw = drawFunc(circle, function drawCircle () {
 			circle.path.arc(circle.x.value, circle.y.value, circle.r.value, 0,
 				Math.PI*2, false);
-			circle.changed.value = false;
-		};
-		circle.interface.draw();
+		});
 
 		return circle.interface;
 
@@ -142,18 +151,16 @@ module.exports = function drawings (Path2D) {
 
 		var rectangle = Drawing(attributes);
 
-		rectangle.interface.draw = function drawRectangle () {
-			rectangle.path = new Path2D();
+		rectangle.interface.draw = drawFunc(rectangle, function drawRect () {
 			rectangle.path.rect(rectangle.x.value, rectangle.y.value,
 				rectangle.w.value, rectangle.h.value);
-			rectangle.changed.value = false;
-		};
-		rectangle.interface.draw();
+		});
 
 		return rectangle.interface;
 
 	}
 
+	// Object to store a list of drawings, and expose corresponding methods.
 	function Drawings () {
 
 		var drawingList = [];
