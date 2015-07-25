@@ -3,6 +3,7 @@
 var gui = require('nw.gui');
 
 var Menus = require('../js/menus.js');
+var drawings = require('../js/animator/drawings.js')(window.Path2D);
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');
 
@@ -11,10 +12,12 @@ var dragging = require('../js/animator/dragging.js');
 
 // ----- Setup ----- //
 
-var assetDefaults = {
-	circle: {x: 250, y: 200, r: 20},
-	rectangle: {x: 225, y: 180, w: 50, h: 40}
+var drawingTypes = {
+	circle: drawings.Circle,
+	rectangle: drawings.Rectangle
 };
+
+var drawingCounter = 0;
 
 
 // ----- Functions ----- //
@@ -27,21 +30,30 @@ function buildMenubar () {
 
 }
 
-// Returns a function that inserts a specified asset into the canvas.
-function insertAsset (canvas, asset, attrs) {
+function insert (draw, drawingList, canvas) {
 
-	return function insert () {
-		canvas.addDrawing(asset, attrs);
+	return function insertDrawing () {
+
+		var name = `drawing${drawingCounter}`;
+		drawingCounter++;
+
+		var drawing = draw({name: name});
+		drawingList.add(drawing);
+
 		canvas.paint();
+
 	};
 
 }
 
 // Sets up the insertion of assets into the canvas.
-function assetInsertion (canvas, assets) {
+function assetInsertion (drawingList, canvas, assets) {
 
-	for (var asset in assetDefaults) {
-		assets.click(asset, insertAsset(canvas, asset, assetDefaults[asset]));
+	for (var asset in drawingTypes) {
+
+		var insertFunction = insert(drawingTypes[asset], drawingList, canvas);
+		assets.click(asset, insertFunction);
+
 	}
 
 }
@@ -53,12 +65,13 @@ function setup () {
 	// buildMenubar();
 
 	var assets = Assets(window);
-	var canvas = Canvas(window);
+	var drawingList = drawings.Drawings();
+	var canvas = Canvas(window, drawingList);
 
 	canvas.drawBackground();
-	assets.build(canvas.drawings().types);
-	assetInsertion(canvas, assets);
-	dragging.setup(canvas);
+	assets.build(drawings.types);
+	assetInsertion(drawingList, canvas, assets);
+	dragging.setup(canvas, drawingList);
 
 }
 
