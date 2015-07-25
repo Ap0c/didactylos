@@ -1,3 +1,9 @@
+// ----- Requires ----- //
+
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+
+
 // ----- Exports ----- //
 
 module.exports = function drawings (Path2D) {
@@ -162,16 +168,31 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Returns a function that adds a drawing to the list.
+	function addDrawing (drawings, drawingList) {
+
+		return function add (drawing) {
+			drawingList.push(drawing);
+			drawings.emit('newDrawing', drawing);
+		};
+
+	}
+
 	// Object to store a list of drawings, and expose corresponding methods.
 	function Drawings () {
 
 		var drawingList = [];
+		var drawings = new EventEmitter();
 
-		return {
-			get number() { return drawingList.length; },
-			get(id) { return drawingList[id]; },
-			add(drawing) { drawingList.push(drawing); }
-		};
+		drawings.get = function getDrawing (id) { return drawingList[id]; };
+		drawings.add = addDrawing(drawings, drawingList);
+
+		Object.defineProperty(drawings, 'number', {
+			get: function () { return drawingList.length; },
+			enumerable: true
+		});
+
+		return drawings;
 
 	}
 

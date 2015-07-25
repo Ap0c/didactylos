@@ -3,10 +3,10 @@
 var gui = require('nw.gui');
 
 var Menus = require('../js/menus.js');
-var drawings = require('../js/animator/drawings.js')(window.Path2D);
+var Properties = require('../js/animator/properties.js');
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');
-
+var drawings = require('../js/animator/drawings.js')(window.Path2D);
 var dragging = require('../js/animator/dragging.js');
 
 
@@ -21,14 +21,6 @@ var drawingCounter = 0;
 
 
 // ----- Functions ----- //
-
-// Builds the animator menubar.
-function buildMenubar () {
-
-	var menus = Menus(gui);
-	menus.macMenu();
-
-}
 
 function insert (draw, drawingList, canvas) {
 
@@ -62,15 +54,19 @@ function assetInsertion (drawingList, canvas, assets) {
 function setup () {
 
 	window.focus();
-	// buildMenubar();
+
+	var drawingList = drawings.Drawings();
 
 	var assets = Assets(window);
-	var drawingList = drawings.Drawings();
 	var canvas = Canvas(window, drawingList);
+	var properties = Properties(window);
 
 	canvas.drawBackground();
 	assets.build(drawings.types);
 	assetInsertion(drawingList, canvas, assets);
+	drawingList.on('newDrawing', function updateProperties (drawingEvent) {
+		properties.update(drawingEvent.drawing);
+	});
 	dragging.setup(canvas, drawingList);
 
 }
