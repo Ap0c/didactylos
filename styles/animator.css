@@ -66,3 +66,19 @@ body {
 	float: left;
 	box-sizing: border-box;
 }
+
+#properties > div {
+	width: 80%;
+	margin: 5% auto;
+}
+
+#properties > div > label {
+	display: inline-block;
+	width: 35%;
+	padding-right: 10%;
+	text-align: right;
+}
+
+#properties > div > input {
+	width: 50%;
+}

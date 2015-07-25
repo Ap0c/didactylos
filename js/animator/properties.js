@@ -55,12 +55,16 @@ module.exports = function Properties (window) {
 		var label = document.createElement('label');
 		var entry = document.createElement('input');
 
+		var entryId = `property_${name}`;
+
 		label.textContent = name;
+		label.for = entryId;
 		entry.type = entryType(type);
+		entry.id = entryId;
 		entryValue(entry, type, value);
 
-		label.appendChild(entry);
 		field.appendChild(label);
+		field.appendChild(entry);
 
 		return field;
 
