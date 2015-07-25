@@ -18,7 +18,7 @@ exports.items = function items (gui, file) {
 
 	var newAnimation = {
 		label: 'New Animation',
-		key: 'Shift+a',
+		key: 'd',
 		modifiers: 'cmd',
 		click: function () {
 

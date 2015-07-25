@@ -10,7 +10,7 @@ module.exports = function drawings (Path2D) {
 		r: {type: 'number'},
 		w: {type: 'number'},
 		h: {type: 'number'},
-		colour: {type: 'string'},
+		colour: {type: 'colour'},
 		name: {type: 'string'},
 		visible: {type: 'boolean'},
 		changed: {type: 'boolean'},
@@ -76,7 +76,8 @@ module.exports = function drawings (Path2D) {
 			set colour(value) { setAttr(drawing, 'colour', value); },
 			set name(value) { setAttr(drawing, 'name', value); },
 			set visible(value) { setAttr(drawing, 'visible', value); },
-			set brush(value) { setAttr(drawing, 'brush', value); }
+			set brush(value) { setAttr(drawing, 'brush', value); },
+			type (attr) { return drawing[attr].type; }
 		};
 
 	}
@@ -88,7 +89,8 @@ module.exports = function drawings (Path2D) {
 
 			Object.defineProperty(drawing.interface, attr, {
 				get: function () { return drawing[attr].value; },
-				set: function (value) { setAttr(drawing, attr, value); }
+				set: function (value) { setAttr(drawing, attr, value); },
+				enumerable: true
 			});
 
 		}

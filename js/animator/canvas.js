@@ -51,6 +51,9 @@ module.exports = function Canvas (window, drawings) {
 		for (var i = drawings.number - 1; i >= 0; i--) {
 
 			var drawing = drawings.get(i);
+			for (var item in drawing) {
+				console.log(item);
+			}
 
 			if (drawing.changed) {
 				drawing.draw();
