@@ -81,18 +81,32 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	function updateInterface (drawing, attr) {
+
+		if (!drawing.interface.hasOwnProperty(attr)) {
+
+			Object.defineProperty(drawing.interface, attr, {
+				get: function () { return drawing[attr].value; },
+				set: function (value) { setAttr(drawing, attr, value); }
+			});
+
+		}
+
+	}
+
 	// Creates a drawing object.
 	function Drawing (attributes) {
 
 		var drawing = defaultDrawing();
+		drawing.interface = drawingInterface(drawing);
 
 		if (attributes) {
 			for (var attr in attributes) {
 				drawing[attr] = Attribute(attr, attributes[attr]);
+				updateInterface(drawing, attr);
 			}
 		}
 
-		drawing.interface = drawingInterface(drawing);
 		return drawing;
 
 	}
@@ -107,7 +121,8 @@ module.exports = function drawings (Path2D) {
 
 		circle.interface.draw = function drawCircle () {
 			circle.path = new Path2D();
-			circle.path.arc(circle.x, circle.y, circle.r, 0, Math.PI*2, false);
+			circle.path.arc(circle.x.value, circle.y.value, circle.r.value, 0,
+				Math.PI*2, false);
 			circle.changed.value = false;
 		};
 		circle.interface.draw();
@@ -129,8 +144,8 @@ module.exports = function drawings (Path2D) {
 
 		rectangle.interface.draw = function drawRectangle () {
 			rectangle.path = new Path2D();
-			rectangle.path.rect(
-				rectangle.x, rectangle.y, rectangle.w, rectangle.h);
+			rectangle.path.rect(rectangle.x.value, rectangle.y.value,
+				rectangle.w.value, rectangle.h.value);
 			rectangle.changed.value = false;
 		};
 		rectangle.interface.draw();
