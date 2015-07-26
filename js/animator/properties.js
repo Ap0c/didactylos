@@ -98,8 +98,6 @@ module.exports = function Properties (window) {
 	// Creates a new field entry element.
 	function newEntry (type, allowedValues) {
 
-		console.log(allowedValues);
-
 		if (allowedValues) {
 			return createSelect(allowedValues);
 		} else {
@@ -149,6 +147,21 @@ module.exports = function Properties (window) {
 
 	}
 
+	// Creates a delete button.
+	function createDelete (drawing) {
+
+		var button = document.createElement('button');
+		button.textContent = 'delete';
+
+		button.addEventListener('click', function () {
+			propertiesObject.emit('deleteDrawing', drawing);
+			removeFields();
+		});
+
+		return button;
+
+	}
+
 	// Creates a function that emits a change event on the properties object.
 	function changeListener (field, drawing) {
 
@@ -173,6 +186,8 @@ module.exports = function Properties (window) {
 		removeFields();
 
 		var newFields = addFields(drawing);
+		var deleteButton = createDelete(drawing);
+		newFields.appendChild(deleteButton);
 		properties.appendChild(newFields);
 
 		for (var i = fields.length - 1; i >= 0; i--) {

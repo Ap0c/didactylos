@@ -171,9 +171,18 @@ module.exports = function drawings (Path2D) {
 	// Returns a function that adds a drawing to the list.
 	function addDrawing (drawings, drawingList) {
 
-		return function add (drawing) {
+		return function addFunction (drawing) {
 			drawingList.push(drawing);
 			drawings.emit('newDrawing', drawing);
+		};
+
+	}
+
+	// Returns a function that deletes a drawing from the list.
+	function deleteDrawing (drawingList) {
+
+		return function deleteFunction (drawing) {
+			drawingList.splice(drawingList.indexOf(drawing), 1);
 		};
 
 	}
@@ -186,6 +195,7 @@ module.exports = function drawings (Path2D) {
 
 		drawings.get = function getDrawing (id) { return drawingList[id]; };
 		drawings.add = addDrawing(drawings, drawingList);
+		drawings.delete = deleteDrawing(drawingList);
 
 		Object.defineProperty(drawings, 'number', {
 			get: function () { return drawingList.length; },

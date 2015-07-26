@@ -75,6 +75,11 @@ function setup () {
 		canvas.paint();
 	});
 
+	properties.on('deleteDrawing', function deleteDrawing (drawing) {
+		drawingList.delete(drawing);
+		canvas.paint();
+	});
+
 }
 
 

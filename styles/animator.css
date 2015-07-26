@@ -82,3 +82,18 @@ body {
 #properties > div > input {
 	width: 50%;
 }
+
+#properties > button {
+	width: 60%;
+	background-color: #bb3333;
+	color: #ffffff;
+	padding: 2% 0;
+	cursor: pointer;
+	margin: 2% 20% 0;
+	border: none;
+	font-size: small;
+}
+
+#properties > button:hover {
+	background-color: #991111;
+}
