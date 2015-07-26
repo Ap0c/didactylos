@@ -22,7 +22,7 @@ var drawingCounter = 0;
 
 // ----- Functions ----- //
 
-function insert (draw, drawingList, canvas) {
+function insert (draw, drawingList) {
 
 	return function insertDrawing () {
 
@@ -32,21 +32,41 @@ function insert (draw, drawingList, canvas) {
 		var drawing = draw({name: name});
 		drawingList.add(drawing);
 
-		canvas.paint();
-
 	};
 
 }
 
 // Sets up the insertion of assets into the canvas.
-function assetInsertion (drawingList, canvas, assets) {
+function assetInsertion (drawingList, assets) {
 
 	for (var asset in drawingTypes) {
 
-		var insertFunction = insert(drawingTypes[asset], drawingList, canvas);
+		var insertFunction = insert(drawingTypes[asset], drawingList);
 		assets.click(asset, insertFunction);
 
 	}
+
+}
+
+// Sets up event listeners on various components.
+function setupListeners (canvas, drawingList, properties) {
+
+	drawingList.on('change', function paintCanvas () {
+		canvas.paint();
+	});
+
+	drawingList.on('newDrawing', function updateProperties (drawing) {
+		properties.update(drawing);
+	});
+
+	properties.on('fieldChange', function updateDrawing (field, drawing) {
+		drawing[field.name] = field.value;
+		canvas.paint();
+	});
+
+	properties.on('deleteDrawing', function deleteDrawing (drawing) {
+		drawingList.del(drawing);
+	});
 
 }
 
@@ -61,24 +81,12 @@ function setup () {
 	var canvas = Canvas(window, drawingList);
 	var properties = Properties(window);
 
-	canvas.drawBackground();
 	assets.build(drawings.types);
-	assetInsertion(drawingList, canvas, assets);
+	assetInsertion(drawingList, assets);
 	selection.setup(canvas, drawingList, properties);
 
-	drawingList.on('newDrawing', function updateProperties (drawing) {
-		properties.update(drawing);
-	});
-
-	properties.on('fieldChange', function updateDrawing (field, drawing) {
-		drawing[field.name] = field.value;
-		canvas.paint();
-	});
-
-	properties.on('deleteDrawing', function deleteDrawing (drawing) {
-		drawingList.delete(drawing);
-		canvas.paint();
-	});
+	setupListeners(canvas, drawingList, properties);
+	canvas.drawBackground();
 
 }
 
