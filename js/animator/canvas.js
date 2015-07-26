@@ -56,7 +56,9 @@ module.exports = function Canvas (window, drawings) {
 				drawing.draw();
 			}
 
-			paintDrawing(drawing);
+			if (drawing.visible) {
+				paintDrawing(drawing);
+			}
 
 		}
 

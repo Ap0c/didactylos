@@ -27,7 +27,7 @@ module.exports = function Properties (window) {
 	}
 
 	// Returns an input field type when given a data type.
-	function entryType (type) {
+	function inputType (type) {
 
 		switch (type) {
 			case 'number':
@@ -45,7 +45,7 @@ module.exports = function Properties (window) {
 	}
 
 	// Sets the initial value of the field.
-	function entryValue (entry, type, value) {
+	function setValue (entry, type, value) {
 
 		if (type === 'number' || type === 'string' || type === 'colour') {
 			entry.value = value;
@@ -55,21 +55,70 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Adds a field to the list of fields to be appended.
-	function newField (name, type, value) {
+	// Creates an input element for a property field.
+	function createInput (type) {
 
-		var field = document.createElement('div');
-		var label = document.createElement('label');
 		var entry = document.createElement('input');
+		entry.type = inputType(type);
 
-		var entryId = `property_${name}`;
+		return entry;
+
+	}
+
+	// Creates a select element for a property field.
+	function createSelect (allowedValues) {
+
+		var entry = document.createElement('select');
+
+		for (var i = 0, noValues = allowedValues.length; i < noValues; i++) {
+
+			var option = document.createElement('option');
+			option.value = allowedValues[i];
+			option.label = allowedValues[i];
+			entry.add(option);
+
+		}
+
+		return entry;
+
+	}
+
+	// Creates a label for a property field.
+	function newLabel (name, entryId) {
+
+		var label = document.createElement('label');
 
 		label.textContent = name;
 		label.for = entryId;
-		entry.type = entryType(type);
+
+		return label;
+
+	}
+
+	// Creates a new field entry element.
+	function newEntry (type, allowedValues) {
+
+		console.log(allowedValues);
+
+		if (allowedValues) {
+			return createSelect(allowedValues);
+		} else {
+			return createInput(type);
+		}
+
+	}
+
+	// Adds a field to the list of fields to be appended.
+	function newField (name, type, value, allowedValues) {
+
+		var field = document.createElement('div');
+		var entryId = `property_${name}`;
+		var label = newLabel(name, entryId);
+		var entry = newEntry(type, allowedValues);
+
 		entry.id = entryId;
 		entry.name = name;
-		entryValue(entry, type, value);
+		setValue(entry, type, value);
 		fields.push(entry);
 
 		field.appendChild(label);
@@ -88,7 +137,8 @@ module.exports = function Properties (window) {
 
 			if (Object.getOwnPropertyDescriptor(drawing, attr).set) {
 
-				var field = newField(attr, drawing.type(attr), drawing[attr]);
+				var field = newField(attr, drawing.type(attr), drawing[attr],
+					drawing.allowedValues(attr));
 				fieldSet.appendChild(field);
 
 			}

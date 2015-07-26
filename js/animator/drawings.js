@@ -72,7 +72,7 @@ module.exports = function drawings (Path2D) {
 			get y() { return drawing.y.value; },
 			get colour() { return drawing.colour.value; },
 			get name() { return drawing.name.value; },
-			get visible() { return drawing.name.value; },
+			get visible() { return drawing.visible.value; },
 			get changed() { return drawing.changed.value; },
 			get brush() { return drawing.brush.value; },
 			get path() { return drawing.path; },
@@ -82,7 +82,8 @@ module.exports = function drawings (Path2D) {
 			set name(value) { setAttr(drawing, 'name', value); },
 			set visible(value) { setAttr(drawing, 'visible', value); },
 			set brush(value) { setAttr(drawing, 'brush', value); },
-			type (attr) { return drawing[attr].type; }
+			type (attr) { return drawing[attr].type; },
+			allowedValues(attr) { return drawing[attr].allowedValues || null; }
 		};
 
 	}
