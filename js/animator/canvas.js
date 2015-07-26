@@ -48,7 +48,7 @@ module.exports = function Canvas (window, drawings) {
 
 		drawBackground();
 
-		for (var i = drawings.number - 1; i >= 0; i--) {
+		for (var i = 0, noDrawings = drawings.number; i < noDrawings; i++) {
 
 			var drawing = drawings.get(i);
 

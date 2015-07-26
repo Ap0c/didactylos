@@ -70,6 +70,11 @@ function setup () {
 		properties.update(drawing);
 	});
 
+	properties.on('fieldChange', function updateDrawing (field, drawing) {
+		drawing[field.name] = field.value;
+		canvas.paint();
+	});
+
 }
 
 

@@ -1,3 +1,8 @@
+// ----- Requires ----- //
+
+var EventEmitter = require('events').EventEmitter;
+
+
 // ----- Exports ----- //
 
 module.exports = function Properties (window) {
@@ -6,6 +11,8 @@ module.exports = function Properties (window) {
 
 	var document = window.document;
 	var properties = document.getElementById('properties');
+	var fields = [];
+	var propertiesObject = new EventEmitter();
 
 
 	// ----- Functions ----- //
@@ -61,7 +68,9 @@ module.exports = function Properties (window) {
 		label.for = entryId;
 		entry.type = entryType(type);
 		entry.id = entryId;
+		entry.name = name;
 		entryValue(entry, type, value);
+		fields.push(entry);
 
 		field.appendChild(label);
 		field.appendChild(entry);
@@ -90,6 +99,24 @@ module.exports = function Properties (window) {
 
 	}
 
+	// Creates a function that emits a change event on the properties object.
+	function changeListener (field, drawing) {
+
+		var fieldInfo = {
+			name: field.name
+		};
+
+		return function fieldChange () {
+
+			fieldInfo.value = field.type === 'checkbox' ?
+				field.checked :
+				field.value;
+			propertiesObject.emit('fieldChange', fieldInfo, drawing);
+
+		};
+
+	}
+
 	// Updates the properties sidebar to display the currently selected drawing.
 	function update (drawing) {
 
@@ -98,13 +125,17 @@ module.exports = function Properties (window) {
 		var newFields = addFields(drawing);
 		properties.appendChild(newFields);
 
+		for (var i = fields.length - 1; i >= 0; i--) {
+			fields[i].addEventListener('change', changeListener(fields[i],
+				drawing));
+		}
+
 	}
 
 
 	// ----- Constructor ----- //
 
-	return {
-		update: update
-	};
+	propertiesObject.update = update;
+	return propertiesObject;
 
 };
