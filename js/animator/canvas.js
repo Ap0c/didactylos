@@ -33,11 +33,11 @@ module.exports = function Canvas (window, drawings) {
 
 		var colour = drawing.colour;
 
-		ctx.fillStyle = colour ? colour : properties.brush;
-
 		if (drawing.brush === 'fill') {
+			ctx.fillStyle = colour ? colour : properties.brush;
 			ctx.fill(drawing.path);
 		} else {
+			ctx.strokeStyle = colour ? colour : properties.brush;
 			ctx.stroke(drawing.path);
 		}
 
