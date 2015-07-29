@@ -15,7 +15,8 @@ function writeInfo (projectName, projectPath, callback) {
 	var projectInfo = {
 		name: projectName,
 		path: projectPath,
-		files: {}
+		files: {},
+		animations: {}
 	};
 
 	var projectJson = JSON.stringify(projectInfo, null, 4);
@@ -53,8 +54,8 @@ function mainWindow () {
 		"height": 640
 	});
 
-	var win = gui.Window.get();
-	win.close();
+	var currentWindow = gui.Window.get();
+	currentWindow.close();
 
 }
 
@@ -74,6 +75,21 @@ function checkProject (projectFile, callback) {
 
 }
 
+// Creates the animations directory.
+function animationsDir (projectPath, callback) {
+
+	var dirPath = path.join(projectPath, 'animations');
+
+	fs.mkdir(dirPath, function (err) {
+		if (err) {
+			alert('Error: Problem creating project (animation directory).');
+		} else {
+			callback();
+		}
+	});
+
+}
+
 // Attempts to create the project directory, and warns user if it exists.
 function createDir (dirPath, callback) {
 
@@ -82,7 +98,7 @@ function createDir (dirPath, callback) {
 			alert('A folder already exists with that name.');
 			createProject();
 		} else {
-			callback();
+			animationsDir(dirPath, callback);
 		}
 	});
 
