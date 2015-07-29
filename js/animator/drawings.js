@@ -64,6 +64,23 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Returns the attributes of a drawing that are to be serialised.
+	function serialisableAttrs (drawing) {
+
+		var serialisable = {};
+
+		for (var attr in ATTR_PROPS) {
+
+			if (drawing[attr] && attr !== 'changed') {
+				serialisable[attr] = drawing[attr].value;
+			}
+
+		}
+
+		return serialisable;
+
+	}
+
 	// Sets up an interface for external access to the drawing.
 	function drawingInterface (drawing) {
 
@@ -83,7 +100,8 @@ module.exports = function drawings (Path2D) {
 			set visible(value) { setAttr(drawing, 'visible', value); },
 			set brush(value) { setAttr(drawing, 'brush', value); },
 			type (attr) { return drawing[attr].type; },
-			allowedValues(attr) { return drawing[attr].allowedValues || null; }
+			allowedValues(attr) { return drawing[attr].allowedValues || null; },
+			serialAttrs() { return serialisableAttrs(drawing); }
 		};
 
 	}

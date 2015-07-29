@@ -2,7 +2,6 @@
 
 var gui = require('nw.gui');
 
-var Menus = require('../js/menus.js');
 var Properties = require('../js/animator/properties.js');
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');

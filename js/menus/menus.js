@@ -1,7 +1,7 @@
 // ----- Requires ----- //
 
-var fileMenu = require('./editor/fileMenu.js');
-var insertMenu = require('./editor/insertMenu.js');
+var fileMenu = require('./fileMenu.js');
+var insertMenu = require('./insertMenu.js');
 
 
 // ----- Export ----- //
