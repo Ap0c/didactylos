@@ -27,6 +27,11 @@ module.exports = function Project (projectJson) {
 		return info.path;
 	}
 
+	// Retrieves the animation directory path.
+	function animationPath () {
+		return info.animPath;
+	}
+
 	// Retrieves the project markdown files.
 	function getFiles () {
 		return Object.keys(info.files);
@@ -125,6 +130,7 @@ module.exports = function Project (projectJson) {
 
 	return {
 		path: getPath,
+		animationPath: animationPath,
 		files: getFiles,
 		file: getFile,
 		addFile: addFile,

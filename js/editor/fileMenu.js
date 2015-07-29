@@ -1,5 +1,27 @@
 exports.items = function items (gui, file) {
 
+	// ----- Function ----- //
+
+	// Prompts the user for an animation name, then opens the animator window.
+	function animatorWindow () {
+
+		file.newAnimation(function animationWindow (animationName) {
+
+			var animWindow = gui.Window.open('animator.html', {
+				"toolbar": true,
+				"width": 1000,
+				"height": 600
+			});
+
+			animWindow.on('saveAnimation', function (animationData) {
+				file.saveAnimation(animationName, animationData);
+			});
+
+		});
+
+	}
+
+
 	// ----- Menu Items ----- //
 
 	var newFile = {
@@ -20,15 +42,7 @@ exports.items = function items (gui, file) {
 		label: 'New Animation',
 		key: 'd',
 		modifiers: 'cmd',
-		click: function () {
-
-			gui.Window.open('animator.html', {
-				"toolbar": true,
-				"width": 1000,
-				"height": 600
-			});
-
-		}
+		click: animatorWindow
 	};
 
 

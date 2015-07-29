@@ -15,6 +15,7 @@ function writeInfo (projectName, projectPath, callback) {
 	var projectInfo = {
 		name: projectName,
 		path: projectPath,
+		animPath: path.join(projectPath, 'animations'),
 		files: {},
 		animations: {}
 	};

@@ -97,6 +97,44 @@ module.exports = function File (views, project) {
 
 	}
 
+	// Builds a path for the animation and adds it to the project.
+	function createAnimation (name, callback) {
+
+		var filename = name + '.json';
+		var animationPath = path.join(project.path(), 'animations', filename);
+
+		project.addAnimation(name, filename);
+		callback(name);
+
+	}
+
+	// Creates a new animation file.
+	function newAnimation (callback) {
+
+		var animation = sidebar.newFile('Name Of New Animation:');
+
+		if (project.animationExists(animation)) {
+			sidebar.message('That animation already exists.');
+			newAnimation(callback);
+		} else if (animation === '') {
+			sidebar.message('Please specify an animation name.');
+			newAnimation(callback);
+		} else if (animation !== null) {
+			createAnimation(animation, callback);
+		}
+
+	}
+
+	// Saves an animation file.
+	function saveAnimation (name, data) {
+
+		var filename = project.animation(name);
+		var filepath = path.join(project.animPath(), filename);
+
+		fs.writeFile(filepath, data);
+
+	}
+
 
 	// ----- Constructor ----- //
 
@@ -104,7 +142,9 @@ module.exports = function File (views, project) {
 		newFile: newFile,
 		open: openFile,
 		save: save,
-		switch: switchFile
+		switch: switchFile,
+		newAnimation: newAnimation,
+		saveAnimation: saveAnimation
 	};
 
 	return files;
