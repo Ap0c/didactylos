@@ -22,14 +22,14 @@ module.exports = function Project (projectJson) {
 		fs.writeFile(infoFile, projectJson);
 	}
 
-	// Retrieves the project markdown files.
-	function getFiles () {
-		return Object.keys(info.files);
-	}
-
 	// Retrieves the project path.
 	function getPath () {
 		return info.path;
+	}
+
+	// Retrieves the project markdown files.
+	function getFiles () {
+		return Object.keys(info.files);
 	}
 
 	// Returns the filename of a file.
@@ -49,6 +49,19 @@ module.exports = function Project (projectJson) {
 
 	}
 
+	// Removes a file from the list of files.
+	function deleteFile (name) {
+
+		delete info.files[name];
+		syncInfo();
+
+	}
+
+	// Returns true if a file already exists, false if not.
+	function fileExists (name) {
+		return info.files[name] ? true : false;
+	}
+
 	// Assigns a style to a file.
 	function updateStyle (filename, style, value) {
 
@@ -63,17 +76,38 @@ module.exports = function Project (projectJson) {
 		return info.files[filename].styles;
 	}
 
-	// Removes a file from the list of files.
-	function deleteFile (name) {
+	// Retrieves the project animation files.
+	function getAnimations () {
+		return Object.keys(info.animations);
+	}
 
-		delete info.files[name];
+	// Returns the filename of a animation.
+	function getAnimation (name) {
+		return info.animations[name].filename;
+	}
+
+	// Adds an animation to the list of animations.
+	function addAnimation (name, filename) {
+
+		info.animations[name] = {
+			filename: filename
+		};
+
 		syncInfo();
 
 	}
 
-	// Returns true if a file already exists, false if not.
-	function fileExists (name) {
-		return info.files[name] ? true : false;
+	// Removes an animation from the list of animations.
+	function deleteAnimation (name) {
+
+		delete info.animations[name];
+		syncInfo();
+
+	}
+
+	// Returns true if an animation already exists, false if not.
+	function animationExists (name) {
+		return info.animations[name] ? true : false;
 	}
 
 	// Parses the project information into an object.
@@ -90,14 +124,19 @@ module.exports = function Project (projectJson) {
 	init();
 
 	return {
-		files: getFiles,
 		path: getPath,
+		files: getFiles,
 		file: getFile,
 		addFile: addFile,
+		deleteFile: deleteFile,
+		fileExists: fileExists,
 		updateStyle: updateStyle,
 		styles: getStyles,
-		deleteFile: deleteFile,
-		fileExists: fileExists
+		animations: getAnimations,
+		animation: getAnimation,
+		addAnimation: addAnimation,
+		deleteAnimation: deleteAnimation,
+		animationExists: animationExists
 	};
 
 };
