@@ -47,6 +47,22 @@ function assetInsertion (drawingList, assets) {
 
 }
 
+// Serialises the drawing data to JSON.
+function serialise (drawings) {
+
+	var serialisable = [];
+
+	for (i = 0, len = drawings.number; i < len; i++) {
+
+		var drawing = drawings.get(i).serialAttrs();
+		serialisable.push(drawing);
+
+	}
+
+	return JSON.stringify(serialisable);
+
+}
+
 // Sets up event listeners on various components.
 function setupListeners (canvas, drawingList, properties) {
 
@@ -65,6 +81,12 @@ function setupListeners (canvas, drawingList, properties) {
 
 	properties.on('deleteDrawing', function deleteDrawing (drawing) {
 		drawingList.del(drawing);
+	});
+
+	var animWindow = gui.Window.get();
+	animWindow.on('serialiseAnim', function saveData () {
+		var serialisedAnim = serialise(drawingList);
+		animWindow.emit('serialisedAnim', serialisedAnim);
 	});
 
 }

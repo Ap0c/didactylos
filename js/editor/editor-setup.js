@@ -12,6 +12,10 @@ var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
 var styles = require('../js/editor/style-tools.js');
 
+// ----- Setup ----- //
+
+var animationWindow = null;
+
 
 // ----- Functions ----- //
 
@@ -76,6 +80,12 @@ function setup () {
 	win.on('close', function () {
 		file.save();
 		win.close('force');
+	});
+	win.on('animFocus', function updateAnim (newWindow) {
+		animationWindow = newWindow;
+	});
+	win.on('saveAnim', function saveAnimation () {
+		animationWindow.win.emit('serialiseAnim');
 	});
 
 	editor.focus();

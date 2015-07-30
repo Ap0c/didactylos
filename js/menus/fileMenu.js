@@ -1,5 +1,10 @@
 exports.items = function items (gui, file) {
 
+	// ----- Internal Properties ----- //
+
+	var editorWindow = gui.Window.get();
+
+
 	// ----- Function ----- //
 
 	// Prompts the user for an animation name, then opens the animator window.
@@ -13,8 +18,13 @@ exports.items = function items (gui, file) {
 				"height": 600
 			});
 
-			animWindow.on('saveAnimation', function (animationData) {
-				file.saveAnimation(animationName, animationData);
+			animWindow.on('focus', function updateCurrent () {
+				var windowInfo = { win: animWindow, name: animationName };
+				editorWindow.emit('animFocus', windowInfo);
+			});
+
+			animWindow.on('serialisedAnim', function (serialData) {
+				file.saveAnimation(animationName, serialData);
 			});
 
 		});
@@ -45,9 +55,17 @@ exports.items = function items (gui, file) {
 		click: animatorWindow
 	};
 
+	var saveAnimation = {
+		label: 'Save Animation',
+		key: 'Ctrl-Shift-D',
+		click: function saveEvent () {
+			editorWindow.emit('saveAnim');
+		}
+	};
+
 
 	// ----- Return ----- //
 
-	return [newFile, saveFile, { type: 'separator' }, newAnimation];
+	return [newFile, saveFile, { type: 'separator' }, newAnimation, saveAnimation];
 
 };

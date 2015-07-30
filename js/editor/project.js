@@ -130,7 +130,7 @@ module.exports = function Project (projectJson) {
 
 	return {
 		path: getPath,
-		animationPath: animationPath,
+		animPath: animationPath,
 		files: getFiles,
 		file: getFile,
 		addFile: addFile,
