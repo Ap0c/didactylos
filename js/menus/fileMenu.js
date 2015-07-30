@@ -1,71 +1,51 @@
-exports.items = function items (gui, file) {
-
-	// ----- Internal Properties ----- //
-
-	var currentAnimation = null;
-
-
-	// ----- Function ----- //
-
-	// Prompts the user for an animation name, then opens the animator window.
-	function animatorWindow () {
-
-		file.newAnimation(function animationWindow (name, path) {
-
-			var animWindow = gui.Window.open('animator.html', {
-				"toolbar": true,
-				"width": 1000,
-				"height": 600
-			});
-
-			animWindow.on('loaded', function passData () {
-				animWindow.title = name;
-				animWindow.window.sessionStorage.setItem('animPath', path);
-			});
-
-			animWindow.on('focus', function updateCurrent () {
-				currentAnimation = animWindow;
-			});
-
-		});
-
-	}
-
+exports.items = function items (clickEvent) {
 
 	// ----- Menu Items ----- //
 
 	var newFile = {
-		label: 'New',
-		key: 'n',
-		modifiers: 'cmd',
-		click: file.newFile
+		win: 'editor',
+		menu: {
+			label: 'New',
+			key: 'n',
+			modifiers: 'cmd',
+			click: clickEvent('new')
+		}
 	};
 
 	var saveFile = {
-		label: 'Save',
-		key: 's',
-		modifiers: 'cmd',
-		click: file.save
+		win: 'editor',
+		menu: {
+			label: 'Save',
+			key: 's',
+			modifiers: 'cmd',
+			click: clickEvent('save')
+		}
 	};
 
 	var newAnimation = {
-		label: 'New Animation',
-		key: 'd',
-		modifiers: 'cmd',
-		click: animatorWindow
+		win: 'animator',
+		menu: {
+			label: 'New Animation',
+			key: 'a',
+			modifiers: 'cmd-shift',
+			click: clickEvent('newAnim')
+		}
 	};
 
 	var saveAnimation = {
-		label: 'Save Animation',
-		key: 'Ctrl-Shift-D',
-		click: function saveEvent () {
-			currentAnimation.emit('saveAnimation');
+		win: 'animator',
+		menu: {
+			label: 'Save Animation',
+			key: 's',
+			modifiers: 'cmd-shift',
+			click: clickEvent('saveAnim')
 		}
 	};
 
 
 	// ----- Return ----- //
 
-	return [newFile, saveFile, { type: 'separator' }, newAnimation, saveAnimation];
+	return [newFile, saveFile, { menu: { type: 'separator' } }, newAnimation,
+		saveAnimation];
 
 };

@@ -11,6 +11,8 @@ var Menus = require('../js/menus/menus.js');
 var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
 var styles = require('../js/editor/style-tools.js');
+var windows = require('../js/windows.js');
+
 
 // ----- Setup ----- //
 
@@ -53,35 +55,31 @@ function buildSidebar (sidebar, file, project) {
 }
 
 // Builds the editor menubar.
-function buildMenubar (file, toolbar) {
+function buildMenus (menus) {
 
-	var menus = Menus(gui);
 	menus.macMenu();
-	menus.editor(file, toolbar);
+	menus.menubar();
 
 }
 
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
 
-	window.focus();
 	updateTitle();
 
 	var views = viewComponents();
 	var project = Project(localStorage.getItem('projectInfo'));
 	var file = File(views, project);
+	var menus = Menus(gui);
 
+	buildMenus(menus);
 	buildSidebar(views.sidebar, file, project);
-	buildMenubar(file, views.toolbar);
 	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
 
-	var win = gui.Window.get();
-	win.on('close', function () {
-		file.save();
-		win.close('force');
-	});
+	windows(gui, file, views.toolbar, menus);
 
+	window.focus();
 	editor.focus();
 
 }

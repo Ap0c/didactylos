@@ -1,4 +1,4 @@
-exports.items = function items (toolbar) {
+exports.items = function items (clickEvent) {
 
 	// ----- Setup ----- //
 
@@ -9,47 +9,42 @@ exports.items = function items (toolbar) {
 
 	// Creates a menu separator.
 	function separator () {
-		return { type: 'separator' };
-	}
-
-	// Simulates a click on an item in the toolbar.
-	function clickTool (name) {
-		return function () {
-			toolbar.click(name);
+		return { 
+			menu: { type: 'separator' }
 		};
 	}
 
 	// Adds headings to the insert menu list.
-	function addHeadings (menuItems) {
+	function buildHeadings () {
 
-		for (var i = headings.length - 1; i >= 0; i--) {
+		var headingItems = [];
+
+		for (var i = 0, noHeadings = headings.length; i < noHeadings; i++) {
 
 			var headingMenuItem = {
-				label: headings[i].toUpperCase(),
-				click: clickTool(headings[i])
+				win: 'editor',
+				menu: {
+					label: headings[i].toUpperCase(),
+					click: clickEvent(headings[i])
+				}
 			};
 
-			menuItems.unshift(headingMenuItem);
+			headingItems.push(headingMenuItem);
 
 		}
+
+		return headingItems;
 
 	}
 
 	// Builds the list of items to be added to the insert menu.
 	function menuItems () {
 
-		var items = [];
+		var headingItems = buildHeadings();
 		var otherItems = [separator(), italicsTool, boldTool, separator(),
 			bulletTool, linkTool, codeTool];
 
-		addHeadings(items);
-
-		items.push.apply(
-			items,
-			otherItems
-		);
-
-		return items;
+		return headingItems.concat(otherItems);
 
 	}
 
@@ -57,38 +52,53 @@ exports.items = function items (toolbar) {
 	// ----- Menu Items ----- //
 
 	var italicsTool = {
-		label: 'Italics',
-		key: 'i',
-		modifiers: 'cmd',
-		click: clickTool('italics')
+		win: 'editor',
+		menu: {
+			label: 'Italics',
+			key: 'i',
+			modifiers: 'cmd',
+			click: clickEvent('italics')
+		}
 	};
 
 	var boldTool = {
-		label: 'Bold',
-		key: 'b',
-		modifiers: 'cmd',
-		click: clickTool('bold')
+		win: 'editor',
+		menu: {
+			label: 'Bold',
+			key: 'b',
+			modifiers: 'cmd',
+			click: clickEvent('bold')
+		}
 	};
 
 	var bulletTool = {
-		label: 'Bullet',
-		key: 'b',
-		modifiers: 'cmd-shift',
-		click: clickTool('bullet')
+		win: 'editor',
+		menu: {
+			label: 'Bullet',
+			key: 'b',
+			modifiers: 'cmd-shift',
+			click: clickEvent('bullet')
+		}
 	};
 
 	var linkTool = {
-		label: 'Link',
-		key: 'l',
-		modifiers: 'cmd',
-		click: clickTool('link')
+		win: 'editor',
+		menu: {
+			label: 'Link',
+			key: 'l',
+			modifiers: 'cmd',
+			click: clickEvent('link')
+		}
 	};
 
 	var codeTool = {
-		label: 'Code Block',
-		key: 'c',
-		modifiers: 'cmd-shift',
-		click: clickTool('code')
+		win: 'editor',
+		menu: {
+			label: 'Code Block',
+			key: 'c',
+			modifiers: 'cmd-shift',
+			click: clickEvent('code')
+		}
 	};
 
 

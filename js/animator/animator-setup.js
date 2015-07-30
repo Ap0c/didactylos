@@ -105,8 +105,6 @@ function setupSave (drawingList) {
 // Sets up various components of the animator.
 function setup () {
 
-	window.focus();
-
 	var drawingList = drawings.Drawings();
 
 	var assets = Assets(window);
@@ -120,6 +118,7 @@ function setup () {
 	setupSave(drawingList);
 
 	canvas.drawBackground();
+	window.focus();
 
 }
 
