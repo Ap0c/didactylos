@@ -1,5 +1,6 @@
 // ----- Requires ----- //
 
+var fs = require('fs');
 var gui = require('nw.gui');
 
 var Properties = require('../js/animator/properties.js');
@@ -21,6 +22,7 @@ var drawingCounter = 0;
 
 // ----- Functions ----- //
 
+// Returns a function that adds a drawing to the list.
 function insert (draw, drawingList) {
 
 	return function insertDrawing () {
@@ -83,10 +85,19 @@ function setupListeners (canvas, drawingList, properties) {
 		drawingList.del(drawing);
 	});
 
-	var animWindow = gui.Window.get();
-	animWindow.on('serialiseAnim', function saveData () {
-		var serialisedAnim = serialise(drawingList);
-		animWindow.emit('serialisedAnim', serialisedAnim);
+}
+
+// Sets up the procedure for saving an animation to file.
+function setupSave (drawingList) {
+
+	var currentWindow = gui.Window.get();
+
+	currentWindow.on('saveAnimation', function saveAnimation () {
+
+		var filepath = sessionStorage.getItem('animPath');
+		var drawingData = serialise(drawingList);
+		fs.writeFile(filepath, drawingData);
+
 	});
 
 }
@@ -105,8 +116,9 @@ function setup () {
 	assets.build(drawings.types);
 	assetInsertion(drawingList, assets);
 	selection.setup(canvas, drawingList, properties);
-
 	setupListeners(canvas, drawingList, properties);
+	setupSave(drawingList);
+
 	canvas.drawBackground();
 
 }

@@ -15,6 +15,7 @@ module.exports = function drawings (Path2D) {
 		r: {type: 'number'},
 		w: {type: 'number'},
 		h: {type: 'number'},
+		type: {type: 'static'},
 		colour: {type: 'colour'},
 		name: {type: 'string'},
 		visible: {type: 'boolean'},
@@ -99,7 +100,7 @@ module.exports = function drawings (Path2D) {
 			set name(value) { setAttr(drawing, 'name', value); },
 			set visible(value) { setAttr(drawing, 'visible', value); },
 			set brush(value) { setAttr(drawing, 'brush', value); },
-			type (attr) { return drawing[attr].type; },
+			attrType (attr) { return drawing[attr].type; },
 			allowedValues(attr) { return drawing[attr].allowedValues || null; },
 			serialAttrs() { return serialisableAttrs(drawing); }
 		};
@@ -152,8 +153,9 @@ module.exports = function drawings (Path2D) {
 	// Creates a circle drawing, using a default or specified radius.
 	function Circle (attributes) {
 
-		attributes = attributes ? attributes : {};
-		attributes.r = attributes.r ? attributes.r : 20;
+		attributes = attributes || {};
+		attributes.r = attributes.r || 20;
+		attributes.type = 'circle';
 
 		var circle = Drawing(attributes);
 
@@ -169,11 +171,12 @@ module.exports = function drawings (Path2D) {
 	// Creates a rectangle drawing, using a default or specified w and h.
 	function Rectangle (attributes) {
 
-		attributes = attributes ? attributes : {};
-		attributes.w = attributes.w ? attributes.w : 50;
-		attributes.h = attributes.h ? attributes.h : 40;
-		attributes.x = attributes.x ? attributes.x : 225;
-		attributes.y = attributes.y ? attributes.y : 180;
+		attributes = attributes || {};
+		attributes.w = attributes.w || 50;
+		attributes.h = attributes.h || 40;
+		attributes.x = attributes.x || 225;
+		attributes.y = attributes.y || 180;
+		attributes.type = 'rectangle';
 
 		var rectangle = Drawing(attributes);
 

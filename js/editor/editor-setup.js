@@ -81,12 +81,6 @@ function setup () {
 		file.save();
 		win.close('force');
 	});
-	win.on('animFocus', function updateAnim (newWindow) {
-		animationWindow = newWindow;
-	});
-	win.on('saveAnim', function saveAnimation () {
-		animationWindow.win.emit('serialiseAnim');
-	});
 
 	editor.focus();
 

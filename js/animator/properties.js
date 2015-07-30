@@ -51,6 +51,8 @@ module.exports = function Properties (window) {
 			entry.value = value;
 		} else if (type === 'boolean') {
 			entry.checked = value;
+		} else {
+			entry.textContent = value;
 		}
 
 	}
@@ -98,7 +100,9 @@ module.exports = function Properties (window) {
 	// Creates a new field entry element.
 	function newEntry (type, allowedValues) {
 
-		if (allowedValues) {
+		if (type === 'static') {
+			return document.createElement('span');
+		} else if (allowedValues) {
 			return createSelect(allowedValues);
 		} else {
 			return createInput(type);
@@ -135,8 +139,8 @@ module.exports = function Properties (window) {
 
 			if (Object.getOwnPropertyDescriptor(drawing, attr).set) {
 
-				var field = newField(attr, drawing.type(attr), drawing[attr],
-					drawing.allowedValues(attr));
+				var field = newField(attr, drawing.attrType(attr),
+					drawing[attr], drawing.allowedValues(attr));
 				fieldSet.appendChild(field);
 
 			}

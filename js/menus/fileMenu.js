@@ -2,7 +2,7 @@ exports.items = function items (gui, file) {
 
 	// ----- Internal Properties ----- //
 
-	var editorWindow = gui.Window.get();
+	var currentAnimation = null;
 
 
 	// ----- Function ----- //
@@ -10,7 +10,7 @@ exports.items = function items (gui, file) {
 	// Prompts the user for an animation name, then opens the animator window.
 	function animatorWindow () {
 
-		file.newAnimation(function animationWindow (animationName) {
+		file.newAnimation(function animationWindow (name, path) {
 
 			var animWindow = gui.Window.open('animator.html', {
 				"toolbar": true,
@@ -18,13 +18,13 @@ exports.items = function items (gui, file) {
 				"height": 600
 			});
 
-			animWindow.on('focus', function updateCurrent () {
-				var windowInfo = { win: animWindow, name: animationName };
-				editorWindow.emit('animFocus', windowInfo);
+			animWindow.on('loaded', function passData () {
+				animWindow.title = name;
+				animWindow.window.sessionStorage.setItem('animPath', path);
 			});
 
-			animWindow.on('serialisedAnim', function (serialData) {
-				file.saveAnimation(animationName, serialData);
+			animWindow.on('focus', function updateCurrent () {
+				currentAnimation = animWindow;
 			});
 
 		});
@@ -59,7 +59,7 @@ exports.items = function items (gui, file) {
 		label: 'Save Animation',
 		key: 'Ctrl-Shift-D',
 		click: function saveEvent () {
-			editorWindow.emit('saveAnim');
+			currentAnimation.emit('saveAnimation');
 		}
 	};
 
