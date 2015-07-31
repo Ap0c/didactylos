@@ -12,12 +12,46 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 	// ----- Functions ----- //
 
 	// Opens the animator window.
-	function openAnimator () {
+	function openAnimator (name) {
 
-		return gui.Window.open('animator.html', {
+		var animWindow = gui.Window.open('animator.html', {
 			"toolbar": true,
 			"width": 1000,
 			"height": 600
+		});
+
+		animatorWindows[name] = animWindow;
+
+		animWindow.on('focus', function updateCurrent () {
+			currentWindow = animWindow;
+			Menus.activateAnimator();
+		});
+
+		animWindow.on('close', function deleteWindow () {
+			delete animatorWindows[name];
+			animWindow.close(true);
+		});
+
+		animWindow.on('saveAnim', function saveAnim (data) {
+			file.saveAnimation(name, data);
+		});
+
+		return animWindow;
+
+	}
+
+	function openAnimation (name) {
+
+		file.openAnimation(function animationData (err, data) {
+
+			var animWindow = openAnimator(name);
+
+			animWindow.on('loaded', function passData () {
+				animWindow.title = name;
+				animWindow.window.sessionStorage.setItem('animPath', path);
+				animWindow.emit('openAnimation', data);
+			});
+
 		});
 
 	}
@@ -27,22 +61,11 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 
 		file.newAnimation(function animationWindow (name, path) {
 
-			var animWindow = openAnimator();
-			animatorWindows[name] = animWindow;
+			var animWindow = openAnimator(name);
 
 			animWindow.on('loaded', function passData () {
 				animWindow.title = name;
 				animWindow.window.sessionStorage.setItem('animPath', path);
-			});
-
-			animWindow.on('focus', function updateCurrent () {
-				currentWindow = animWindow;
-				Menus.activateAnimator();
-			});
-
-			animWindow.on('close', function deleteWindow () {
-				delete animatorWindows[name];
-				animWindow.close(true);
 			});
 
 		});

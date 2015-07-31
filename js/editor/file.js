@@ -97,6 +97,23 @@ module.exports = function File (views, project) {
 
 	}
 
+	// Opens an existing animation.
+	function openAnimation (name, callback) {
+
+		if (project.animationExists(name)) {
+
+			var filepath = project.animation(name);
+
+			fs.readFile(filepath, function (err, data) {
+				callback(null, data);
+			});
+
+		} else {
+			callback('Animation not found.');
+		}
+
+	}
+
 	// Builds a path for the animation and adds it to the project.
 	function createAnimation (name, callback) {
 
@@ -143,6 +160,7 @@ module.exports = function File (views, project) {
 		open: openFile,
 		save: save,
 		switch: switchFile,
+		openAnimation: openAnimation,
 		newAnimation: newAnimation,
 		saveAnimation: saveAnimation
 	};

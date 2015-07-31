@@ -19,6 +19,8 @@ var drawingTypes = {
 
 var drawingCounter = 0;
 
+var currentWindow = gui.Window.get();
+
 
 // ----- Functions ----- //
 
@@ -90,13 +92,10 @@ function setupListeners (canvas, drawingList, properties) {
 // Sets up the procedure for saving an animation to file.
 function setupSave (drawingList) {
 
-	var currentWindow = gui.Window.get();
-
 	currentWindow.on('saveAnimation', function saveAnimation () {
 
-		var filepath = sessionStorage.getItem('animPath');
 		var drawingData = serialise(drawingList);
-		fs.writeFile(filepath, drawingData);
+		currentWindow.emit('saveAnim', drawingData);
 
 	});
 
