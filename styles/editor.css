@@ -17,9 +17,10 @@ body {
 	background-color: #ffffff;
 	float: left;
 	height: 100%;
+	overflow-y: auto;
 }
 
-#sidebar > div {
+#files > div, #animations > div {
 	width: 100%;
 	padding: 5% 0 5% 5%;
 	color: #005c8a;
@@ -29,7 +30,7 @@ body {
 	vertical-align: middle;
 }
 
-#sidebar > .selected_file {
+#files > .selected_file {
 	background-color: #005c8a;
 	color: #ffffff;
 }

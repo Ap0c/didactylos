@@ -21,14 +21,49 @@ module.exports = function Sidebar (window) {
 
 	}
 
-	// Adds a file to the sidebar.
-	function addFile (name, switchFile) {
+	// Adds an animation to the sidebar.
+	function createAnimation (name, animationOpen) {
+
+		var animationDiv = document.createElement('div');
+		animationDiv.textContent = name;
+
+		animationDiv.addEventListener('click', function () {
+			animationOpen(name);
+		});
+
+		return animationDiv;
+
+	}
+
+	// Adds an animation to the sidebar.
+	function addAnimation (animations, animationOpen) {
+
+		var animationSection = document.getElementById('animations');
+		var animation = createAnimation(name, animationOpen);
+		animationSection.appendChild(animation);
+
+	}
+
+	// Adds project animations to the sidebar.
+	function addAnimations (animations, animationOpen) {
+
+		var animationList = document.createDocumentFragment();
+
+		for (var i = 0, noAnims = animations.length; i < noAnims; i++) {
+			var animation = createAnimation(animations[i], animationOpen);
+			animationList.appendChild(animation);
+		}
+
+		var animationSection = document.getElementById('animations');
+		animationSection.appendChild(animationList);
+
+	}
+
+	// Creates a file div for the sidebar.
+	function createFile (name, switchFile) {
 
 		var fileDiv = document.createElement('div');
-		var filename = document.createTextNode(name);
-
-		fileDiv.appendChild(filename);
-		sidebar.appendChild(fileDiv);
+		fileDiv.textContent = name;
 		updateSelection(fileDiv);
 
 		fileDiv.addEventListener('click', function () {
@@ -36,32 +71,50 @@ module.exports = function Sidebar (window) {
 			updateSelection(fileDiv);
 		});
 
+		return fileDiv;
+
+	}
+
+	// Adds a file to the sidebar.
+	function addFile (name, switchFile) {
+
+		var fileSection = document.getElementById('files');
+		var file = createFile(name, switchFile);
+		fileSection.appendChild(file);
+
+	}
+
+	// Adds project files to the sidebar.
+	function addFiles (files, fileOpen, switchFile) {
+
+		var fileList = document.createDocumentFragment();
+
+		for (var i = 0, noFiles = files.length; i < noFiles; i++) {
+			var file = createFile(files[i], switchFile);
+			fileList.appendChild(file);
+		}
+
+		if (fileList.firstChild) {
+			fileOpen(fileList.firstChild.textContent);
+			updateSelection(fileList.firstChild);
+		}
+
+		var fileSection = document.getElementById('files');
+		fileSection.appendChild(fileList);
+
 	}
 
 	// Fills the sidebar with project files.
-	function populateFiles (files, fileOpen, switchFile) {
+	function populateFiles (files, fileOpen, switchFile, animationOpen) {
 
-		var noFiles = files.length;
-
-		for (var i = 0; i < noFiles; i++) {
-			addFile(files[i], switchFile);
-		}
-
-		var fileDivs = sidebar.getElementsByTagName('div');
-		var firstFile = fileDivs[0];
-
-		if (firstFile) {
-			fileOpen(firstFile.textContent);
-			updateSelection(firstFile);
-		}
+		addFiles(files.files, fileOpen, switchFile);
+		addAnimations(files.animations, animationOpen);
 
 	}
 
 	// Prompts the user for a new file name.
 	function newFile (message) {
-
 		return window.prompt(message, 'My File');
-
 	}
 
 	// Returns the name of the current file.
@@ -84,6 +137,7 @@ module.exports = function Sidebar (window) {
 
 	return {
 		addFile: addFile,
+		addAnimation: addAnimation,
 		build: populateFiles,
 		newFile: newFile,
 		activeFile: activeFile,

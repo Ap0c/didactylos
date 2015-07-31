@@ -47,10 +47,14 @@ function updateTitle () {
 }
 
 // Populates the sidebar with project files.
-function buildSidebar (sidebar, file, project) {
+function buildSidebar (sidebar, file, project, animator) {
 
-	var files = project.files();
-	sidebar.build(files, file.open, file.switch);
+	var files = {
+		files: project.files(),
+		animations: project.animations()
+	};
+
+	sidebar.build(files, file.open, file.switch, animator.openAnimation);
 
 }
 
@@ -85,9 +89,6 @@ function fileMenu (menus, file, animator) {
 				break;
 			case 'save':
 				file.save();
-				break;
-			case 'newAnim':
-				animator.newAnimation();
 				break;
 			case 'openAnim':
 				animator.openAnimation('try');
@@ -127,7 +128,7 @@ function setup () {
 	var animator = Animator(gui, menus, file);
 
 	buildMenus(menus, views, file, animator);
-	buildSidebar(views.sidebar, file, project);
+	buildSidebar(views.sidebar, file, project, animator);
 	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
 	setupClose(file, animator);
