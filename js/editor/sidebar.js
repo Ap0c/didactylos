@@ -36,7 +36,7 @@ module.exports = function Sidebar (window) {
 	}
 
 	// Adds an animation to the sidebar.
-	function addAnimation (animations, animationOpen) {
+	function addAnimation (name, animationOpen) {
 
 		var animationSection = document.getElementById('animations');
 		var animation = createAnimation(name, animationOpen);

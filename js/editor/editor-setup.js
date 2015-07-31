@@ -79,7 +79,7 @@ function insertMenu (menus, toolbar) {
 }
 
 // Sets up handling of options from the file menu.
-function fileMenu (menus, file, animator) {
+function fileMenu (menus, file, animator, sidebar) {
 
 	menus.on('file', function fileEvent (item) {
 
@@ -90,8 +90,8 @@ function fileMenu (menus, file, animator) {
 			case 'save':
 				file.save();
 				break;
-			case 'openAnim':
-				animator.openAnimation('try');
+			case 'newAnim':
+				animator.newAnimation(sidebar.addAnimation);
 				break;
 			case 'saveAnim':
 				animator.saveAnimation();
@@ -107,7 +107,7 @@ function buildMenus (menus, views, file, animator) {
 	menus.macMenu();
 	menus.menubar();
 	insertMenu(menus, views.toolbar);
-	fileMenu(menus, file, animator);
+	fileMenu(menus, file, animator, views.sidebar);
 	menus.activateEditor();
 
 	editorWindow.on('focus', function toggleMenus () {

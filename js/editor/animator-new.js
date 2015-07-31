@@ -51,8 +51,15 @@ module.exports = function Animator (gui, menus, file) {
 	}
 
 	// Creates a new animation.
-	function newAnimation () {
-		file.newAnimation(newWindow);
+	function newAnimation (callback) {
+
+		file.newAnimation(function openWindow (name) {
+
+			newWindow(name);
+			callback(name, openAnimation);
+
+		});
+
 	}
 
 	// Sends a request to the animation window to begin the save procedure.
