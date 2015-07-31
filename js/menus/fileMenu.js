@@ -23,7 +23,7 @@ exports.items = function items (clickEvent) {
 	};
 
 	var newAnimation = {
-		win: 'animator',
+		win: 'editor',
 		menu: {
 			label: 'New Animation',
 			key: 'a',

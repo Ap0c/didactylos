@@ -79,7 +79,6 @@ function setup () {
 
 	windows(gui, file, views.toolbar, menus);
 
-	window.focus();
 	editor.focus();
 
 }

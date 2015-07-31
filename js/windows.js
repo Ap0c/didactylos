@@ -6,6 +6,7 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 
 	var editorWindow = gui.Window.get();
 	var currentWindow = editorWindow;
+	var animatorWindows = {};
 
 
 	// ----- Functions ----- //
@@ -27,6 +28,7 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 		file.newAnimation(function animationWindow (name, path) {
 
 			var animWindow = openAnimator();
+			animatorWindows[name] = animWindow;
 
 			animWindow.on('loaded', function passData () {
 				animWindow.title = name;
@@ -36,6 +38,11 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 			animWindow.on('focus', function updateCurrent () {
 				currentWindow = animWindow;
 				Menus.activateAnimator();
+			});
+
+			animWindow.on('close', function deleteWindow () {
+				delete animatorWindows[name];
+				animWindow.close(true);
 			});
 
 		});
@@ -88,11 +95,16 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 
 		editorWindow.on('close', function () {
 			file.save();
-			editorWindow.close('force');
+			for (var win in animatorWindows) {
+				animatorWindows[win].close();
+			}
+			editorWindow.close(true);
 		});
 
 		setupFile();
 		setupInsert();
+
+		editorWindow.emit('focus');
 
 	}
 
