@@ -1,4 +1,4 @@
-module.exports = function Animator (gui, file) {
+module.exports = function Animator (gui, menus, file) {
 
 	// ----- Internal Properties ----- //
 
@@ -22,7 +22,14 @@ module.exports = function Animator (gui, file) {
 
 		animWindow.on('loaded', function whenLoaded () {
 			animWindow.title = name;
-			onload(animWindow);
+			if (onload) {
+				onload(animWindow);
+			}
+		});
+
+		animWindow.on('focus', function focusWindow () {
+			currentWindow = animWindow;
+			menus.activateAnimator();
 		});
 
 	}
@@ -74,6 +81,7 @@ module.exports = function Animator (gui, file) {
 		}
 
 	}
+
 
 	// ----- Constructor ----- //
 

@@ -107,6 +107,11 @@ function buildMenus (menus, views, file, animator) {
 	menus.menubar();
 	insertMenu(menus, views.toolbar);
 	fileMenu(menus, file, animator);
+	menus.activateEditor();
+
+	editorWindow.on('focus', function toggleMenus () {
+		menus.activateEditor();
+	});
 
 }
 
@@ -119,7 +124,7 @@ function setup () {
 	var project = Project(localStorage.getItem('projectInfo'));
 	var file = File(views, project);
 	var menus = Menus(gui);
-	var animator = Animator(gui, file);
+	var animator = Animator(gui, menus, file);
 
 	buildMenus(menus, views, file, animator);
 	buildSidebar(views.sidebar, file, project);
