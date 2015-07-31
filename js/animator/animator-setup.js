@@ -18,8 +18,7 @@ var drawingTypes = {
 };
 
 var drawingCounter = 0;
-
-var currentWindow = gui.Window.get();
+var animationWindow = gui.Window.get();
 
 
 // ----- Functions ----- //
@@ -51,22 +50,6 @@ function assetInsertion (drawingList, assets) {
 
 }
 
-// Serialises the drawing data to JSON.
-function serialise (drawings) {
-
-	var serialisable = [];
-
-	for (i = 0, len = drawings.number; i < len; i++) {
-
-		var drawing = drawings.get(i).serialAttrs();
-		serialisable.push(drawing);
-
-	}
-
-	return JSON.stringify(serialisable);
-
-}
-
 // Sets up event listeners on various components.
 function setupListeners (canvas, drawingList, properties) {
 
@@ -89,13 +72,29 @@ function setupListeners (canvas, drawingList, properties) {
 
 }
 
+// Serialises the drawing data to JSON.
+function serialise (drawings) {
+
+	var serialisable = [];
+
+	for (i = 0, len = drawings.number; i < len; i++) {
+
+		var drawing = drawings.get(i).serialAttrs();
+		serialisable.push(drawing);
+
+	}
+
+	return JSON.stringify(serialisable);
+
+}
+
 // Sets up the procedure for saving an animation to file.
 function setupSave (drawingList) {
 
-	currentWindow.on('saveAnimation', function saveAnimation () {
+	animationWindow.on('saveRequest', function saveAnimation () {
 
 		var drawingData = serialise(drawingList);
-		currentWindow.emit('saveAnim', drawingData);
+		animationWindow.emit('animationSerialised', drawingData);
 
 	});
 

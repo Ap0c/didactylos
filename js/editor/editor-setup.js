@@ -7,16 +7,16 @@ var Toolbar = require('../js/editor/toolbar.js');
 var Sidebar = require('../js/editor/sidebar.js');
 var Stylebar = require('../js/editor/stylebar.js');
 var File = require('../js/editor/file.js');
-var Menus = require('../js/menus/menus.js');
+var Menus = require('../js/editor/menus/menus.js');
 var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
 var styles = require('../js/editor/style-tools.js');
-var windows = require('../js/windows.js');
+var Animator = require('../js/editor/animator-new.js');
 
 
 // ----- Setup ----- //
 
-var animationWindow = null;
+var editorWindow = gui.Window.get();
 
 
 // ----- Functions ----- //
@@ -54,11 +54,56 @@ function buildSidebar (sidebar, file, project) {
 
 }
 
-// Builds the editor menubar.
-function buildMenus (menus) {
+// Handles the user closing the window.
+function setupClose (file, animator) {
+
+	editorWindow.on('close', function closeApp () {
+		file.save();
+		animator.closeWindows();
+		editorWindow.close(true);
+	});
+
+}
+
+// Sets up handling of options from the insert menu.
+function insertMenu (menus, toolbar) {
+
+	menus.on('insert', function insertEvent (item) {
+		toolbar.click(item);
+	});
+
+}
+
+// Sets up handling of options from the file menu.
+function fileMenu (menus, file, animator) {
+
+	menus.on('file', function fileEvent (item) {
+
+		switch (item) {
+			case 'new':
+				file.newFile();
+				break;
+			case 'save':
+				file.save();
+				break;
+			case 'newAnim':
+				animator.newAnimation();
+				break;
+			case 'saveAnim':
+				animator.saveAnimation();
+		}
+
+	});
+
+}
+
+// Builds the main menubar.
+function buildMenus (menus, views, file, animator) {
 
 	menus.macMenu();
 	menus.menubar();
+	insertMenu(menus, views.toolbar);
+	fileMenu(menus, file, animator);
 
 }
 
@@ -71,13 +116,13 @@ function setup () {
 	var project = Project(localStorage.getItem('projectInfo'));
 	var file = File(views, project);
 	var menus = Menus(gui);
+	var animator = Animator(gui, file);
 
-	buildMenus(menus);
+	buildMenus(menus, views, file, animator);
 	buildSidebar(views.sidebar, file, project);
 	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
-
-	windows(gui, file, views.toolbar, menus);
+	setupClose(file, animator);
 
 	editor.focus();
 

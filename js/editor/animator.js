@@ -1,6 +1,6 @@
 // ----- Export ----- //
 
-module.exports = function windows (gui, file, toolbar, Menus) {
+module.exports = function animator (gui, file, toolbar, Menus) {
 
 	// ----- Internal Properties ----- //
 
@@ -110,7 +110,7 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 	}
 
 	// Sets up the menus and window handling.
-	function setup () {
+	function init () {
 
 		editorWindow.on('focus', function editorMenus () {
 			Menus.activateEditor();
@@ -132,8 +132,12 @@ module.exports = function windows (gui, file, toolbar, Menus) {
 	}
 
 
-	// ----- Setup ----- //
+	// ----- Constructor ----- //
 
-	setup();
+	init();
+
+	return {
+		open: 
+	};
 
 };

@@ -121,7 +121,7 @@ module.exports = function File (views, project) {
 		var animationPath = path.join(project.path(), 'animations', filename);
 
 		project.addAnimation(name, filename);
-		callback(name, animationPath);
+		callback(name);
 
 	}
 

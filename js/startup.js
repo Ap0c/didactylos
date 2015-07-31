@@ -4,7 +4,7 @@ var gui = require('nw.gui');
 var fs = require('fs');
 var path = require('path');
 
-var Menus = require('../js/menus/menus.js');
+var Menus = require('../js/editor/menus/menus.js');
 
 
 // ----- Functions ----- //
