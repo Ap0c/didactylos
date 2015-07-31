@@ -102,9 +102,10 @@ module.exports = function File (views, project) {
 
 		if (project.animationExists(name)) {
 
-			var filepath = project.animation(name);
+			var filename = project.animation(name);
+			var animPath = path.join(project.animPath(), filename);
 
-			fs.readFile(filepath, function (err, data) {
+			fs.readFile(animPath, function (err, data) {
 				callback(null, data);
 			});
 

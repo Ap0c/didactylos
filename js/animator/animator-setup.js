@@ -89,12 +89,23 @@ function serialise (drawings) {
 }
 
 // Sets up the procedure for saving an animation to file.
-function setupSave (drawingList) {
+function saveLoad (drawingList) {
 
 	animationWindow.on('saveRequest', function saveAnimation () {
 
 		var drawingData = serialise(drawingList);
 		animationWindow.emit('animationSerialised', drawingData);
+
+	});
+
+	animationWindow.on('loadRequest', function loadAnimation (data) {
+
+		var drawingData = JSON.parse(data);
+
+		for (var i = 0, noDrawings = drawingData.length; i < noDrawings; i++) {
+			var drawing = drawingTypes[drawingData[i].type](drawingData[i]);
+			drawingList.add(drawing);
+		}
 
 	});
 
@@ -113,7 +124,7 @@ function setup () {
 	assetInsertion(drawingList, assets);
 	selection.setup(canvas, drawingList, properties);
 	setupListeners(canvas, drawingList, properties);
-	setupSave(drawingList);
+	saveLoad(drawingList);
 
 	canvas.drawBackground();
 	window.focus();

@@ -32,6 +32,16 @@ exports.items = function items (clickEvent) {
 		}
 	};
 
+	var openAnimation = {
+		win: 'editor',
+		menu: {
+			label: 'Open Animation',
+			key: 'o',
+			modifiers: 'cmd-shift',
+			click: clickEvent('openAnim')
+		}
+	};
+
 	var saveAnimation = {
 		win: 'animator',
 		menu: {
@@ -46,6 +56,6 @@ exports.items = function items (clickEvent) {
 	// ----- Return ----- //
 
 	return [newFile, saveFile, { menu: { type: 'separator' } }, newAnimation,
-		saveAnimation];
+		openAnimation, saveAnimation];
 
 };

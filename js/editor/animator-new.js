@@ -9,7 +9,7 @@ module.exports = function Animator (gui, file) {
 	// ----- Functions ----- //
 
 	// Sets up the required listeners on a new animator window.
-	function windowListeners (name, animWindow) {
+	function windowListeners (name, animWindow, onload) {
 
 		animWindow.on('close', function deleteWindow () {
 			delete openWindows[name];
@@ -22,12 +22,13 @@ module.exports = function Animator (gui, file) {
 
 		animWindow.on('loaded', function whenLoaded () {
 			animWindow.title = name;
+			onload(animWindow);
 		});
 
 	}
 
 	// Opens a new animator window.
-	function newWindow (name) {
+	function newWindow (name, onload) {
 
 		var animWindow = gui.Window.open('animator.html', {
 			"toolbar": true,
@@ -38,7 +39,7 @@ module.exports = function Animator (gui, file) {
 		openWindows[name] = animWindow;
 		currentWindow = animWindow;
 
-		windowListeners(name, animWindow);
+		windowListeners(name, animWindow, onload);
 
 	}
 
@@ -50,6 +51,19 @@ module.exports = function Animator (gui, file) {
 	// Sends a request to the animation window to begin the save procedure.
 	function saveAnimation () {
 		currentWindow.emit('saveRequest');
+	}
+
+	// Opens an animation from file.
+	function openAnimation (name) {
+
+		file.openAnimation(name, function (err, data) {
+
+			newWindow(name, function onload (animWindow) {
+				animWindow.emit('loadRequest', data);
+			});
+
+		});
+
 	}
 
 	// Closes all open animation windows.
@@ -65,6 +79,7 @@ module.exports = function Animator (gui, file) {
 
 	return {
 		newAnimation: newAnimation,
+		openAnimation: openAnimation,
 		saveAnimation: saveAnimation,
 		closeWindows: closeWindows
 	};

@@ -89,6 +89,9 @@ function fileMenu (menus, file, animator) {
 			case 'newAnim':
 				animator.newAnimation();
 				break;
+			case 'openAnim':
+				animator.openAnimation('try');
+				break;
 			case 'saveAnim':
 				animator.saveAnimation();
 		}
