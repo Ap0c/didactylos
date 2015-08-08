@@ -168,6 +168,60 @@ body {
 }
 
 
+/* ----- Dialogs ----- */
+
+dialog {
+	border: none;
+	padding: 0;
+}
+
+dialog > form > div {
+	margin: 8% 10%;
+	width: 80%;
+}
+
+.dialog_button {
+	padding: 2%;
+	margin: 1% 10%;
+	width: 80%;
+	border: none;
+	background-color: #005c8a;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.dialog_button:hover {
+	background-color: #ffffff;
+	color: #005c8a;
+}
+
+dialog::backdrop {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+#link_type_overlay {
+	width: 10%;
+}
+
+#link_type_overlay > form {
+	padding: 0;
+	margin: 0;
+}
+
+#web_link_overlay {
+	width: 15%;
+}
+
+#link_text {
+	width: 95%;
+}
+
+#file_select {
+	width: 100%;
+	margin-bottom: 6%;
+}
+
+
 /* ----- Site Export ----- */
 
 #site_export {
