@@ -12,6 +12,7 @@ var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
 var styles = require('../js/editor/style-tools.js');
 var Animator = require('../js/editor/animator-new.js');
+var site = require('../js/site/site.js');
 
 
 // ----- Setup ----- //
@@ -81,6 +82,8 @@ function insertMenu (menus, toolbar) {
 // Sets up handling of options from the file menu.
 function fileMenu (menus, file, animator, sidebar) {
 
+	var exportField = document.getElementById('site_export');
+
 	menus.on('file', function fileEvent (item) {
 
 		switch (item) {
@@ -95,6 +98,9 @@ function fileMenu (menus, file, animator, sidebar) {
 				break;
 			case 'saveAnim':
 				animator.saveAnimation();
+				break;
+			case 'exportSite':
+				exportField.click();
 		}
 
 	});
@@ -116,6 +122,17 @@ function buildMenus (menus, views, file, animator) {
 
 }
 
+// Sets up export of the project.
+function setupExport (menus, project) {
+
+	var exportField = document.getElementById('site_export');
+
+	exportField.addEventListener('change', function (changeEvent) {
+		site.exportSite(exportField.value, project);
+	});
+
+}
+
 // Sets up various components of the editor (e.g. file handling).
 function setup () {
 
@@ -132,6 +149,7 @@ function setup () {
 	tools.setup(views.toolbar, views.editor, project);
 	styles.setup(project, views);
 	setupClose(file, animator);
+	setupExport(menus, project);
 
 	editor.focus();
 

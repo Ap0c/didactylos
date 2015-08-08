@@ -42,10 +42,18 @@ exports.items = function items (clickEvent) {
 		}
 	};
 
+	var exportSite = {
+		win: 'editor',
+		menu: {
+			label: 'Export Site',
+			click: clickEvent('exportSite')
+		}
+	};
+
 
 	// ----- Return ----- //
 
 	return [newFile, saveFile, { menu: { type: 'separator' } }, newAnimation,
-		saveAnimation];
+		saveAnimation, { menu: { type: 'separator' } }, exportSite];
 
 };

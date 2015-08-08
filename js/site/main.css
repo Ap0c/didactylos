@@ -1,0 +1,24 @@
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
+	color: #222222;
+	background-color: #ffffff;
+}
+
+#content {
+	line-height: 1.4;
+	padding: 0 8%;
+}
+
+@media (min-width: 1000px) {
+
+	#content {
+		width: 700px;
+		margin: 0 auto;
+	}
+
+}
