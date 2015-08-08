@@ -9,7 +9,7 @@ var path = require('path');
 var styleData = {
 
 	font_family: {
-		selector: '#content',
+		selector: '#content > p, #content > ul, #content > pre',
 		property: 'font-family',
 		values: {
 			serif: 'Times, "Times New Roman", Georgia, serif',
@@ -17,7 +17,7 @@ var styleData = {
 		}
 	},
 	font_colour: {
-		selector: '#content',
+		selector: '#content > p, #content > ul, #content > pre',
 		property: 'color'
 	},
 	background_colour: {
@@ -25,7 +25,7 @@ var styleData = {
 		property: 'background-color'
 	},
 	font_size: {
-		selector: '#content',
+		selector: '#content > p, #content > ul, #content > pre',
 		property: 'font-size',
 		values: {
 			smallest: 'x-small',

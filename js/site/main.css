@@ -14,10 +14,15 @@ body {
 	padding: 0 8%;
 }
 
+canvas {
+	width: 80%;
+	margin: 0 10%;
+}
+
 @media (min-width: 1000px) {
 
 	#content {
-		width: 700px;
+		width: 45em;
 		margin: 0 auto;
 	}
 
