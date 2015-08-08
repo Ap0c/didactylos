@@ -49,6 +49,7 @@ function paint (ctx, drawings) {
 
 }
 
+// Retrieves a canvas and sets up the javascript context.
 function drawCanvas (id) {
 
 	var canvas = document.getElementById(id);

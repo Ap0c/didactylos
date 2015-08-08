@@ -6,6 +6,7 @@ var path = require('path');
 
 // ----- Functions ----- //
 
+// Writes the animation script to file.
 function writeScript (target, animations, filename) {
 
 	fs.readFile(path.join(__dirname, 'page_script.js'), function (err, data) {
@@ -17,8 +18,8 @@ function writeScript (target, animations, filename) {
 
 }
 
-
-function build (target, project, animationData, filename) {
+// Creates an object to store the animations.
+function compileAnimations (project, animationData) {
 
 	var animations = 'var canvases = {\n';
 
@@ -31,8 +32,19 @@ function build (target, project, animationData, filename) {
 
 	}
 
-	animations = `${animations}};`;
-	writeScript(target, animations, filename);
+	return `${animations}};`;
+
+}
+
+// Reads the animations in from files and prepares them for the page script.
+function build (target, project, animationData, filename) {
+
+	if (animationData.length > 0) {
+
+		var animations = compileAnimations(project, animationData);
+		writeScript(target, animations, filename);
+
+	}
 
 }
 

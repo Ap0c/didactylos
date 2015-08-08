@@ -119,7 +119,7 @@ function buildStylesheet (styles) {
 
 }
 
-
+// Builds a stylesheet and writes it to file.
 function exportStyles (target, styles, filename) {
 
 	var stylesheet = buildStylesheet(styles);
