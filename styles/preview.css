@@ -1,20 +1,20 @@
-.smallest_font > p {
+.smallest_font > p, .smallest_font > ul, .smallest_font > pre {
 	font-size: x-small;
 }
 
-.small_font > p {
+.small_font > p, .small_font > ul, .small_font > pre {
 	font-size: small;
 }
 
-.medium_font > p {
+.medium_font > p, .medium_font > ul, .medium_font > pre {
 	font-size: medium;
 }
 
-.large_font > p {
+.large_font > p, .large_font > ul, .large_font > pre {
 	font-size: large;
 }
 
-.largest_font > p {
+.largest_font > p, .largest_font > ul, .largest_font > pre {
 	font-size: x-large;
 }
 

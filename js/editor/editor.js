@@ -30,16 +30,26 @@ module.exports = function Editor (window) {
 
 	// ----- Functions ----- //
 
+	function linkRenderer (href, title, text) {
+
+		if (href.substring(0, 5) === 'file:') {
+			return `File: ${href.substring(5)}`;
+		} else if (href.substring(0, 10) === 'animation:') {
+			return `Animation: ${href.substring(10)}`;
+		}
+
+		return `<a href="${href}" target="_blank">${text}</a>`;
+
+	}
+
 	// Updates the preview area with rendered HTML.
 	function updatePreview () {
 
 		var content = editArea.value;
-		preview.innerHTML = marked(content);
+		var renderer = new marked.Renderer();
 
-		var links = document.links;
-		for (var i = links.length - 1; i >= 0; i--) {
-			links[i].setAttribute('target', '_blank');
-		}
+		renderer.link = linkRenderer;
+		preview.innerHTML = marked(content, { renderer: renderer });
 
 	}
 
