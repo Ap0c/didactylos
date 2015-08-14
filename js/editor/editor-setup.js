@@ -11,7 +11,7 @@ var Menus = require('../js/editor/menus/menus.js');
 var Project = require('../js/editor/project.js');
 var tools = require('../js/editor/editing-tools.js');
 var styles = require('../js/editor/style-tools.js');
-var Animator = require('../js/editor/animator-new.js');
+var Animator = require('../js/editor/animator.js');
 var site = require('../js/site/site.js');
 
 

@@ -9,10 +9,6 @@ var scripts = require('./build_scripts');
 
 // ----- Functions ----- //
 
-function addAssets () {
-	
-}
-
 // Takes the page content and wraps it in HTML boilerplate.
 function buildPage (title, content, filename) {
 

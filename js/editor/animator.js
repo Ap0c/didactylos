@@ -1,18 +1,41 @@
-// ----- Export ----- //
-
-module.exports = function animator (gui, file, toolbar, Menus) {
+module.exports = function Animator (gui, menus, file) {
 
 	// ----- Internal Properties ----- //
 
-	var editorWindow = gui.Window.get();
-	var currentWindow = editorWindow;
-	var animatorWindows = {};
+	var openWindows = {};
+	var currentWindow = null;
 
 
 	// ----- Functions ----- //
 
-	// Opens the animator window.
-	function openAnimator (name) {
+	// Sets up the required listeners on a new animator window.
+	function windowListeners (name, animWindow, onload) {
+
+		animWindow.on('close', function deleteWindow () {
+			delete openWindows[name];
+			animWindow.close(true);
+		});
+
+		animWindow.on('animationSerialised', function saveData (data) {
+			file.saveAnimation(name, data);
+		});
+
+		animWindow.on('loaded', function whenLoaded () {
+			animWindow.title = name;
+			if (onload) {
+				onload(animWindow);
+			}
+		});
+
+		animWindow.on('focus', function focusWindow () {
+			currentWindow = animWindow;
+			menus.activateAnimator();
+		});
+
+	}
+
+	// Opens a new animator window.
+	function newWindow (name, onload) {
 
 		var animWindow = gui.Window.open('animator.html', {
 			"toolbar": true,
@@ -20,124 +43,60 @@ module.exports = function animator (gui, file, toolbar, Menus) {
 			"height": 600
 		});
 
-		animatorWindows[name] = animWindow;
+		openWindows[name] = animWindow;
+		currentWindow = animWindow;
 
-		animWindow.on('focus', function updateCurrent () {
-			currentWindow = animWindow;
-			Menus.activateAnimator();
-		});
-
-		animWindow.on('close', function deleteWindow () {
-			delete animatorWindows[name];
-			animWindow.close(true);
-		});
-
-		animWindow.on('saveAnim', function saveAnim (data) {
-			file.saveAnimation(name, data);
-		});
-
-		return animWindow;
+		windowListeners(name, animWindow, onload);
 
 	}
 
+	// Creates a new animation.
+	function newAnimation (callback) {
+
+		file.newAnimation(function openWindow (name) {
+
+			newWindow(name);
+			callback(name, openAnimation);
+
+		});
+
+	}
+
+	// Sends a request to the animation window to begin the save procedure.
+	function saveAnimation () {
+		currentWindow.emit('saveRequest');
+	}
+
+	// Opens an animation from file.
 	function openAnimation (name) {
 
-		file.openAnimation(function animationData (err, data) {
+		file.openAnimation(name, function (err, data) {
 
-			var animWindow = openAnimator(name);
-
-			animWindow.on('loaded', function passData () {
-				animWindow.title = name;
-				animWindow.window.sessionStorage.setItem('animPath', path);
-				animWindow.emit('openAnimation', data);
+			newWindow(name, function onload (animWindow) {
+				animWindow.emit('loadRequest', data);
 			});
 
 		});
 
 	}
 
-	// Creates a new animation and opens the animator window.
-	function newAnimation () {
+	// Closes all open animation windows.
+	function closeWindows () {
 
-		file.newAnimation(function animationWindow (name, path) {
-
-			var animWindow = openAnimator(name);
-
-			animWindow.on('loaded', function passData () {
-				animWindow.title = name;
-				animWindow.window.sessionStorage.setItem('animPath', path);
-			});
-
-		});
-
-	}
-
-	// Fires the event to save an animation on the animator window.
-	function saveAnimation () {
-		currentWindow.emit('saveAnimation');
-	}
-
-	// Sets up the insert menu.
-	function setupInsert () {
-
-		Menus.on('insert', function insertEvent (item) {
-			toolbar.click(item);
-		});
-
-	}
-
-	// Sets up the file menu.
-	function setupFile () {
-
-		Menus.on('file', function fileEvent (item) {
-
-			switch (item) {
-				case 'new':
-					file.newFile();
-					break;
-				case 'save':
-					file.save();
-					break;
-				case 'newAnim':
-					newAnimation();
-					break;
-				case 'saveAnim':
-					saveAnimation();
-			}
-
-		});
-
-	}
-
-	// Sets up the menus and window handling.
-	function init () {
-
-		editorWindow.on('focus', function editorMenus () {
-			Menus.activateEditor();
-		});
-
-		editorWindow.on('close', function () {
-			file.save();
-			for (var win in animatorWindows) {
-				animatorWindows[win].close();
-			}
-			editorWindow.close(true);
-		});
-
-		setupFile();
-		setupInsert();
-
-		editorWindow.emit('focus');
+		for (var animWindow in openWindows) {
+			openWindows[animWindow].close();
+		}
 
 	}
 
 
 	// ----- Constructor ----- //
 
-	init();
-
 	return {
-		open: 
+		newAnimation: newAnimation,
+		openAnimation: openAnimation,
+		saveAnimation: saveAnimation,
+		closeWindows: closeWindows
 	};
 
 };

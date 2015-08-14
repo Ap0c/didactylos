@@ -167,6 +167,15 @@ body {
 	font-family: HelveticaNeue, Verdana, Arial, sans-serif;
 }
 
+.anim {
+	width: 70%;
+	border: 0.1em solid #222222;
+	margin: 5% auto;
+	padding: 20% 10%;
+	box-sizing: border-box;
+	text-align: center;
+}
+
 
 /* ----- Dialogs ----- */
 

@@ -30,12 +30,17 @@ module.exports = function Editor (window) {
 
 	// ----- Functions ----- //
 
+	// Custom renderer for links, including local links and animations.
 	function linkRenderer (href, title, text) {
 
 		if (href.substring(0, 5) === 'file:') {
-			return `File: ${href.substring(5)}`;
+
+			return `${text}(link: ${href.substring(5)})`;
+
 		} else if (href.substring(0, 10) === 'animation:') {
-			return `Animation: ${href.substring(10)}`;
+
+			return `<div class="anim">Animation: ${href.substring(10)}</div>`;
+
 		}
 
 		return `<a href="${href}" target="_blank">${text}</a>`;
