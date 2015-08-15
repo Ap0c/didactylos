@@ -67,6 +67,19 @@ body {
 	box-sizing: border-box;
 }
 
+#drawing_selector {
+	margin: 20% 0;
+}
+
+#drawing_select {
+	width: 60%;
+	margin: 0 20%;
+}
+
+#properties {
+	width: 100%;
+}
+
 #properties > div {
 	width: 80%;
 	margin: 5% auto;

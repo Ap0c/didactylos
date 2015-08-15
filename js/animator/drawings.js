@@ -223,6 +223,23 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Returns a function that retrieves the names of all drawings.
+	function drawingsNames (drawings) {
+
+		return function getNames () {
+
+			var names = [];
+
+			for (var i = 0, noDrawings = drawings.length; i < noDrawings; i++) {
+				names.push(drawings[i].name);
+			}
+
+			return names;
+
+		};
+
+	}
+
 	// Object to store a list of drawings, and expose corresponding methods.
 	function Drawings () {
 
@@ -232,6 +249,7 @@ module.exports = function drawings (Path2D) {
 		drawings.get = getDrawing(drawingList);
 		drawings.add = addDrawing(drawings, drawingList);
 		drawings.del = deleteDrawing(drawings, drawingList);
+		drawings.names = drawingsNames(drawingList);
 
 		Object.defineProperty(drawings, 'number', {
 			get: function () { return drawingList.length; },
