@@ -151,13 +151,37 @@ module.exports = function Properties (window) {
 
 	}
 
+	// Creates buttons to move drawings up and down.
+	function depthButtons (drawing) {
+
+		var container = document.createElement('div');
+		var up = document.createElement('button');
+		var down = document.createElement('button');
+		up.textContent = 'Up';
+		down.textContent = 'Down';
+
+		up.addEventListener('click', function drawingUp () {
+			propertiesObject.emit('moveDrawing', drawing, 'up');
+		});
+
+		down.addEventListener('click', function drawingDown () {
+			propertiesObject.emit('moveDrawing', drawing, 'down');
+		});
+
+		container.appendChild(up);
+		container.appendChild(down);
+
+		return container;
+
+	}
+
 	// Creates a delete button.
 	function createDelete (drawing) {
 
 		var button = document.createElement('button');
 		button.textContent = 'delete';
 
-		button.addEventListener('click', function () {
+		button.addEventListener('click', function clickDelete () {
 			propertiesObject.emit('deleteDrawing', drawing);
 			removeFields();
 		});
@@ -191,6 +215,9 @@ module.exports = function Properties (window) {
 
 		var newFields = addFields(drawing);
 		var deleteButton = createDelete(drawing);
+		var depthControls = depthButtons(drawing);
+
+		newFields.appendChild(depthControls);
 		newFields.appendChild(deleteButton);
 		properties.appendChild(newFields);
 

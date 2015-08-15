@@ -240,6 +240,28 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Returns a function that moves the position of a drawing in the list.
+	function moveDrawing (drawings, drawingList) {
+
+		return function move (drawing, direction) {
+
+			var location = drawingList.indexOf(drawing);
+
+			if ((location === 0 && direction === 'down') ||
+				(location === drawingList.length && direction === 'up')) {
+				return;
+			}
+
+			var item = drawingList.splice(location, 1)[0];
+			var newLocation = direction === 'up' ? location + 1 : location - 1;
+
+			drawingList.splice(newLocation, 0, item);
+			drawings.emit('change');
+
+		};
+
+	}
+
 	// Object to store a list of drawings, and expose corresponding methods.
 	function Drawings () {
 
@@ -250,6 +272,7 @@ module.exports = function drawings (Path2D) {
 		drawings.add = addDrawing(drawings, drawingList);
 		drawings.del = deleteDrawing(drawings, drawingList);
 		drawings.names = drawingsNames(drawingList);
+		drawings.move = moveDrawing(drawings, drawingList);
 
 		Object.defineProperty(drawings, 'number', {
 			get: function () { return drawingList.length; },
@@ -257,14 +280,6 @@ module.exports = function drawings (Path2D) {
 		});
 
 		return drawings;
-
-	}
-
-	function Text () {
-
-	}
-
-	function Arrow () {
 
 	}
 

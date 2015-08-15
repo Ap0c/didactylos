@@ -70,6 +70,10 @@ function setupListeners (canvas, drawingList, properties) {
 		drawingList.del(drawing);
 	});
 
+	properties.on('moveDrawing', function moveDrawing (drawing, direction) {
+		drawingList.move(drawing, direction);
+	});
+
 }
 
 // Serialises the drawing data to JSON.

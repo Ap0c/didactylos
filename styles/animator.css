@@ -110,3 +110,14 @@ body {
 #properties > button:hover {
 	background-color: #991111;
 }
+
+#properties > div > button {
+	width: 40%;
+	background-color: #005c8a;
+	color: #ffffff;
+	padding: 4% 0;
+	cursor: pointer;
+	margin: 2% 5% 0;
+	border: none;
+	font-size: small;
+}
