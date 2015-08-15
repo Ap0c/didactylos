@@ -27,6 +27,13 @@ module.exports = function Toolbar (window) {
 			cancel: document.getElementById('cancel_file_link'),
 			dataElement: document.getElementById('file_select'),
 			dataAttribute: 'value'
+		},
+		animation_insert: {
+			dialog: document.getElementById('animation_insert_overlay'),
+			form: document.getElementById('animation_insert_form'),
+			cancel: document.getElementById('cancel_animation_insert'),
+			dataElement: document.getElementById('animation_select'),
+			dataAttribute: 'value'
 		}
 	};
 
@@ -92,15 +99,35 @@ module.exports = function Toolbar (window) {
 
 	}
 
-	// Removes files from the file insert dialog if they no longer exist.
-	function deleteFiles (fileSelect, projectFiles) {
+	// Removes items from a select box if they no longer exist.
+	function deleteOptions (selectBox, items) {
 
-		for (var file in fileSelect) {
+		for (var option in selectBox) {
 
-			var optionId = file + '_option';
+			var optionId = option + '_option';
 
-			if (projectFiles.indexOf(optionId) < 0) {
-				fileSelect.remove(optionId);
+			if (items.indexOf(optionId) < 0) {
+				selectBox.remove(optionId);
+			}
+
+		}
+
+	}
+
+	// Adds options to a select box.
+	function addOptions (selectBox, items) {
+
+		for (var i = items.length - 1; i >= 0; i--) {
+
+			var item = items[i];
+
+			if (!selectBox[item]) {
+
+				var option = document.createElement('option');
+				option.value = option.text = item;
+				option.id = item + '_option';
+				selectBox.add(option);
+
 			}
 
 		}
@@ -111,22 +138,19 @@ module.exports = function Toolbar (window) {
 	function updateFiles (files) {
 
 		var fileSelect = document.getElementById('file_select');
-		deleteFiles(fileSelect, files);
 
-		for (var i = files.length - 1; i >= 0; i--) {
+		deleteOptions(fileSelect, files);
+		addOptions(fileSelect, files);
 
-			var file = files[i];
+	}
 
-			if (!fileSelect[file]) {
+	// Updates the animation list in the animation insert dialog.
+	function updateAnimations (animations) {
 
-				var option = document.createElement('option');
-				option.value = option.text = file;
-				option.id = file + '_option';
-				fileSelect.add(option);
+		var animationSelect = document.getElementById('animation_select');
 
-			}
-
-		}
+		deleteOptions(animationSelect, animations);
+		addOptions(animationSelect, animations);
 
 	}
 
@@ -154,7 +178,8 @@ module.exports = function Toolbar (window) {
 		click: click,
 		setupOverlay: setupOverlay,
 		overlay: openOverlay,
-		updateFiles: updateFiles
+		updateFiles: updateFiles,
+		updateAnimations: updateAnimations
 	};
 
 };

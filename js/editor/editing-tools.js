@@ -136,7 +136,7 @@ function insertLink (editor, linkText) {
 }
 
 // Sets up the overlays that handle link insertion.
-function setupOverlays (toolbar, editor, project) {
+function linkOverlays (toolbar, editor, project) {
 
 	toolbar.setupOverlay('link_type', linkChoice, editor.focus);
 	toolbar.setupOverlay('file_link', insertFile, editor.focus);
@@ -163,10 +163,25 @@ function setupOverlays (toolbar, editor, project) {
 
 }
 
+function setupAnimation (toolbar, editor, project) {
+
+	toolbar.setupOverlay('animation_insert', insertAnimation, editor.focus);
+
+	function insertAnimation (animName) {
+		insertLink(editor, `animation:${animName}`);
+	}
+
+	toolbar.action('animation', function insertAnim () {
+		toolbar.updateAnimations(project.animations());
+		toolbar.overlay('animation_insert');
+	});
+
+}
+
 // Sets up handling of link insertion.
 function setupLink (toolbar, editor, project) {
 
-	setupOverlays(toolbar, editor, project);
+	linkOverlays(toolbar, editor, project);
 
 	toolbar.action('link', function insertLink () {
 		toolbar.overlay('link_type');
@@ -181,6 +196,7 @@ function setup (toolbar, editor, project) {
 	setupSyntax(toolbar, editor);
 	setupTab(editor);
 	setupLink(toolbar, editor, project);
+	setupAnimation(toolbar, editor, project);
 
 }
 

@@ -271,7 +271,7 @@ dialog::backdrop {
 	width: 95%;
 }
 
-#file_select {
+#file_select, #animation_select {
 	width: 100%;
 	margin-bottom: 6%;
 }
