@@ -75,16 +75,21 @@ function setupListeners (canvas, drawingList, properties) {
 // Serialises the drawing data to JSON.
 function serialise (drawings) {
 
-	var serialisable = [];
+	var drawingList = [];
 
 	for (i = 0, len = drawings.number; i < len; i++) {
 
 		var drawing = drawings.get(i).serialAttrs();
-		serialisable.push(drawing);
+		drawingList.push(drawing);
 
 	}
 
-	return JSON.stringify(serialisable);
+	var output = {
+		counter: drawingCounter,
+		drawings: drawingList
+	};
+
+	return JSON.stringify(output);
 
 }
 
@@ -101,9 +106,11 @@ function saveLoad (drawingList) {
 	animationWindow.on('loadRequest', function loadAnimation (data) {
 
 		var drawingData = JSON.parse(data);
+		var drawings = drawingData.drawings;
+		drawingCounter = drawingData.counter;
 
-		for (var i = 0, noDrawings = drawingData.length; i < noDrawings; i++) {
-			var drawing = drawingTypes[drawingData[i].type](drawingData[i]);
+		for (var i = 0, noDrawings = drawings.length; i < noDrawings; i++) {
+			var drawing = drawingTypes[drawings[i].type](drawings[i]);
 			drawingList.add(drawing);
 		}
 

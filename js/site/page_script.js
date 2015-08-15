@@ -35,7 +35,9 @@ function paintDrawing (ctx, drawing) {
 }
 
 // Paints the drawings onto the canvas.
-function paint (ctx, drawings) {
+function paint (ctx, drawingData) {
+
+	var drawings = drawingData.drawings;
 
 	for (var i = 0, noDrawings = drawings.length; i < noDrawings; i++) {
 

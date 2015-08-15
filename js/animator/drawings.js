@@ -17,7 +17,7 @@ module.exports = function drawings (Path2D) {
 		h: {type: 'number'},
 		type: {type: 'static'},
 		colour: {type: 'colour'},
-		name: {type: 'string'},
+		name: {type: 'static'},
 		visible: {type: 'boolean'},
 		changed: {type: 'boolean'},
 		brush: {
