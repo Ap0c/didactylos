@@ -38,7 +38,7 @@ module.exports = function Animator (gui, menus, file) {
 	function newWindow (name, onload) {
 
 		var animWindow = gui.Window.open('animator.html', {
-			"toolbar": true,
+			"toolbar": false,
 			"width": 1000,
 			"height": 600
 		});
