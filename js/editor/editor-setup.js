@@ -129,6 +129,7 @@ function setupExport (menus, project) {
 
 	exportField.addEventListener('change', function (changeEvent) {
 		site.exportSite(exportField.value, project);
+		exportField.value = '';
 	});
 
 }
