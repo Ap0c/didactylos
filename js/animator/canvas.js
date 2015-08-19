@@ -48,7 +48,7 @@ module.exports = function Canvas (window, drawings) {
 	}
 
 	// Applies the brush colour and draw style (fill or stroke);
-	function paintDrawing (drawing) {
+	function draw (drawing) {
 
 		var colour = drawing.colour;
 
@@ -70,6 +70,24 @@ module.exports = function Canvas (window, drawings) {
 
 	}
 
+	function paintDrawing (drawing) {
+
+		if (drawing.changed) {
+
+			if (drawing.type === 'textbox') {
+				drawing.draw(ctx.measureText(drawing.desc));
+			} else {
+				drawing.draw();
+			}
+
+		}
+
+		if (drawing.visible) {
+			draw(drawing);
+		}
+
+	}
+
 	// Paints the drawings onto the canvas.
 	function paint () {
 
@@ -78,14 +96,7 @@ module.exports = function Canvas (window, drawings) {
 		for (var i = 0, noDrawings = drawings.number; i < noDrawings; i++) {
 
 			var drawing = drawings.get(i);
-
-			if (drawing.changed) {
-				drawing.draw();
-			}
-
-			if (drawing.visible) {
-				paintDrawing(drawing);
-			}
+			paintDrawing(drawing);
 
 		}
 

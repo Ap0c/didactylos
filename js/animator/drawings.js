@@ -130,10 +130,12 @@ module.exports = function drawings (Path2D) {
 		drawing.interface = drawingInterface(drawing);
 
 		if (attributes) {
+
 			for (var attr in attributes) {
 				drawing[attr] = Attribute(attr, attributes[attr]);
 				updateInterface(drawing, attr);
 			}
+
 		}
 
 		return drawing;
@@ -143,10 +145,12 @@ module.exports = function drawings (Path2D) {
 	// Creates a function used to draw the drawing.
 	function drawFunc (drawing, drawPath) {
 
-		return function drawDrawing () {
+		return function drawDrawing (info) {
+
 			drawing.path = new Path2D();
-			drawPath();
+			drawPath(info);
 			drawing.changed.value = false;
+
 		};
 
 	}
@@ -190,6 +194,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	// Creates a rectangle drawing, using a default or specified description.
 	function Textbox (attributes) {
 
 		attributes = attributes || {};
@@ -198,7 +203,10 @@ module.exports = function drawings (Path2D) {
 
 		var textbox = Drawing(attributes);
 
-		textbox.interface.draw = function drawText () {};
+		textbox.interface.draw = drawFunc(textbox, function drawText (metrics) {
+			textbox.path.rect(textbox.x.value, textbox.y.value,
+				metrics.width, -30);
+		});
 
 		return textbox.interface;
 
