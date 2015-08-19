@@ -18,6 +18,7 @@ module.exports = function drawings (Path2D) {
 		type: {type: 'static'},
 		colour: {type: 'colour'},
 		name: {type: 'static'},
+		desc: {type: 'string'},
 		visible: {type: 'boolean'},
 		changed: {type: 'boolean'},
 		brush: {
@@ -26,7 +27,7 @@ module.exports = function drawings (Path2D) {
 		}
 	};
 
-	var drawingTypes = ['circle', 'rectangle'];
+	var drawingTypes = ['circle', 'rectangle', 'textbox'];
 
 
 	// ----- Objects ----- //
@@ -189,6 +190,20 @@ module.exports = function drawings (Path2D) {
 
 	}
 
+	function Textbox (attributes) {
+
+		attributes = attributes || {};
+		attributes.desc = attributes.desc || 'Text';
+		attributes.type = 'textbox';
+
+		var textbox = Drawing(attributes);
+
+		textbox.interface.draw = function drawText () {};
+
+		return textbox.interface;
+
+	}
+
 	// Returns a function that retrieves a drawing from the list.
 	function getDrawing (drawingList) {
 
@@ -272,6 +287,7 @@ module.exports = function drawings (Path2D) {
 		Drawings: Drawings,
 		Circle: Circle,
 		Rectangle: Rectangle,
+		Textbox: Textbox,
 		get types() { return drawingTypes.slice(0); }
 	};
 

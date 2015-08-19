@@ -28,17 +28,44 @@ module.exports = function Canvas (window, drawings) {
 
 	}
 
+	// Paints text onto the canvas.
+	function paintText (drawing, colour) {
+
+		ctx.font = '24px sans-serif';
+
+		if (drawing.brush === 'fill') {
+
+			ctx.fillStyle = colour ? colour : properties.brush;
+			ctx.fillText(drawing.desc, drawing.x, drawing.y);
+
+		} else {
+
+			ctx.strokeStyle = colour ? colour : properties.brush;
+			ctx.strokeText(drawing.desc, drawing.x, drawing.y);
+
+		}
+
+	}
+
 	// Applies the brush colour and draw style (fill or stroke);
 	function paintDrawing (drawing) {
 
 		var colour = drawing.colour;
 
-		if (drawing.brush === 'fill') {
+		if (drawing.type === 'textbox') {
+
+			paintText(drawing, colour);
+
+		} else if (drawing.brush === 'fill') {
+
 			ctx.fillStyle = colour ? colour : properties.brush;
 			ctx.fill(drawing.path);
+
 		} else {
+
 			ctx.strokeStyle = colour ? colour : properties.brush;
 			ctx.stroke(drawing.path);
+
 		}
 
 	}

@@ -14,7 +14,8 @@ var selection = require('../js/animator/selection.js');
 
 var drawingTypes = {
 	circle: drawings.Circle,
-	rectangle: drawings.Rectangle
+	rectangle: drawings.Rectangle,
+	textbox: drawings.Textbox
 };
 
 var drawingCounter = 0;
