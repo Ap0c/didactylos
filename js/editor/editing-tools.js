@@ -163,12 +163,21 @@ function linkOverlays (toolbar, editor, project) {
 
 }
 
+// Sets up the overlay that handles animation insertion.
 function setupAnimation (toolbar, editor, project) {
 
 	toolbar.setupOverlay('animation_insert', insertAnimation, editor.focus);
 
 	function insertAnimation (animName) {
-		insertLink(editor, `animation:${animName}`);
+
+		var animSyntax = {
+			before: `[](animation:${animName})`,
+			after: '',
+			caretMove: null
+		};
+
+		insertSyntax(animSyntax, editor)();
+
 	}
 
 	toolbar.action('animation', function insertAnim () {
