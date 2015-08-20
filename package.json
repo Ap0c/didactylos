@@ -11,5 +11,6 @@
   },
   "dependencies": {
     "marked": "^0.3.3"
-  }
+  },
+  "chromium-args": "--enable-experimental-canvas-features"
 }

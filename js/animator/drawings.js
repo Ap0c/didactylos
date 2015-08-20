@@ -19,6 +19,7 @@ module.exports = function drawings (Path2D) {
 		colour: {type: 'colour'},
 		name: {type: 'static'},
 		desc: {type: 'string'},
+		font: {type: 'number'},
 		visible: {type: 'boolean'},
 		changed: {type: 'boolean'},
 		brush: {
@@ -199,13 +200,18 @@ module.exports = function drawings (Path2D) {
 
 		attributes = attributes || {};
 		attributes.desc = attributes.desc || 'Text';
+		attributes.font = attributes.font || 20;
 		attributes.type = 'textbox';
 
 		var textbox = Drawing(attributes);
 
 		textbox.interface.draw = drawFunc(textbox, function drawText (metrics) {
+
+			var textHeight = metrics.actualBoundingBoxDescent +
+				metrics.actualBoundingBoxAscent;
 			textbox.path.rect(textbox.x.value, textbox.y.value,
-				metrics.width, -30);
+				metrics.width, -textHeight);
+
 		});
 
 		return textbox.interface;

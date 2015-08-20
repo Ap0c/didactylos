@@ -31,7 +31,7 @@ module.exports = function Canvas (window, drawings) {
 	// Paints text onto the canvas.
 	function paintText (drawing, colour) {
 
-		ctx.font = '24px sans-serif';
+		ctx.font = `${drawing.font}px sans-serif`;
 
 		if (drawing.brush === 'fill') {
 
@@ -70,6 +70,7 @@ module.exports = function Canvas (window, drawings) {
 
 	}
 
+	// Adds a drawing to the canvas.
 	function paintDrawing (drawing) {
 
 		if (drawing.changed) {
