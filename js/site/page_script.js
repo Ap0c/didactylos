@@ -18,18 +18,53 @@ function getPath (drawing) {
 
 }
 
+// Paints a shape onto the canvas.
+function drawShape (ctx, drawing, colour) {
+
+	var path = getPath(drawing);
+
+	if (drawing.brush === 'fill') {
+
+		ctx.fillStyle = colour ? colour : defaultColour;
+		ctx.fill(path);
+
+	} else {
+
+		ctx.strokeStyle = colour ? colour : defaultColour;
+		ctx.stroke(path);
+
+	}
+
+}
+
+// Paints text onto the canvas.
+function drawText (ctx, drawing, colour) {
+
+	ctx.font = drawing.font + 'px sans-serif';
+
+	if (drawing.brush === 'fill') {
+
+		ctx.fillStyle = colour ? colour : defaultColour;
+		ctx.fillText(drawing.desc, drawing.x, drawing.y);
+
+	} else {
+
+		ctx.strokeStyle = colour ? colour : defaultColour;
+		ctx.strokeText(drawing.desc, drawing.x, drawing.y);
+
+	}
+
+}
+
 // Applies the brush colour and draw style (fill or stroke).
 function paintDrawing (ctx, drawing) {
 
 	var colour = drawing.colour;
-	var path = getPath(drawing);
 
-	if (drawing.brush === 'fill') {
-		ctx.fillStyle = colour ? colour : defaultColour;
-		ctx.fill(path);
+	if (drawing.type === 'textbox') {
+		drawText(ctx, drawing, colour);
 	} else {
-		ctx.strokeStyle = colour ? colour : defaultColour;
-		ctx.stroke(path);
+		drawShape(ctx, drawing, colour);
 	}
 
 }
