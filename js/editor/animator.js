@@ -70,13 +70,19 @@ module.exports = function Animator (gui, menus, file) {
 	// Opens an animation from file.
 	function openAnimation (name) {
 
-		file.openAnimation(name, function (err, data) {
+		if (name in openWindows) {
+			openWindows[name].show();
+		} else {
 
-			newWindow(name, function onload (animWindow) {
-				animWindow.emit('loadRequest', data);
+			file.openAnimation(name, function (err, data) {
+
+				newWindow(name, function onload (animWindow) {
+					animWindow.emit('loadRequest', data);
+				});
+
 			});
 
-		});
+		}
 
 	}
 
