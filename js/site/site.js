@@ -120,6 +120,8 @@ function retrieveFonts () {
 		fonts[i] = path.join('styles/fonts', fonts[i]);
 	}
 
+	return fonts;
+
 }
 
 // Copies the Katex files to the exported site.
