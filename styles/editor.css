@@ -87,7 +87,48 @@ body {
 	background-color: #bbbbbb;
 }
 
-.heading_button {
+#toolbar > #heading_menu {
+	width: 24%;
+}
+
+#toolbar > #equation_menu {
+	width: 20%;
+}
+
+#equation_menu > span {
+	margin-top: 3.5%;
+}
+
+#heading_menu > span {
+	margin-top: 3%;
+}
+
+#equation_menu > span, #equation_menu > .dropdown_menu {
+	margin-left: 3%;
+}
+
+#heading_menu > span, #heading_menu > .dropdown_menu {
+	margin-left: 7%;
+}
+
+.dropdown {
+	position: relative;
+	cursor: pointer;
+}
+
+.dropdown > span {
+	background-color: #ffffff;
+	color: #005c8a;
+	display: inline-block;
+	width: 90%;
+	margin: 3% 7% 0;
+	height: 78%;
+	padding: 2% 5% 0;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.dropdown_button {
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -96,17 +137,11 @@ body {
 	box-sizing: border-box;
 }
 
-.dropdown {
-	position: relative;
-	cursor: pointer;
-}
-
 .dropdown_menu {
 	position: absolute;
 	display: none;
 	background: #ffffff;
 	width: 90%;
-	margin-left: 7%;
 }
 
 .dropdown:hover > .dropdown_menu {
@@ -116,21 +151,6 @@ body {
 .dropdown_menu > button:hover {
 	background-color: #005c8a;
 	color: #ffffff;
-}
-
-#toolbar > #heading_menu {
-	width: 24%;
-}
-
-#heading_menu > span {
-	background-color: #ffffff;
-	display: inline-block;
-	width: 90%;
-	margin: 3% 7% 0;
-	height: 78%;
-	padding: 2% 5% 0;
-	text-align: center;
-	box-sizing: border-box;
 }
 
 #italics_insert {
