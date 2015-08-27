@@ -61,9 +61,11 @@ function setupHeadings (toolbar, editor) {
 }
 
 // Moves the editor caret position.
-function moveCaret (selection, caretMove, editor) {
+function moveCaret (selection, caretMove, editor, caretRange) {
 
 	editor.focus();
+
+	selection.end = caretRange ? selection.end + caretRange : selection.end;
 
 	if (caretMove) {
 
@@ -76,12 +78,12 @@ function moveCaret (selection, caretMove, editor) {
 }
 
 // Inserts a piece of syntax and moves the caret.
-function insertSyntax (syntax, editor) {
+function insertSyntax (syntax, editor, caretRange) {
 
 	return function () {
 
 		var selection = insert(syntax.before, syntax.after, editor);
-		moveCaret(selection, syntax.caretMove, editor);
+		moveCaret(selection, syntax.caretMove, editor, caretRange);
 
 	};
 
@@ -134,10 +136,10 @@ function insertLink (editor, linkText) {
 	var linkSyntax = {
 		before: '[label',
 		after: `](${linkText})`,
-		caretMove: null
+		caretMove: 1
 	};
 
-	insertSyntax(linkSyntax, editor)();
+	insertSyntax(linkSyntax, editor, 5)();
 
 }
 
@@ -178,10 +180,10 @@ function setupAnimation (toolbar, editor, project) {
 
 		var animSyntax = {
 			before: `[](animation:${animName})`,
-			after: '',
-			caretMove: null
+			after: ''
 		};
 
+		animSyntax.caretMove = animSyntax.before.length;
 		insertSyntax(animSyntax, editor)();
 
 	}
