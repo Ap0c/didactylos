@@ -14,7 +14,9 @@ var SYNTAX = {
 	bullet: { before: '- ', after: '', caretMove: null },
 	italics: { before: '*', after: '*', caretMove: 1 },
 	bold: { before: '**', after: '**', caretMove: 2 },
-	code: { before: '```\n', after: '\n```', caretMove: 4 }
+	code: { before: '```\n', after: '\n```', caretMove: 4 },
+	eq_inline: { before: '$', after: '$', caretMove: 1 },
+	eq_standalone: { before: '$$\n', after: '\n$$', caretMove: 3 },
 
 };
 
