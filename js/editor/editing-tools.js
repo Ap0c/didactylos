@@ -11,7 +11,7 @@ var HEADINGS = {
 
 var SYNTAX = {
 
-	bullet: { before: '- ', after: '', caretMove: null },
+	bullet: { before: '- ', after: '', caretMove: 2 },
 	italics: { before: '*', after: '*', caretMove: 1 },
 	bold: { before: '**', after: '**', caretMove: 2 },
 	code: { before: '```\n', after: '\n```', caretMove: 4 },
@@ -38,7 +38,8 @@ function insert (symbolBefore, symbolAfter, editor) {
 		symbolAfter + contentAfter;
 
 	editor.setContent(newContent);
-	editor.focus();
+
+	return selection;
 
 }
 
@@ -46,8 +47,11 @@ function insert (symbolBefore, symbolAfter, editor) {
 function setupHeadings (toolbar, editor) {
 
 	function addHeading () {
+
 		var snippet = HEADINGS[this.name];
-		insert(snippet, '', editor);
+		var selection = insert(snippet, '', editor);
+		moveCaret(selection, snippet.length, editor);
+
 	}
 
 	for (var heading in HEADINGS) {
@@ -57,13 +61,14 @@ function setupHeadings (toolbar, editor) {
 }
 
 // Moves the editor caret position.
-function moveCaret (caretMove, editor) {
+function moveCaret (selection, caretMove, editor) {
+
+	editor.focus();
 
 	if (caretMove) {
 
-		var selection = editor.getSelection();
-		selection.start -= caretMove;
-		selection.end -= caretMove;
+		selection.start += caretMove;
+		selection.end += caretMove;
 		editor.setSelection(selection);
 
 	}
@@ -74,8 +79,10 @@ function moveCaret (caretMove, editor) {
 function insertSyntax (syntax, editor) {
 
 	return function () {
-		insert(syntax.before, syntax.after, editor);
-		moveCaret(syntax.caretMove, editor);
+
+		var selection = insert(syntax.before, syntax.after, editor);
+		moveCaret(selection, syntax.caretMove, editor);
+
 	};
 
 }
@@ -99,11 +106,8 @@ function setupTab (editor) {
 
 		if (keyEvent.keyCode === 9) {
 
-			var selection = editor.getSelection();
-
-			insert('    ', '', editor);
-			editor.setSelection(selection);
-			moveCaret(-4, editor);
+			var selection = insert('    ', '', editor);
+			moveCaret(selection, -4, editor);
 
 			keyEvent.preventDefault();
 
