@@ -50,7 +50,7 @@ function readInfo (projectPath, infoFile) {
 function mainWindow () {
 
 	gui.Window.open('editor.html', {
-		"toolbar": false,
+		"toolbar": true,
 		"width": 1300,
 		"height": 640
 	});

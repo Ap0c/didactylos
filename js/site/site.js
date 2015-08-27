@@ -19,7 +19,10 @@ function buildPage (title, content, filename) {
 <meta name="viewport" content="width=device-width, initial-scale=1">	
 <link rel="stylesheet" href="styles/main.css">
 <link rel="stylesheet" href="styles/${filename}.css">
+<link rel="stylesheet" href="styles/katex.min.css">
 <script type="text/javascript" src="scripts/${filename}.js"></script>
+<script type="text/javascript" src="scripts/katex.min.js"></script>
+<script type="text/javascript" src="scripts/auto-render.min.js"></script>
 <title>${title}</title>
 </head>
 <body>
@@ -96,17 +99,53 @@ function exportFile (target, project, file) {
 
 }
 
+function copyFile (location, filename) {
+
+	var destination = path.join(location, filename);
+
+	return function fileCopy (err, data) {
+		fs.writeFile(destination, data);
+	};
+
+}
+
+function copyKatex (location) {
+
+	var katexPath = path.join(__dirname, 'katex');
+	var fontPath = path.join(__dirname, 'katex/styles/fonts');
+	var fonts = fs.readdirSync(fontPath);
+
+	for (var i = fonts.length - 1; i >= 0; i--) {
+		fonts[i] = path.join('styles/fonts', fonts[i]);
+	}
+
+	var files = ['styles/katex.min.css', 'scripts/katex.min.js',
+		'scripts/auto-render.min.js'];
+
+	files = files.concat(fonts);
+
+	for (var j = files.length - 1; j >= 0; j--) {
+
+		var origin = path.join(katexPath, files[j]);
+
+		fs.readFile(origin, copyFile(location, files[j]));
+
+	}
+
+}
+
 // Sets up the directories and prerequisite files (e.g. main.css).
 function setupDirectories (location) {
 
-	var styleLocation = path.join(location, 'styles/main.css');
-
 	fs.mkdir(path.join(location, 'styles'));
 	fs.mkdir(path.join(location, 'scripts'));
+	fs.mkdir(path.join(location, 'styles/fonts'));
 
-	fs.readFile(path.join(__dirname, 'main.css'), function (err, data) {
-		fs.writeFile(styleLocation, data);
-	});
+	var mainOrigin = path.join(__dirname, 'main.css');
+	var mainDestination = 'styles/main.css';
+	fs.readFile(mainOrigin, copyFile(location, mainDestination));
+
+	copyKatex(location);
 
 }
 

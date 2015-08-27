@@ -99,12 +99,27 @@ function drawCanvas (id) {
 
 }
 
+function renderMaths () {
+
+	var content = document.getElementById('content');
+
+	renderMathInElement(content, {
+		delimiters: [
+			{left: "$$", right: "$$", display: true},
+			{left: "$", right: "$", display: false}
+		]
+	});
+
+}
+
 // Sets up the canvas objects.
 function setup () {
 
 	for (var canvas in canvases) {
 		drawCanvas(canvas);
 	}
+
+	renderMaths();
 
 }
 
