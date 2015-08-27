@@ -99,6 +99,7 @@ function drawCanvas (id) {
 
 }
 
+// Renders the Katex maths on the page.
 function renderMaths () {
 
 	var content = document.getElementById('content');

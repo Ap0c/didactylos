@@ -99,6 +99,7 @@ function exportFile (target, project, file) {
 
 }
 
+// Returns a function that writes a copied file's data to another file.
 function copyFile (location, filename) {
 
 	var destination = path.join(location, filename);
@@ -109,15 +110,23 @@ function copyFile (location, filename) {
 
 }
 
-function copyKatex (location) {
+// Retrieves the paths of the Katex font files.
+function retrieveFonts () {
 
-	var katexPath = path.join(__dirname, 'katex');
 	var fontPath = path.join(__dirname, 'katex/styles/fonts');
 	var fonts = fs.readdirSync(fontPath);
 
 	for (var i = fonts.length - 1; i >= 0; i--) {
 		fonts[i] = path.join('styles/fonts', fonts[i]);
 	}
+
+}
+
+// Copies the Katex files to the exported site.
+function copyKatex (location) {
+
+	var katexPath = path.join(__dirname, 'katex');
+	var fonts = retrieveFonts();
 
 	var files = ['styles/katex.min.css', 'scripts/katex.min.js',
 		'scripts/auto-render.min.js'];
@@ -127,7 +136,6 @@ function copyKatex (location) {
 	for (var j = files.length - 1; j >= 0; j--) {
 
 		var origin = path.join(katexPath, files[j]);
-
 		fs.readFile(origin, copyFile(location, files[j]));
 
 	}
