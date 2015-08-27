@@ -26,6 +26,7 @@ module.exports = function Editor (window) {
 	var document = window.document;
 	var editArea = document.getElementById('editor_input');
 	var preview = document.getElementById('preview');
+	var renderer = new marked.Renderer();
 
 
 	// ----- Functions ----- //
@@ -47,21 +48,27 @@ module.exports = function Editor (window) {
 
 	}
 
-	// Updates the preview area with rendered HTML.
+	// Updates the preview area with rendered HTML and equations.
 	function updatePreview () {
 
 		var content = editArea.value;
-		var renderer = new marked.Renderer();
-
-		renderer.link = linkRenderer;
 		preview.innerHTML = marked(content, { renderer: renderer });
+
+		window.renderMathInElement(preview, {
+			delimiters: [
+				{left: "$$", right: "$$", display: true},
+				{left: "$", right: "$", display: false}
+			]
+		});
 
 	}
 
 	// Sets the contents of the editor pane.
 	function setContent (newContent) {
+
 		editArea.value = newContent;
 		updatePreview();
+
 	}
 
 	// Gets the contents of the editor pane.
@@ -78,6 +85,7 @@ module.exports = function Editor (window) {
 		};
 
 		return selection;
+
 	}
 
 	// Sets the selection in the textarea.
@@ -88,9 +96,11 @@ module.exports = function Editor (window) {
 
 	// Listens for a keydown event.
 	function keyDown (callback) {
+
 		editArea.addEventListener('keydown', function (keyEvent) {
 			callback(keyEvent);
 		});
+
 	}
 
 	// Sets the focus on the editing textarea.
@@ -100,6 +110,8 @@ module.exports = function Editor (window) {
 
 	// Sets up event listeners.
 	function init () {
+
+		renderer.link = linkRenderer;
 
 		editArea.addEventListener('input', function () {
 			updatePreview();
