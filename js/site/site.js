@@ -37,7 +37,7 @@ function buildPage (title, content, filename) {
 
 // Converts a string to one that is filesystem/url friendly.
 function sanitiseName (name) {
-	return name.replace(' ', '_').toLowerCase();
+	return name.replace(/ /g, '_').toLowerCase();
 }
 
 // Custom link renderer to handle files and animations.
