@@ -42,7 +42,8 @@ exports.items = function items (clickEvent) {
 
 		var headingItems = buildHeadings();
 		var otherItems = [separator(), italicsTool, boldTool, separator(),
-			bulletTool, linkTool, codeTool];
+			bulletTool, linkTool, codeTool, separator(), eqInline,
+			eqStandalone];
 
 		return headingItems.concat(otherItems);
 
@@ -101,8 +102,24 @@ exports.items = function items (clickEvent) {
 		}
 	};
 
+	var eqInline = {
+		win: 'editor',
+		menu: {
+			label: 'Inline Equation',
+			click: clickEvent('eq_inline')
+		}
+	};
 
-	// ----- Return ----- //
+	var eqStandalone = {
+		win: 'editor',
+		menu: {
+			label: 'Standalone Equation',
+			click: clickEvent('eq_standalone')
+		}
+	};
+
+
+// ----- Return ----- //
 
 	return menuItems();
 
