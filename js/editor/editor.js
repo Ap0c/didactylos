@@ -113,9 +113,7 @@ module.exports = function Editor (window) {
 
 		renderer.link = linkRenderer;
 
-		editArea.addEventListener('input', function () {
-			updatePreview();
-		});
+		editArea.addEventListener('input', updatePreview);
 
 	}
 
