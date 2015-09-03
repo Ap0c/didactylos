@@ -39,12 +39,9 @@ function compileAnimations (project, animationData) {
 // Reads the animations in from files and prepares them for the page script.
 function build (target, project, animationData, filename) {
 
-	if (animationData.length > 0) {
+	var animations = compileAnimations(project, animationData);
+	writeScript(target, animations, filename);
 
-		var animations = compileAnimations(project, animationData);
-		writeScript(target, animations, filename);
-
-	}
 
 }
 
