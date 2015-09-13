@@ -1,8 +1,7 @@
 {
-  "name": "didactylos",
+  "name": "jb0378-masters-project",
   "version": "0.0.1",
   "main": "./html/startup.html",
-  "url": "https://github.com/Ap0c/didactylos",
   "window": {
     "width": 800,
     "height": 400,

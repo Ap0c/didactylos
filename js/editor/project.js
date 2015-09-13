@@ -119,7 +119,7 @@ module.exports = function Project (projectJson) {
 	function init () {
 
 		info = JSON.parse(projectJson);
-		infoFile = path.join(info.path, 'didactylos.json');
+		infoFile = path.join(info.path, 'project-metadata.json');
 
 	}
 

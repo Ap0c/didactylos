@@ -25,7 +25,7 @@ function writeInfo (projectName, projectPath, callback) {
 	localStorage.setItem('projectPath', projectPath);
 	localStorage.setItem('projectInfo', projectJson);
 
-	var dataPath = path.join(projectPath, 'didactylos.json');
+	var dataPath = path.join(projectPath, 'project-metadata.json');
 	fs.writeFile(dataPath, projectJson, callback);
 
 }
@@ -60,14 +60,13 @@ function mainWindow () {
 
 }
 
-// Checks if the directory contains a didactylos project.
+// Checks if the directory contains a project.
 function checkProject (projectFile, callback) {
 
 	fs.stat(projectFile, function (err, stats) {
 
 		if (err) {
-			alert('This directory does not appear to contain a didactylos' +
-				' project.');
+			alert('This directory does not appear to contain a project.');
 		} else {
 			callback();
 		}
@@ -134,7 +133,7 @@ function setupLoad () {
 	projectLoad.addEventListener('change', function () {
 
 		var projectPath = projectLoad.value;
-		var infoFile = path.join(projectPath, 'didactylos.json');
+		var infoFile = path.join(projectPath, 'project-metadata.json');
 
 		checkProject(infoFile, function afterCheck () {
 			readInfo(projectPath, infoFile);
