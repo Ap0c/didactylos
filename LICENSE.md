@@ -1,6 +1,6 @@
-Some of the code in this software is part of the KaTeX project, which is licesnsed under the following:
+Some of the code included in this software is part of the KaTeX project, which is licensed as follows:
 
-The MIT License (MIT)
+"The MIT License (MIT)
 
 Copyright (c) 2015 Khan Academy
 
@@ -26,4 +26,4 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SOFTWARE."
