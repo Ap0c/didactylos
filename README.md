@@ -43,6 +43,6 @@ The `js` directory contains the Javascript code for the project, and the bulk of
 - animator - Contains the code for the animator component.
 - editor - Contains the code for the editor component.
 - katex - Contains code from the KaTeX project used in the editor.
-- site - Contains code used for the static site export. This is not all Javascript, as it contains a CSS file used to define default styles for exported sites.
+- site - Contains code used for the static site export. This is not all Javascript, as it contains a CSS file used to define default styles for exported sites. It also contains a copy of KaTeX that is copied across to the static site.
 
 The `styles` directory contains stylesheets used to style the various application windows.
