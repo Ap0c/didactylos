@@ -2,15 +2,15 @@
 
 A collection of teaching tools designed to allow educators to produce web-oriented educational content. Current development focuses on Physics content specifically. Built using nwjs (previously node-webkit).
 
-# Components (In Development)
+# Components
 
 ## Markdown Editor
 
-An editor for building the content, based around the Markdown language. Will incorporate live previews and MathML rendering of equations.
+An editor for building the content, based around the Markdown language. Incorporates live HTML previews and equations rendering.
 
 ## Animator
 
-A tool for creating animations and diagrams using the HTML5 canvas element. These will be embedded in the content created in the editor.
+A tool for creating diagrams using the HTML5 canvas element. These will be embedded in the content created in the editor.
 
 ## Static Site Generator
 
