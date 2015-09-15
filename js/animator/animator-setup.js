@@ -1,6 +1,6 @@
 /* The main setup file for the animator, runs in the Webkit context of the
 animator window, loaded by 'animator.html'. Loads in the rest of the animator
-modules using Node require function and sets them up.
+modules using the Node require function and sets them up.
 */
 
 // ----- Requires ----- //

@@ -1,3 +1,8 @@
+/* Creates Javascript files to accompany each exported page in the static site.
+These set up several aspects of the page including KaTeX and diagram rendering,
+and are based on 'page_script.js'.
+*/
+
 // ----- Requires ----- //
 
 var fs = require('fs');
@@ -6,7 +11,7 @@ var path = require('path');
 
 // ----- Functions ----- //
 
-// Writes the animation script to file.
+// Writes the script to file.
 function writeScript (target, animations, filename) {
 
 	fs.readFile(path.join(__dirname, 'page_script.js'), function (err, data) {
@@ -18,7 +23,7 @@ function writeScript (target, animations, filename) {
 
 }
 
-// Creates an object to store the animations.
+// Creates an object to store the drawings for the canvas.
 function compileAnimations (project, animationData) {
 
 	var animations = 'var canvases = {\n';
@@ -36,7 +41,7 @@ function compileAnimations (project, animationData) {
 
 }
 
-// Reads the animations in from files and prepares them for the page script.
+// Reads the animator files and prepares them for the page script.
 function build (target, project, animationData, filename) {
 
 	var animations = compileAnimations(project, animationData);

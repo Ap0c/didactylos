@@ -1,3 +1,7 @@
+/* Handles the static site export process, builds a collection of HTML, CSS and
+Javascript files from the project files stored on disk.
+*/
+
 // ----- Requires ----- //
 
 var fs = require('fs');
@@ -35,7 +39,7 @@ function buildPage (title, content, filename) {
 
 }
 
-// Converts a string to one that is filesystem/url friendly.
+// Converts a string to one that is filesystem/URL friendly.
 function sanitiseName (name) {
 	return name.replace(/ /g, '_').toLowerCase();
 }
@@ -64,7 +68,7 @@ function linkRenderer (animations) {
 
 }
 
-// Creates a custom marked renderer to handle file links and animation embeds.
+// Creates a custom Marked renderer to handle file links and animation embeds.
 function customRenderer () {
 
 	var renderer = new marked.Renderer();
@@ -79,7 +83,7 @@ function customRenderer () {
 
 }
 
-// Exports a file and its associated assets.
+// Exports an editor file to an HTML page, along with its associated assets.
 function exportFile (target, project, file) {
 
 	var renderer = customRenderer();
@@ -110,7 +114,7 @@ function copyFile (location, filename) {
 
 }
 
-// Retrieves the paths of the Katex font files.
+// Retrieves the paths of the KaTeX font files.
 function retrieveFonts () {
 
 	var fontPath = path.join(__dirname, 'katex/styles/fonts');
@@ -124,7 +128,7 @@ function retrieveFonts () {
 
 }
 
-// Copies the Katex files to the exported site.
+// Copies the KaTeX files to the exported site.
 function copyKatex (location) {
 
 	var katexPath = path.join(__dirname, 'katex');

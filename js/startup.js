@@ -1,3 +1,8 @@
+/* The main setup file for the startup window, runs in the Webkit context of the
+startup window, loaded by 'startup.html'. Handles opening and creation of
+projects, and opens the main editor window.
+*/
+
 // ----- Requires ----- //
 
 var gui = require('nw.gui');
@@ -9,7 +14,7 @@ var Menus = require('../js/editor/menus/menus.js');
 
 // ----- Functions ----- //
 
-// Writes the project info to file and local storage.
+// Writes the project info to a metadata file, and to localStorage.
 function writeInfo (projectName, projectPath, callback) {
 
 	var projectInfo = {
@@ -30,7 +35,7 @@ function writeInfo (projectName, projectPath, callback) {
 
 }
 
-// Reads the project info from file.
+// Reads the project info from the metadata file.
 function readInfo (projectPath, infoFile) {
 
 	var projectJson = fs.readFileSync(infoFile);

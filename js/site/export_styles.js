@@ -1,3 +1,7 @@
+/* Handles export of the styles stored in the project's metadata to stylesheets
+in the static site.
+*/
+
 // ----- Requires ----- //
 
 var fs = require('fs');
@@ -6,6 +10,7 @@ var path = require('path');
 
 // ----- Setup ----- //
 
+// Stores the structure for CSS rules as they will appear in the stylesheet.
 var styleData = {
 
 	font_family: {

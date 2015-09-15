@@ -15,7 +15,7 @@ module.exports = function Stylebar (window) {
 	// Inputs in the stylebar.
 	var styleTools = {};
 
-	// Stores all the possible CSS rules that can be applied using the stylebar.
+	// Stores the possible CSS rules that can be applied using the stylebar.
 	var rules = {
 		font_size: {
 			type: 'class',

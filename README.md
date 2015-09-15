@@ -45,7 +45,7 @@ The `styles` directory contains stylesheets used to style the various applicatio
 The following tools were used in the development of this software:
 
 - Markdown (http://daringfireball.net/projects/markdown/)
-- nw.js, previously node-webkit (http://nwjs.io)
+- nw.js, previously Node-Webkit (http://nwjs.io)
 - Marked (https://github.com/chjj/marked)
 - KaTeX (https://github.com/Khan/KaTeX)
 
