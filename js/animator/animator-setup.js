@@ -1,8 +1,15 @@
+/* The main setup file for the animator, runs in the Webkit context of the
+animator window, loaded by 'animator.html'. Loads in the rest of the animator
+modules using Node require function and sets them up.
+*/
+
 // ----- Requires ----- //
 
+// Node and Node-Webkit modules.
 var fs = require('fs');
 var gui = require('nw.gui');
 
+// Animator modules.
 var Properties = require('../js/animator/properties.js');
 var Canvas = require('../js/animator/canvas.js');
 var Assets = require('../js/animator/assets.js');
@@ -12,12 +19,14 @@ var selection = require('../js/animator/selection.js');
 
 // ----- Setup ----- //
 
+// Types of drawing in the canvas.
 var drawingTypes = {
 	circle: drawings.Circle,
 	rectangle: drawings.Rectangle,
 	textbox: drawings.Textbox
 };
 
+// Number of drawings on the canvas, and the Window object.
 var drawingCounter = 0;
 var animationWindow = gui.Window.get();
 
@@ -51,7 +60,7 @@ function assetInsertion (drawingList, assets) {
 
 }
 
-// Sets up event listeners on various components.
+// Sets up listeners for events on the drawing list and properties sidebar.
 function setupListeners (canvas, drawingList, properties) {
 
 	drawingList.on('change', function paintCanvas () {
@@ -77,7 +86,7 @@ function setupListeners (canvas, drawingList, properties) {
 
 }
 
-// Serialises the drawing data to JSON.
+// Serialises all the drawings in the drawings list to JSON.
 function serialise (drawings) {
 
 	var drawingList = [];
@@ -101,6 +110,7 @@ function serialise (drawings) {
 // Sets up the procedure for saving an animation to file.
 function saveLoad (drawingList) {
 
+	// Sends the drawing information via an event on the animator Window.
 	animationWindow.on('saveRequest', function saveAnimation () {
 
 		var drawingData = serialise(drawingList);
@@ -108,6 +118,7 @@ function saveLoad (drawingList) {
 
 	});
 
+	// Receives drawing data via an event, loads the drawings onto the canvas.
 	animationWindow.on('loadRequest', function loadAnimation (data) {
 
 		var drawingData = JSON.parse(data);
@@ -123,11 +134,12 @@ function saveLoad (drawingList) {
 
 }
 
-// Sets up various components of the animator.
+// Sets up the animator modules, and prepares the animator window.
 function setup () {
 
 	var drawingList = drawings.Drawings();
 
+	// Creates sections of the window.
 	var assets = Assets(window);
 	var canvas = Canvas(window, drawingList);
 	var properties = Properties(window);

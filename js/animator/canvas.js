@@ -1,3 +1,5 @@
+/* Object to handle the animator window's central canvas area. */
+
 // ----- Exports ----- //
 
 module.exports = function Canvas (window, drawings) {
@@ -7,7 +9,8 @@ module.exports = function Canvas (window, drawings) {
 	var document = window.document;
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d');
-	
+
+	// Sets default properties for the canvas.
 	var properties = {
 		brush: '#005c8a',
 		background: '#ffffff'
@@ -47,7 +50,7 @@ module.exports = function Canvas (window, drawings) {
 
 	}
 
-	// Applies the brush colour and draw style (fill or stroke);
+	// Applies the brush colour and draw style (fill or stroke) to a drawing.
 	function draw (drawing) {
 
 		var colour = drawing.colour;
@@ -123,7 +126,7 @@ module.exports = function Canvas (window, drawings) {
 		return { width: canvas.width, height: canvas.height };
 	}
 
-	// Checks if a point is within a drawing.
+	// Checks if a point on the canvas is within a drawing.
 	function pointInside (drawing, x, y) {
 		return ctx.isPointInPath(drawing.path, x, y);
 	}

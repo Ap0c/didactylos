@@ -1,3 +1,5 @@
+/* Object to handle the animator window's properties sidebar. */
+
 // ----- Requires ----- //
 
 var EventEmitter = require('events').EventEmitter;
@@ -11,6 +13,8 @@ module.exports = function Properties (window) {
 
 	var document = window.document;
 	var properties = document.getElementById('properties');
+
+	// Stores the fields in the sidebar that correspond to drawing attributes.
 	var fields = [];
 	var propertiesObject = new EventEmitter();
 
@@ -26,7 +30,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Returns an input field type when given a data type.
+	// Returns an HTML form input field type when given a data type.
 	function inputType (type) {
 
 		switch (type) {
@@ -44,7 +48,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Sets the initial value of the field.
+	// Sets the initial value of an input field.
 	function setValue (entry, type, value) {
 
 		if (type === 'number' || type === 'string' || type === 'colour') {
@@ -57,7 +61,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Creates an input element for a property field.
+	// Creates an input element for a drawing attribute.
 	function createInput (type) {
 
 		var entry = document.createElement('input');
@@ -67,7 +71,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Creates a select element for a property field.
+	// Creates a select element for a drawing attribute.
 	function createSelect (allowedValues) {
 
 		var entry = document.createElement('select');
@@ -85,7 +89,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Creates a label for a property field.
+	// Creates a label for a drawing attribute.
 	function newLabel (name, entryId) {
 
 		var label = document.createElement('label');
@@ -97,7 +101,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Creates a new field entry element.
+	// Creates a new user input for an attribute, or a span to hold static text.
 	function newEntry (type, allowedValues) {
 
 		if (type === 'static') {
@@ -110,7 +114,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Adds a field to the list of fields to be appended.
+	// Adds a new field to the list of drawing attributes.
 	function newField (name, type, value, allowedValues) {
 
 		var field = document.createElement('div');
@@ -130,7 +134,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Adds the fields for a drawing to the properties sidebar.
+	// Adds the attributes for a drawing to the properties sidebar.
 	function addFields (drawing) {
 
 		var fieldSet = document.createDocumentFragment();
@@ -151,12 +155,13 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Creates buttons to move drawings up and down.
+	// Creates buttons to move drawings up and down in the drawing list.
 	function depthButtons (drawing) {
 
 		var container = document.createElement('div');
 		var up = document.createElement('button');
 		var down = document.createElement('button');
+
 		up.textContent = 'Up';
 		down.textContent = 'Down';
 
@@ -175,7 +180,7 @@ module.exports = function Properties (window) {
 
 	}
 
-	// Creates a delete button.
+	// Creates a button to delete a drawing from the canvas.
 	function createDelete (drawing) {
 
 		var button = document.createElement('button');

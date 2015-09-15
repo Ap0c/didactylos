@@ -1,5 +1,10 @@
+/* Handles user selection of drawings on the canvas. Also manages the dragging
+of drawings using the mouse cursor.
+*/
+
 // ----- Setup ----- //
 
+// Status defining whether the user is currently dragging a drawing.
 DRAGGING = false;
 
 
@@ -37,7 +42,7 @@ function inDrawing (canvas, drawings, coords, callback) {
 
 }
 
-// Returns function that updates the drawing position as it is dragged.
+// Returns a function that updates the drawing position as it is dragged.
 function drag (drawing, canvas, coords) {
 
 	DRAGGING = true;
@@ -59,7 +64,7 @@ function drag (drawing, canvas, coords) {
 
 }
 
-// Sets up the selection of drawings on the canvas.
+// Sets up the selection of drawings on the canvas based upon user clicks.
 function setupSelection (canvas, drawings, properties) {
 
 	canvas.listen('click', function (clickEvent) {
@@ -79,7 +84,7 @@ function setupSelection (canvas, drawings, properties) {
 
 }
 
-// Sets up the user's ability to drag drawings.
+// Sets up the dragging functionality through mouseup and mousedown events.
 function setupDrag (canvas, drawings) {
 
 	var dragFunction = function () { return; };

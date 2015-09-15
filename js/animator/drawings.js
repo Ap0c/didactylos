@@ -1,3 +1,13 @@
+/* Manages the drawings that appear on the canvas. Includes a number of drawing
+objects:
+
+  - Circle
+  - Rectangle
+  - Textbox
+
+Also includes a list object to store the drawings currently on the canvas.
+*/
+
 // ----- Requires ----- //
 
 var EventEmitter = require('events').EventEmitter;
@@ -9,6 +19,7 @@ module.exports = function drawings (Path2D) {
 
 	// ----- Internal Properties ----- //
 
+	// Possible attributes that drawings can have, and their data types.
 	var ATTR_PROPS = {
 		x: {type: 'number'},
 		y: {type: 'number'},
@@ -67,7 +78,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
-	// Returns the attributes of a drawing that are to be serialised.
+	// Returns the attributes of a given drawing that are serialisable.
 	function serialisableAttrs (drawing) {
 
 		var serialisable = {};
@@ -84,7 +95,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
-	// Sets up an interface for external access to the drawing.
+	// Sets up an interface for external access to a drawing.
 	function drawingInterface (drawing) {
 
 		return {
@@ -143,7 +154,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
-	// Creates a function used to draw the drawing.
+	// Creates a function used to draw the drawing on the canvas.
 	function drawFunc (drawing, drawPath) {
 
 		return function drawDrawing (info) {
@@ -165,6 +176,7 @@ module.exports = function drawings (Path2D) {
 
 		var circle = Drawing(attributes);
 
+		// Function for drawing the object path on the canvas.
 		circle.interface.draw = drawFunc(circle, function drawCircle () {
 			circle.path.arc(circle.x.value, circle.y.value, circle.r.value, 0,
 				Math.PI*2, false);
@@ -186,6 +198,7 @@ module.exports = function drawings (Path2D) {
 
 		var rectangle = Drawing(attributes);
 
+		// Function for drawing the object path on the canvas.
 		rectangle.interface.draw = drawFunc(rectangle, function drawRect () {
 			rectangle.path.rect(rectangle.x.value, rectangle.y.value,
 				rectangle.w.value, rectangle.h.value);
@@ -195,7 +208,7 @@ module.exports = function drawings (Path2D) {
 
 	}
 
-	// Creates a rectangle drawing, using a default or specified description.
+	// Creates a Textbox drawing, using a default or specified description.
 	function Textbox (attributes) {
 
 		attributes = attributes || {};
@@ -205,6 +218,7 @@ module.exports = function drawings (Path2D) {
 
 		var textbox = Drawing(attributes);
 
+		// For the textbox, the drawing path is a rectangle bounding the text.
 		textbox.interface.draw = drawFunc(textbox, function drawText (metrics) {
 
 			var textHeight = metrics.actualBoundingBoxDescent +
@@ -259,15 +273,17 @@ module.exports = function drawings (Path2D) {
 
 			var location = drawingList.indexOf(drawing);
 
+			// Does nothing if drawing is at the end of the list.
 			if ((location === 0 && direction === 'down') ||
 				(location === drawingList.length && direction === 'up')) {
 				return;
 			}
 
+			// Moves the drawing.
 			var item = drawingList.splice(location, 1)[0];
 			var newLocation = direction === 'up' ? location + 1 : location - 1;
-
 			drawingList.splice(newLocation, 0, item);
+
 			drawings.emit('change');
 
 		};

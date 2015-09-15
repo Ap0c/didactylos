@@ -1,3 +1,5 @@
+/* Object to handle the animator window's assets sidebar. */
+
 // ----- Requires ----- //
 
 var path = require('path');
@@ -11,8 +13,9 @@ module.exports = function Assets (window) {
 
 	var document = window.document;
 	var assets = document.getElementById('assets');
-	var assetPath = '../assets';
 
+	// Location of asset images, and object to store them.
+	var assetPath = '../assets';
 	var assetList = {};
 
 
