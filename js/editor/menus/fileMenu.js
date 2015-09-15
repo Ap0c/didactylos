@@ -1,3 +1,8 @@
+/* Creates a list of menu items for the File menu, including keyboard shortcuts.
+Whenever a click is registered, a click event is created with the name of the
+menu item.
+*/
+
 exports.items = function items (clickEvent) {
 
 	// ----- Menu Items ----- //

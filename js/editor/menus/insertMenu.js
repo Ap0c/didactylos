@@ -1,3 +1,8 @@
+/* Creates a list of menu items for the Insert menu, including keyboard
+shortcuts. Whenever a click is registered, a click event is created with the
+name of the menu item. The creation of the heading menu items is automated.
+*/
+
 exports.items = function items (clickEvent) {
 
 	// ----- Setup ----- //

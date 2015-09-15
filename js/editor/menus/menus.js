@@ -1,7 +1,12 @@
+/* Handles the creation of menus for the editor and animator. Creates a Menus
+object that can be accessed by the rest of the application.
+*/
+
 // ----- Requires ----- //
 
 var events = require('events');
 
+// The sets of menu items for the File and Insert menus.
 var fileMenu = require('./fileMenu.js');
 var insertMenu = require('./insertMenu.js');
 
@@ -15,6 +20,8 @@ module.exports = function menus (gui) {
 	// Creates the menu bar.
 	var menu = new gui.Menu({ type: 'menubar' });
 	var Menus = new events.EventEmitter();
+
+	// Stores the menu items specific to the editor and animator.
 	var editor = [];
 	var animator = [];
 
@@ -108,7 +115,7 @@ module.exports = function menus (gui) {
 
 	}
 
-	// Builds out the menubar with menus.
+	// Adds File and Insert menus to the menubar.
 	function menubar () {
 
 		var insertMenuItems = insertMenu.items(menuEvent('insert'));
