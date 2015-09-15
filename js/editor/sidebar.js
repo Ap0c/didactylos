@@ -1,3 +1,7 @@
+/* Object to handle the editor window's file browsing sidebar, on the left of
+the editor window.
+*/
+
 module.exports = function Sidebar (window) {
 
 	// ----- Internal Properties ----- //

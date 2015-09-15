@@ -1,3 +1,8 @@
+/* The main setup file for the editor, runs in the Webkit context of the editor
+window, loaded by 'editor.html'. Loads in the rest of the editor modules using
+the Node require function and sets them up.
+*/
+
 // ----- Requires ----- //
 
 var gui = require('nw.gui');

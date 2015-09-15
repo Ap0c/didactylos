@@ -1,11 +1,18 @@
+/* Object to handle the animator window's insertion toolbar, located at the top
+of the editing area.
+*/
+
 module.exports = function Toolbar (window) {
 
 	// ----- Internal Properties ----- //
 
 	var document = window.document;
 	var toolbar = document.getElementById('toolbar');
+
+	// Buttons in the toolbar.
 	var toolButtons = {};
 
+	// Stores information about the modal dialogs opened by the toolbar.
 	var overlays = {
 		link_type: {
 			dialog: document.getElementById('link_type_overlay'),
@@ -40,7 +47,7 @@ module.exports = function Toolbar (window) {
 
 	// ----- Functions ----- //
 
-	// Listens for a click event on the button.
+	// Listens for a click event on a toolbar button.
 	function action (buttonName, callback) {
 
 		var toolButton = toolButtons[buttonName];
@@ -59,13 +66,14 @@ module.exports = function Toolbar (window) {
 
 	}
 
-	// Closes the overlay, processes the data submitted and passes to callback.
+	// Closes a dialog overlay, processes the data and passes to callback.
 	function setupOverlay (name, callback, cancel) {
 
 		var overlay = overlays[name];
 		overlay.form.addEventListener('submit', formHandler);
 		overlay.cancel.addEventListener('click', cancelOverlay);
 
+		// Handles the data received from the overlay.
 		function formHandler (submitEvent) {
 
 			closeOverlay(overlay, submitEvent);
@@ -74,6 +82,7 @@ module.exports = function Toolbar (window) {
 
 		}
 
+		// Closes the overlay.
 		function cancelOverlay (clickEvent) {
 
 			closeOverlay(overlay, clickEvent);
@@ -99,7 +108,7 @@ module.exports = function Toolbar (window) {
 
 	}
 
-	// Removes items from a select box if they no longer exist.
+	// Removes items from a dialog select box if they no longer exist.
 	function deleteOptions (selectBox, items) {
 
 		for (var option in selectBox) {
@@ -114,7 +123,7 @@ module.exports = function Toolbar (window) {
 
 	}
 
-	// Adds options to a select box.
+	// Adds options to a select box in a dialog.
 	function addOptions (selectBox, items) {
 
 		for (var i = items.length - 1; i >= 0; i--) {

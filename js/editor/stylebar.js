@@ -1,3 +1,7 @@
+/* Object to handle the animator window's style toolbar, located at the top of
+the preview area.
+*/
+
 module.exports = function Stylebar (window) {
 
 	// ----- Internal Properties ----- //
@@ -5,9 +9,13 @@ module.exports = function Stylebar (window) {
 	var document = window.document;
 	var preview = document.getElementById('preview');
 	var styleBar = document.getElementById('stylebar');
+
+	// Gets the stylesheet for the page.
 	var pageStyle = document.styleSheets[2];
+	// Inputs in the stylebar.
 	var styleTools = {};
 
+	// Stores all the possible CSS rules that can be applied using the stylebar.
 	var rules = {
 		font_size: {
 			type: 'class',
@@ -66,7 +74,7 @@ module.exports = function Stylebar (window) {
 
 	}
 
-	// Loads a given style into a select-element based tool.
+	// Loads a given style into an HTML select element based tool.
 	function loadSelect (tool, value) {
 
 		var toolOptions = tool.options;
@@ -85,7 +93,7 @@ module.exports = function Stylebar (window) {
 
 	}
 
-	// Loads a given style into an input-element based tool.
+	// Loads a given style into an HTML input element based tool.
 	function loadInput (tool, value) {
 
 		tool.value = value;
@@ -95,7 +103,7 @@ module.exports = function Stylebar (window) {
 
 	}
 
-	// Loads up a specific style into the stylebar.
+	// Loads a specific style into the stylebar.
 	function loadStyle (tool, value) {
 
 		if (tool.tagName === 'SELECT') {
@@ -255,7 +263,7 @@ module.exports = function Stylebar (window) {
 
 	}
 
-	// Sets up the style bar.
+	// Sets up the stylebar.
 	function init () {
 
 		var tools = styleBar.getElementsByClassName('style_tool');

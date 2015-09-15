@@ -1,5 +1,10 @@
+/* Handles the procedure for inserting Markdown snippets into the editing area
+of the editor.
+*/
+
 // ----- Setup ----- //
 
+// Markdown snippets for HTML headings.
 var HEADINGS = {
 	h1: '# ',
 	h2: '## ',
@@ -9,6 +14,7 @@ var HEADINGS = {
 	h6: '###### '
 };
 
+// Markdown snippets for everything else that can be inserted.
 var SYNTAX = {
 
 	bullet: { before: '- ', after: '', caretMove: 2 },

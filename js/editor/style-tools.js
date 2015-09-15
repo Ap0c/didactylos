@@ -1,6 +1,10 @@
+/* Handles the procedure for adjusting styles in the preview area through the
+stylebar in the editor.
+*/
+
 // ----- Functions ----- //
 
-// Sets up a tool in the stylebar.
+// Sets up an individual tool in the stylebar.
 function setupStyle(project, views, styleName) {
 
 	views.stylebar.action(styleName, function (value) {

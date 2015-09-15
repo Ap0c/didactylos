@@ -1,3 +1,7 @@
+/* Keeps track of and updates the project's metadata, which is held in memory
+while the application is open. Keeps this in sync with the version on disk.
+*/
+
 // ----- Requires ----- //
 
 var fs = require('fs');
@@ -16,7 +20,7 @@ module.exports = function Project (projectJson) {
 
 	// ----- Functions ----- //
 
-	// Updates the project info json file on disk.
+	// Updates the project info JSON file on disk.
 	function syncInfo () {
 		projectJson = JSON.stringify(info, null, 4);
 		fs.writeFile(infoFile, projectJson);
@@ -32,7 +36,7 @@ module.exports = function Project (projectJson) {
 		return info.animPath;
 	}
 
-	// Retrieves the project markdown files.
+	// Retrieves the project Markdown files.
 	function getFiles () {
 		return Object.keys(info.files);
 	}

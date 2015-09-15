@@ -1,3 +1,7 @@
+/* Handles the project's interactions with the file system, including saving
+files from both the editor and the animator.
+*/
+
 // ----- Requires ----- //
 
 var fs = require('fs');
@@ -18,7 +22,7 @@ module.exports = function File (views, project) {
 
 	// ----- Functions ----- //
 
-	// Marks the file as markdown, saves it, and updates the sidebar.
+	// Marks the file as Markdown, saves it, and updates the sidebar.
 	function createFile (name) {
 
 		var filename = name + '.md';
@@ -32,7 +36,7 @@ module.exports = function File (views, project) {
 
 	}
 
-	// Creates a new file.
+	// Creates a new file in the editor.
 	function newFile () {
 
 		save();
@@ -97,7 +101,7 @@ module.exports = function File (views, project) {
 
 	}
 
-	// Opens an existing animation.
+	// Opens an existing animator file.
 	function openAnimation (name, callback) {
 
 		if (project.animationExists(name)) {
@@ -115,7 +119,7 @@ module.exports = function File (views, project) {
 
 	}
 
-	// Builds a path for the animation and adds it to the project.
+	// Builds a path for the animator file and adds it to the project.
 	function createAnimation (name, callback) {
 
 		var filename = name + '.json';
@@ -126,7 +130,7 @@ module.exports = function File (views, project) {
 
 	}
 
-	// Creates a new animation file.
+	// Creates a new animator file.
 	function newAnimation (callback) {
 
 		var animation = sidebar.newFile('Name Of New Animation:');
@@ -143,7 +147,7 @@ module.exports = function File (views, project) {
 
 	}
 
-	// Saves an animation file.
+	// Saves an animator file.
 	function saveAnimation (name, data) {
 
 		var filename = project.animation(name);

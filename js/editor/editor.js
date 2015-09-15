@@ -1,3 +1,7 @@
+/* Object to handle the editor part of the editor window, which is comprised of
+the Markdown editing area on the left and the HTML preview on the right.
+*/
+
 // ----- Requires ----- //
 
 var marked = require('marked');
