@@ -1,3 +1,10 @@
+/* Stylesheet for the preview section of the editor window, 'editor.html'.
+The classes are applied to elements according to the styles that the user
+selects.
+*/
+
+/* ----- Font Sizes ----- */
+
 .smallest_font > p, .smallest_font > ul, .smallest_font > pre {
 	font-size: x-small;
 }
@@ -17,6 +24,8 @@
 .largest_font > p, .largest_font > ul, .largest_font > pre {
 	font-size: x-large;
 }
+
+/* ----- Font Families ----- */
 
 .serif_font {
 	font-family: Times, "Times New Roman", Georgia, serif;

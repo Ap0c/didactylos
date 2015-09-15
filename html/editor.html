@@ -13,6 +13,7 @@
 </head>
 <body>
 
+	<!-- The sidebar on the left of the editor, displays project files. -->
 	<section id="sidebar">
 		<header>Files</header>
 		<section id="files"></section>
@@ -20,9 +21,13 @@
 		<section id="animations"></section>
 	</section>
 
+	<!-- The toolbar running across the top of most of the editor window. -->
 	<section id="topbar">
 
+		<!-- The insertion toolbar, contains controls for inserting content into the Markdown editor. -->
 		<section id="toolbar">
+
+			<!-- The headings dropdown menu. -->
 			<div class="dropdown" id="heading_menu">
 				<span>Headings &#x25BC;</span>
 				<div class="dropdown_menu">
@@ -34,12 +39,16 @@
 					<button id="h6_insert" class="tool_button dropdown_button" name="h6" type="button" title="Insert Heading 6">Heading 6 - ######</button>
 				</div>
 			</div>
+
+			<!-- The series of insertion buttons in the centre of the toolbar. -->
 			<div><button id="bullet_insert" class="tool_button" name="bullet" type="button" title="Insert Bullet Point">&#8226;</button></div>
 			<div><button id="italics_insert" class="tool_button" name="italics" type="button" title="Italics">I</button></div>
 			<div><button id="bold_insert" class="tool_button" name="bold" type="button" title="Bold">B</button></div>
 			<div><button id="link_insert" class="tool_button" name="link" type="button" title="Insert Link">link</button></div>
 			<div><button id="animation_insert" class="tool_button" name="animation" type="button" title="Insert Animation">anim</button></div>
 			<div><button id="code_insert" class="tool_button" name="code" type="button" title="Insert Code Block">&#60;&#62;</button></div>
+
+			<!-- The equations dropdown menu. -->
 			<div class="dropdown" id="equation_menu">
 				<span><em>F = ma &#x25BC;</em></span>
 				<div class="dropdown_menu">
@@ -49,6 +58,7 @@
 			</div>
 		</section>
 
+		<!-- The style toolbar, includes controls for styling the content in the preview area. -->
 		<section id="stylebar">
 			<select name="font_size" id="font_size" class="style_tool">
 				<option value="largest">largest font</option>
@@ -76,12 +86,15 @@
 
 	</section>
 
+	<!-- The Markdown editing area, situated centre-left in the window. -->
 	<section id="editor" class="editor_window">
 		<textarea name="editor" id="editor_input" placeholder="Markdown goes here..."></textarea>
 	</section>
 
+	<!-- The preview area, where rendered HTML is placed, on the right of the window. -->
 	<section id="preview" class="editor_window"></section>
 
+	<!-- A modal dialog used to display options for link insertion. -->
 	<dialog id="link_type_overlay">
 		<form method="dialog" id="link_type">
 			<div>
@@ -101,6 +114,7 @@
 		</form>
 	</dialog>
 
+	<!-- A modal dialog used to display options for inserting web links. -->
 	<dialog id="web_link_overlay">
 		<form method="dialog" id="web_link">
 			<div>
@@ -113,6 +127,7 @@
 		</form>
 	</dialog>
 
+	<!-- A modal dialog used to display options for inserting project file links. -->
 	<dialog id="file_link_overlay">
 		<form method="dialog" id="file_link">
 			<div>
@@ -123,6 +138,7 @@
 		</form>
 	</dialog>
 
+	<!-- A modal dialog used to display options for inserting animations. -->
 	<dialog id="animation_insert_overlay">
 		<form method="dialog" id="animation_insert_form">
 			<div>
@@ -133,6 +149,7 @@
 		</form>
 	</dialog>
 
+	<!-- An input used to select the site export directory, hidden by default. -->
 	<input type="file" id="site_export" webkitdirectory />
 
 </body>
