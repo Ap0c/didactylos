@@ -16,7 +16,7 @@ This software is comprised of three main components:
 
 Up to this point development has focused on OS X, which means that, although nw.js is also available for Windows and Linux, there is no guarantee that this application will run on either of those platforms.
 
-To install, clone the repo:
+To install, clone the repo (or download a copy from the release page):
 
 ```
 git clone https://github.com/Ap0c/didactylos
