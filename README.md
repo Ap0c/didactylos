@@ -1,24 +1,56 @@
-# MSc Project
+# Didactylos
 
-A collection of teaching tools designed to allow educators to produce web-oriented educational content. Current development focuses on Physics content specifically.
+A collection of teaching tools designed to allow educators to produce web-oriented educational content. The purpose to create a set of tools that will allow teachers, who do not have necessarily have any prior technical knowledge, to build educational content that makes good use of the capabilities of the web and its corresponding technologies. This will hopefully provide an experience to match that which technology provides students in other aspects of their lives. Current development focuses on Physics content specifically.
 
-# Components
+The result of this project is a GUI-based application built upon the nw.js app runtime, which is itself built upon Chromium and node.js. This repo is intended for development, and is not designed as a means to deploy the application. As a result it contains the application code only, and does not bundle nw.js.
+
+## Components
 
 This software is comprised of three main components:
 
-## Markdown Editor
+- **Markdown Editor** - An editor for building the content, based around the Markdown language. Incorporates live HTML previews, file handling and equation rendering.
+- **Animator** A tool for creating diagrams using the HTML5 canvas element. These can be embedded in the content created in the editor.
+- **Static Site Generator** - Allows the content to be exported as a static site, to then be hosted in a location chosen by the user.
 
-An editor for building the content, based around the Markdown language. Incorporates live HTML previews, file handling and equation rendering.
+## Development and/or Running the Application
 
-## Animator
+Up to this point development has focused on OS X, which means that, although nw.js is also available for Windows and Linux, there is no guarantee that this application will run on either of those platforms.
 
-A tool for creating diagrams using the HTML5 canvas element. These can be embedded in the content created in the editor.
+To install, clone the repo:
 
-## Static Site Generator
+```
+git clone https://github.com/Ap0c/didactylos
+```
 
-Allows the content to be exported as a static site, to then be hosted in a location chosen by the user.
+then `cd` into the `didactylos` directory and install the necessary libraries using:
 
-# Overview of File Structure
+```
+npm install
+```
+
+You will also need a copy of the stable build of nw.js (v0.12.3 NORMAL at the time of writing), which is available from the [project website](http://nwjs.io). You now have everything you need to run the application, but the procedure for doing so differs from platform to platform.
+
+### OS X
+
+Once nw.js has been downloaded and extracted, copy the `nwjs.app` package into the `didactylos` directory. Now simply double-click on `nwjs.app` to launch the application (`open nwjs.app` on the command line also works). Alternatively, leave `nwjs.app` where it is and run:
+
+```
+nwjs.app/Contents/MacOS/nwjs /path/to/didactylos
+```
+
+### Linux
+
+Downloading nw.js for Linux will provide you with a binary executable called `nw`. To run the application simply do:
+
+```
+/path/to/nw /path/to/didactylos
+```
+
+### Windows
+
+The Windows download contains a binary file, called `nw.exe`. To run the application, simply drag the `package.json` file from didactylos onto this executable. Alternatively, to use the command line, follow the instructions for Linux given above, but replace `nw` with `nw.exe`.
+
+## Overview of File Structure
 
 The `package.json` file found in the root directory provides information about the project and sets certain runtime parameters.
 
